@@ -10,11 +10,17 @@ using System.Windows.Forms;
 
 namespace SuperCAL
 {
-    public partial class Form1 : Form
+    public partial class Error : Form
     {
-        public Form1()
+        public Error(string message)
         {
             InitializeComponent();
+            ErrorBox.Text = message;
+        }
+
+        private void Ok_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

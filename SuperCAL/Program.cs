@@ -14,9 +14,22 @@ namespace SuperCAL
         [STAThread]
         static void Main()
         {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            //Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+            bool prePass = true;
+            try
+            {
+                McrsCalSrvc.Service.Status.ToString();
+            }
+            catch (InvalidOperationException e)
+            {
+                Application.Run(new Error(e.Message + "\n\nTry and install Micros CAL next time maybe?"));
+                prePass = false;
+            }
+            if(prePass)
+            {
+                Application.Run(new Window());
+            }
         }
     }
 }
