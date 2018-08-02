@@ -4,14 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Win32;
+using System.IO;
 
 namespace SuperCAL
 {
     class Wipe
     {
-        public static Task Do()
+        public async static Task Do()
         {
-            return Task.Run(() => {
+            if (McrsCalSrvc.IsRunning())
+            {
+                await McrsCalSrvc.Stop();
+            }
+            await Task.Run(() => {
                 string MicrosRegRoot = @"SOFTWARE\MICROS";
                 Dictionary<string, object> r = new Dictionary<string, object>
                 {
@@ -19,6 +24,8 @@ namespace SuperCAL
                     ["ActiveHost"] = "cp-simapp",
                     ["POSType"] = 101
                 };
+
+                deleteDirectory(@"C:\Micros\Simphony");
 
                 RegistryKey McrsReg32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(MicrosRegRoot, true);
                 RegistryKey McrsReg64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).OpenSubKey(MicrosRegRoot, true);
@@ -37,6 +44,32 @@ namespace SuperCAL
                 RegCfg32.Close();
                 RegCfg64.Close();
             });
+            await McrsCalSrvc.Start();
+        }
+        private static void deleteDirectory(string path)
+        {
+            if(Directory.Exists(path))
+            {
+                string[] files = Directory.EnumerateFiles(path).ToArray();
+                if (files.Length != 0)
+                {
+                    foreach(string file in files)
+                    {
+                        File.Delete(file);
+                        Logger.Good(file + ": Deleted.");
+                    }
+                }
+                string[] dirs = Directory.EnumerateDirectories(path).ToArray();
+                if(dirs.Length != 0)
+                {
+                    foreach(string dir in dirs)
+                    {
+                        deleteDirectory(dir);
+                    }
+                }
+                Directory.Delete(path);
+                Logger.Good(path + ": Deleted.");
+            }
         }
     }
 }

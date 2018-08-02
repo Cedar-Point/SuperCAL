@@ -28,7 +28,7 @@ namespace SuperCAL
             }
             if(prePass)
             {
-                Application.Run(new Window());
+                Application.Run(new Main());
             }
         }
     }

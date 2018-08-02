@@ -10,17 +10,19 @@ using System.Windows.Forms;
 
 namespace SuperCAL
 {
-    public partial class Window : Form
+    public partial class Main : Form
     {
         public Timer topTimer = new Timer();
 
-        public Window()
+        public Main()
         {
             InitializeComponent();
             Logger.LogRTB = LogRTB;
             topTimer.Interval = 1000;
             topTimer.Tick += TopTimer_Tick;
             topTimer.Start();
+            McrsCalSrvc.StopStartCAL = StopStartCAL;
+            McrsCalSrvc.Table = Table;
         }
 
         private void TopTimer_Tick(object sender, EventArgs e)
@@ -32,7 +34,7 @@ namespace SuperCAL
         {
             Left = Left - 440;
             Logger.Log("Welcome to Super CAL: Press any button to begin.");
-            if(McrsCalSrvc.IsRunning())
+            if (McrsCalSrvc.IsRunning())
             {
                 Logger.Good("CAL Service is running.");
                 StopStartCAL.Text = "Stop CAL";
@@ -46,34 +48,17 @@ namespace SuperCAL
 
         private async void StopStartCAL_Click(object sender, EventArgs e)
         {
-            await toggleCal();
-        }
-
-        private async Task toggleCal()
-        {
-            StopStartCAL.Enabled = false;
-            if (McrsCalSrvc.IsRunning())
-            {
-                StopStartCAL.Text = "Stopping CAL...";
-                await McrsCalSrvc.Stop();
-                StopStartCAL.Text = "Start CAL";
-            }
-            else
-            {
-                StopStartCAL.Text = "Starting CAL...";
-                await McrsCalSrvc.Start();
-                StopStartCAL.Text = "Stop CAL";
-            }
-            StopStartCAL.Enabled = true;
+            await McrsCalSrvc.ToggleCal();
         }
 
         private async void ReCAL_Click(object sender, EventArgs e)
         {
-            if(McrsCalSrvc.IsRunning())
-            {
-                await toggleCal();
-            }
             await Wipe.Do();
+            await WatchDog.WaitForProcessStart("WIN7CALStart");
+            await WatchDog.WaitForCALBusy("WIN7CALStart");
+            await WatchDog.WaitForCALBusy("WIN7CALStart", true);
+            await WatchDog.WaitForCALBusy("WIN7CALStart");
+            await McrsCalSrvc.Stop();
         }
 
         private void ReDownloadCAL_Click(object sender, EventArgs e)

@@ -1,6 +1,6 @@
 ﻿namespace SuperCAL
 {
-    partial class Window
+    partial class Main
     {
         /// <summary>
         /// Required designer variable.
@@ -98,7 +98,6 @@
             this.LogRTB.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.LogRTB.BackColor = System.Drawing.SystemColors.Control;
             this.LogRTB.Location = new System.Drawing.Point(6, 82);
             this.LogRTB.Name = "LogRTB";
             this.LogRTB.ReadOnly = true;
@@ -107,7 +106,7 @@
             this.LogRTB.TabIndex = 5;
             this.LogRTB.Text = "";
             // 
-            // Window
+            // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -115,9 +114,10 @@
             this.Controls.Add(this.LogRTB);
             this.Controls.Add(this.Table);
             this.Font = new System.Drawing.Font("MS UI Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "Window";
+            this.Name = "Main";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

@@ -80,6 +80,7 @@
     <Compile Include="McrsCalSrvc.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WatchDog.cs" />
     <Compile Include="Wipe.cs" />
     <EmbeddedResource Include="Error.resx">
       <DependentUpon>Error.cs</DependentUpon>
