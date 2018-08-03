@@ -21,8 +21,8 @@ namespace SuperCAL
                 string MicrosRegRoot = @"SOFTWARE\MICROS";
                 Dictionary<string, object> r = new Dictionary<string, object>
                 {
-                    ["ActiveHostIpAddress"] = "http://cp-simapp:8080/EGateway/EGateway.asmx",
-                    ["ActiveHost"] = "cp-simapp",
+                    ["ActiveHostIpAddress"] = EGatewayURL,
+                    ["ActiveHost"] = EGatewayHost,
                     ["POSType"] = 101
                 };
                 deleteDirectory(@"C:\Micros\Simphony");

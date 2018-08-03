@@ -28,21 +28,17 @@ namespace SuperCAL
         {
             if (Program.Arguments.Length != 0 && Program.Arguments[0] == "0")
             {
+                Table.Enabled = false;
                 Logger.Log("Phase two: Join domain...");
-                await WatchDog.WaitForProcessStart();
-                if (McrsCalSrvc.IsRunning())
+                string newName = await Misc.GetCalNameFromRegistry();
+                if(newName != "")
                 {
-                    await McrsCalSrvc.Stop();
-                    string newName = await Misc.GetCalNameFromRegistry();
-                    if(newName != "")
-                    {
-                        CenterToScreen();
-                        Left = Left - 440;
-                        await DomainJoin.Join(newName);
-                        CenterToScreen();
-                        await Misc.InstallPhaseTwo(false);
-                        Misc.RestartWindows();
-                    }
+                    CenterToScreen();
+                    Left = Left - 440;
+                    await DomainJoin.Join(newName);
+                    CenterToScreen();
+                    await Misc.InstallPhaseTwo(false);
+                    Misc.RestartWindows();
                 }
             }
             else
@@ -89,17 +85,8 @@ namespace SuperCAL
             if (McrsCalSrvc.IsRunning())
             {
                 await McrsCalSrvc.Stop();
-                Misc.RestartWindows();
             }
-            else
-            {
-                Logger.Error("ReCAL process failed! Cleaning up...");
-                await Misc.InstallPhaseTwo(false);
-                CenterToScreen();
-                Left = Left - 440;
-                await DomainJoin.Join(Environment.MachineName);
-                CenterToScreen();
-            }
+            Misc.RestartWindows();
         }
 
         private void ReDownloadCAL_Click(object sender, EventArgs e)
@@ -110,14 +97,6 @@ namespace SuperCAL
         private void LogRTB_DoubleClick(object sender, EventArgs e)
         {
             Logger.Log("Super CAL: Written by Dylan Bickerstaff Aug 2018.");
-        }
-
-        private void Main_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if(e.CloseReason == CloseReason.WindowsShutDown)
-            {
-                Process.Start("shutdown.exe", "/a");
-            }
         }
     }
 }
