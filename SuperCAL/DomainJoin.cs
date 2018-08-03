@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.DirectoryServices.ActiveDirectory;
+using System;
 
 namespace SuperCAL
 {
@@ -10,7 +11,14 @@ namespace SuperCAL
         public static async Task Join(string NewName)
         {
             Logger.Log("Adding computer to the domain as " + NewName + ": Please wait for credential prompt...");
-            await Misc.RunPowershell("Add-Computer -DomainName \"" + DomainName + "\" -Force -Options AccountCreate -Credential \"domain\\username\" -OUPath \"" + OU + "\" -NewName \"" + NewName + "\"");
+            if (NewName == Environment.MachineName)
+            {
+                await Misc.RunPowershell("Add-Computer -DomainName \"" + DomainName + "\" -Force -Options AccountCreate -Credential \"domain\\username\" -OUPath \"" + OU + "\"");
+            }
+            else
+            {
+                await Misc.RunPowershell("Add-Computer -DomainName \"" + DomainName + "\" -Force -Options AccountCreate -Credential \"domain\\username\" -OUPath \"" + OU + "\" -NewName \"" + NewName + "\"");
+            }
             Logger.Log("Done.");
         }
         public static async Task Leave()
