@@ -89,9 +89,9 @@ namespace SuperCAL
             Misc.RestartWindows();
         }
 
-        private void ReDownloadCAL_Click(object sender, EventArgs e)
+        private async void ReDownloadCAL_Click(object sender, EventArgs e)
         {
-
+            await Wipe.Do(true);
         }
 
         private void LogRTB_DoubleClick(object sender, EventArgs e)

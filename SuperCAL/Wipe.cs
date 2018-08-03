@@ -11,59 +11,33 @@ namespace SuperCAL
     {
         public static string EGatewayURL = "";
         public static string EGatewayHost = "";
-        public async static Task Do()
+        private static Dictionary<string, object> RegDictionary = null;
+        private static string MicrosRegRoot = @"SOFTWARE\MICROS";
+        public async static Task Do(bool softWipe = false)
         {
             if (McrsCalSrvc.IsRunning())
             {
                 await McrsCalSrvc.Stop();
             }
             await Task.Run(() => {
-                string MicrosRegRoot = @"SOFTWARE\MICROS";
-                Dictionary<string, object> r = new Dictionary<string, object>
+                RegDictionary = new Dictionary<string, object>
                 {
                     ["ActiveHostIpAddress"] = EGatewayURL,
                     ["ActiveHost"] = EGatewayHost,
                     ["POSType"] = 101
                 };
-                deleteDirectory(@"C:\Micros\Simphony");
-                try
+                if(softWipe)
                 {
-                    RegistryKey McrsReg32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(MicrosRegRoot, true);
-                    McrsReg32.DeleteSubKeyTree("CAL");
-                    RegistryKey RegCfg32 = McrsReg32.CreateSubKey(@"CAL\Config");
-                    McrsReg32.Close();
-                    foreach (KeyValuePair<string, object> kv in r)
-                    {
-                        RegCfg32.SetValue(kv.Key, kv.Value);
-                        Logger.Good(MicrosRegRoot + @"\" + kv.Key + ": " + kv.Value);
-                    }
-                    RegCfg32.Close();
+                    SaveImportantKeys(false);
+                    SaveImportantKeys(true);
                 }
-                catch (Exception)
-                {
-                    Logger.Warning("Failed to modify the Micros key in the 32 bit registry.");
-                }
-                try
-                {
-                    RegistryKey McrsReg64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).OpenSubKey(MicrosRegRoot, true);
-                    McrsReg64.DeleteSubKeyTree("CAL");
-                    RegistryKey RegCfg64 = McrsReg64.CreateSubKey(@"CAL\Config");
-                    McrsReg64.Close();
-                    foreach (KeyValuePair<string, object> kv in r)
-                    {
-                        RegCfg64.SetValue(kv.Key, kv.Value);
-                        Logger.Good(MicrosRegRoot + @"\" + kv.Key + ": " + kv.Value);
-                    }
-                    RegCfg64.Close();
-                }
-                catch (Exception)
-                {
-                    Logger.Warning("Failed to modify the Micros key in the 64 bit registry.");
-                }
+                DeleteDirectory(@"C:\Micros\Simphony");
+                RegClear(false);
+                RegClear(true);
             });
             await McrsCalSrvc.Start();
         }
-        public static void deleteDirectory(string path)
+        public static void DeleteDirectory(string path)
         {
             if(Directory.Exists(path))
             {
@@ -81,11 +55,67 @@ namespace SuperCAL
                 {
                     foreach(string dir in dirs)
                     {
-                        deleteDirectory(dir);
+                        DeleteDirectory(dir);
                     }
                 }
                 Directory.Delete(path);
                 Logger.Good(path + ": Deleted.");
+            }
+        }
+        private static void RegClear(bool bit64)
+        {
+            RegistryView view = RegistryView.Registry32;
+            string bit = "32";
+            if (bit64)
+            {
+                bit = "64";
+            }
+            if (bit64)
+            {
+                view = RegistryView.Registry64;
+            }
+            try
+            {
+                RegistryKey regKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, view).OpenSubKey(MicrosRegRoot, true);
+                regKey.DeleteSubKeyTree("CAL");
+                RegistryKey newKey = regKey.CreateSubKey(@"CAL\Config");
+                regKey.Close();
+                foreach (KeyValuePair<string, object> kv in RegDictionary)
+                {
+                    newKey.SetValue(kv.Key, kv.Value);
+                    Logger.Good(bit + "Bit Reg: " + kv.Key + ": " + kv.Value);
+                }
+                newKey.Close();
+            }
+            catch (Exception)
+            {
+                Logger.Warning("Failed to modify the Micros key in the " + bit + " bit registry.");
+            }
+        }
+        private static void SaveImportantKeys(bool bit64)
+        {
+            RegistryView view = RegistryView.Registry32;
+            if (bit64)
+            {
+                view = RegistryView.Registry64;
+            }
+            try
+            {
+                RegistryKey regKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, view).OpenSubKey(MicrosRegRoot, true);
+                RegDictionary["DeviceId"] = regKey.GetValue("DeviceId");
+                RegDictionary["ProductType"] = regKey.GetValue("ProductType");
+                RegDictionary["ServiceHostId"] = regKey.GetValue("ServiceHostId");
+                RegDictionary["WSId"] = regKey.GetValue("WSId");
+                regKey.Close();
+            }
+            catch (Exception)
+            {
+                string bit = "32";
+                if (bit64)
+                {
+                    bit = "64";
+                }
+                Logger.Warning("Failed to save the Micros key in the " + bit + " bit registry.");
             }
         }
     }
