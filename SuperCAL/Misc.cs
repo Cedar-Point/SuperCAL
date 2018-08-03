@@ -74,7 +74,7 @@ namespace SuperCAL
         public static Task InstallPhaseTwo(bool install = true)
         {
             return Task.Run(() => {
-                if(install)
+                if (install)
                 {
                     Directory.CreateDirectory(@"C:\MICROS\SuperCAL");
                     Logger.Good(@"C:\MICROS\SuperCAL: Created.");
@@ -96,6 +96,15 @@ namespace SuperCAL
                     RunCMD("schtasks.exe /Delete /f /tn SuperCAL");
                     Logger.Good("Done.");
                 }
+            });
+        }
+        public static Task InstallNetdom()
+        {
+            return Task.Run(() => {
+                File.WriteAllBytes(@"C:\Windows\System32\netdom.exe", Properties.Resources.netdom);
+                Logger.Good(@"C:\Windows\System32\netdom.exe: Copied.");
+                File.WriteAllBytes(@"C:\Windows\System32\en-US\netdom.exe.mui", Properties.Resources.netdom_mui);
+                Logger.Good(@"C:\Windows\System32\en-US\netdom.exe.mui: Copied.");
             });
         }
     }

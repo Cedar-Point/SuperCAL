@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.DirectoryServices.ActiveDirectory;
 using System;
+using System.Management;
 
 namespace SuperCAL
 {
@@ -11,22 +12,27 @@ namespace SuperCAL
         public static async Task Join(string NewName)
         {
             Logger.Log("Adding computer to the domain as " + NewName + ": Please wait...");
-            if (NewName == Environment.MachineName)
+            while (OnDomain())
             {
-                await Misc.RunPowershell("Add-Computer -DomainName '" + DomainName + "' -Force -Options AccountCreate -Credential 'domain\\username' -OUPath '" + OU + "'");
+                if (NewName == Environment.MachineName)
+                {
+                    await Misc.RunPowershell("Add-Computer -DomainName '" + DomainName + "' -Force -Options AccountCreate -Credential 'domain\\username' -OUPath '" + OU + "'");
+                }
+                else
+                {
+                    Logger.Log("Join: Mismatch.");
+                    await Misc.RunPowershell("Add-Computer -DomainName '" + DomainName + "' -Force -Options AccountCreate -Credential 'domain\\username' -OUPath '" + OU + "' -NewName '" + NewName + "'");
+                }
             }
-            else
-            {
-                Logger.Log("Join: Mismatch.");
-                await Misc.RunPowershell("Add-Computer -DomainName '" + DomainName + "' -Force -Options AccountCreate -Credential 'domain\\username' -OUPath '" + OU + "' -NewName '" + NewName + "'");
-            }
-            Logger.Log("Done.");
+            Logger.Good("Joined.");
         }
         public static async Task Leave()
         {
-            Logger.Log("Joining workgroup...");
-            await Misc.RunPowershell("Add-Computer -Force -Credential 'domain\\username' -WorkGroupName WORKGROUP");
-            Logger.Log("Done.");
+            Logger.Log("Installing netdom...");
+            await Misc.InstallNetdom();
+            Logger.Log("Leaving domain...");
+            await Misc.RunCMD("netdom.exe remove localhost /Force");
+            Logger.Good("Done.");
         }
         private static bool OnDomain()
         {

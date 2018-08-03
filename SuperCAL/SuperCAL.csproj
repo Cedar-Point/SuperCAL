@@ -131,12 +131,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\netdom.exe.mui" />
     <None Include="Resources\PsExec.exe" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SuperCAL.xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\netdom.exe" />
     <Content Include="supercal.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

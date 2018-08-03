@@ -95,26 +95,40 @@ namespace SuperCAL
         private static void SaveImportantKeys(bool bit64)
         {
             RegistryView view = RegistryView.Registry32;
+            string bit = "32";
             if (bit64)
             {
                 view = RegistryView.Registry64;
+                bit = "64";
             }
             try
             {
-                RegistryKey regKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, view).OpenSubKey(MicrosRegRoot, true);
-                RegDictionary["DeviceId"] = regKey.GetValue("DeviceId");
-                RegDictionary["ProductType"] = regKey.GetValue("ProductType");
-                RegDictionary["ServiceHostId"] = regKey.GetValue("ServiceHostId");
-                RegDictionary["WSId"] = regKey.GetValue("WSId");
+                Logger.Log("Trying to save the " + bit + " bit registry.");
+                RegistryKey regKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, view).OpenSubKey(MicrosRegRoot + @"\CAL\Config", false);
+                object DeviceId = regKey.GetValue("DeviceId");
+                if (DeviceId != null)
+                {
+                    RegDictionary["DeviceId"] = DeviceId;
+                }
+                object ProductType = regKey.GetValue("ProductType");
+                if (ProductType != null)
+                {
+                    RegDictionary["ProductType"] = ProductType;
+                }
+                object ServiceHostId = regKey.GetValue("ServiceHostId");
+                if (ServiceHostId != null)
+                {
+                    RegDictionary["ServiceHostId"] = ServiceHostId;
+                }
+                object WSId = regKey.GetValue("WSId");
+                if (WSId != null)
+                {
+                    RegDictionary["WSId"] = WSId;
+                }
                 regKey.Close();
             }
             catch (Exception)
             {
-                string bit = "32";
-                if (bit64)
-                {
-                    bit = "64";
-                }
                 Logger.Warning("Failed to save the Micros key in the " + bit + " bit registry.");
             }
         }
