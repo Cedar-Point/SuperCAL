@@ -69,24 +69,6 @@ namespace SuperCAL
             Left = Left - 440;
             await DomainJoin.Leave();
             await Wipe.Do();
-            await WatchDog.WaitForProcessStart();
-            if (McrsCalSrvc.IsRunning())
-            {
-                await WatchDog.WaitForCALBusy();
-            }
-            if (McrsCalSrvc.IsRunning())
-            {
-                await WatchDog.WaitForCALBusy(true);
-            }
-            if (McrsCalSrvc.IsRunning())
-            {
-                await WatchDog.WaitForCALBusy();
-            }
-            if (McrsCalSrvc.IsRunning())
-            {
-                await McrsCalSrvc.Stop();
-            }
-            Misc.RestartWindows();
         }
 
         private async void ReDownloadCAL_Click(object sender, EventArgs e)
