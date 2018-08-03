@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.DirectoryServices.ActiveDirectory;
+using System.DirectoryServices;
 using System;
-using System.Management;
 
 namespace SuperCAL
 {
@@ -12,7 +12,7 @@ namespace SuperCAL
         public static async Task Join(string NewName)
         {
             Logger.Log("Adding computer to the domain as " + NewName + ": Please wait...");
-            while (OnDomain())
+            while (!OnDomain())
             {
                 if (NewName == Environment.MachineName)
                 {
@@ -41,9 +41,16 @@ namespace SuperCAL
                 Domain.GetComputerDomain();
                 return true;
             }
-            catch(ActiveDirectoryObjectNotFoundException)
+            catch(Exception e)
             {
-                return false;
+                if(e.InnerException is DirectoryServicesCOMException)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
     }
