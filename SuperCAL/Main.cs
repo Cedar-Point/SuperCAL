@@ -30,19 +30,37 @@ namespace SuperCAL
             BringToFront();
         }
 
-        private void Window_Load(object sender, EventArgs e)
+        private async void Window_Load(object sender, EventArgs e)
         {
-            Left = Left - 440;
-            Logger.Log("Welcome to Super CAL: Press any button to begin.");
-            if (McrsCalSrvc.IsRunning())
+            if (Program.Arguments.Length != 0 && Program.Arguments[0] == "0")
             {
-                Logger.Good("CAL Service is running.");
-                StopStartCAL.Text = "Stop CAL";
+                Logger.Log("Initiating phase two...");
+                await WatchDog.WaitForProcessStart();
+                if (McrsCalSrvc.IsRunning())
+                {
+                    await McrsCalSrvc.Stop();
+                    string newName = Misc.GetCalNameFromRegistry();
+                    if(newName != "")
+                    {
+                        await DomainJoin.Join(newName);
+                        Misc.RestartWindows();
+                    }
+                }
             }
             else
             {
-                Logger.Warning("CAL Service is not running.");
-                StopStartCAL.Text = "Start CAL";
+                Left = Left - 440;
+                Logger.Log("Welcome to Super CAL: Press any button to begin.");
+                if (McrsCalSrvc.IsRunning())
+                {
+                    Logger.Good("CAL Service is running.");
+                    StopStartCAL.Text = "Stop CAL";
+                }
+                else
+                {
+                    Logger.Warning("CAL Service is not running.");
+                    StopStartCAL.Text = "Start CAL";
+                }
             }
         }
 
@@ -53,17 +71,37 @@ namespace SuperCAL
 
         private async void ReCAL_Click(object sender, EventArgs e)
         {
+            await DomainJoin.Leave();
+            await Misc.SetAutoLogon();
             await Wipe.Do();
-            await WatchDog.WaitForProcessStart("WIN7CALStart");
-            await WatchDog.WaitForCALBusy("WIN7CALStart");
-            await WatchDog.WaitForCALBusy("WIN7CALStart", true);
-            await WatchDog.WaitForCALBusy("WIN7CALStart");
-            await McrsCalSrvc.Stop();
+            await WatchDog.WaitForProcessStart();
+            if (McrsCalSrvc.IsRunning())
+            {
+                await WatchDog.WaitForCALBusy();
+            }
+            if (McrsCalSrvc.IsRunning())
+            {
+                await WatchDog.WaitForCALBusy(true);
+            }
+            if (McrsCalSrvc.IsRunning())
+            {
+                await WatchDog.WaitForCALBusy();
+            }
+            if (McrsCalSrvc.IsRunning())
+            {
+                await McrsCalSrvc.Stop();
+                Misc.RestartWindows();
+            }
         }
 
         private void ReDownloadCAL_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void LogRTB_DoubleClick(object sender, EventArgs e)
+        {
+            Logger.Log("Super CAL: Written by Dylan Bickerstaff Aug 2018.");
         }
     }
 }

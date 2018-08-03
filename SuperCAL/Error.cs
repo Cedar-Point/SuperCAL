@@ -18,8 +18,14 @@ namespace SuperCAL
             ErrorBox.Text = message;
         }
 
-        private void Ok_Click(object sender, EventArgs e)
+        private void Exit_Click(object sender, EventArgs e)
         {
+            Close();
+        }
+
+        private void Retry_Click(object sender, EventArgs e)
+        {
+            Program.RetryLaunch = true;
             Close();
         }
     }

@@ -43,7 +43,7 @@
             this.ReCAL.Location = new System.Drawing.Point(6, 5);
             this.ReCAL.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.ReCAL.Name = "ReCAL";
-            this.ReCAL.Size = new System.Drawing.Size(110, 66);
+            this.ReCAL.Size = new System.Drawing.Size(110, 69);
             this.ReCAL.TabIndex = 1;
             this.ReCAL.Text = "Re CAL";
             this.ReCAL.UseVisualStyleBackColor = false;
@@ -56,7 +56,7 @@
             this.ReDownloadCAL.Location = new System.Drawing.Point(122, 5);
             this.ReDownloadCAL.Margin = new System.Windows.Forms.Padding(0, 5, 0, 5);
             this.ReDownloadCAL.Name = "ReDownloadCAL";
-            this.ReDownloadCAL.Size = new System.Drawing.Size(122, 66);
+            this.ReDownloadCAL.Size = new System.Drawing.Size(122, 69);
             this.ReDownloadCAL.TabIndex = 2;
             this.ReDownloadCAL.Text = "Re Download";
             this.ReDownloadCAL.UseVisualStyleBackColor = false;
@@ -70,7 +70,7 @@
             this.StopStartCAL.Location = new System.Drawing.Point(250, 5);
             this.StopStartCAL.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.StopStartCAL.Name = "StopStartCAL";
-            this.StopStartCAL.Size = new System.Drawing.Size(110, 66);
+            this.StopStartCAL.Size = new System.Drawing.Size(110, 69);
             this.StopStartCAL.TabIndex = 3;
             this.StopStartCAL.Text = "CAL Srvc Toggle";
             this.StopStartCAL.UseVisualStyleBackColor = false;
@@ -90,7 +90,7 @@
             this.Table.Name = "Table";
             this.Table.RowCount = 1;
             this.Table.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.Table.Size = new System.Drawing.Size(366, 76);
+            this.Table.Size = new System.Drawing.Size(366, 79);
             this.Table.TabIndex = 4;
             // 
             // LogRTB
@@ -105,6 +105,7 @@
             this.LogRTB.Size = new System.Drawing.Size(354, 346);
             this.LogRTB.TabIndex = 5;
             this.LogRTB.Text = "";
+            this.LogRTB.DoubleClick += new System.EventHandler(this.LogRTB_DoubleClick);
             // 
             // Main
             // 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace SuperCAL
 {
@@ -12,10 +13,11 @@ namespace SuperCAL
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
+            Arguments = args;
             bool prePass = true;
             try
             {
@@ -30,6 +32,12 @@ namespace SuperCAL
             {
                 Application.Run(new Main());
             }
+            if(RetryLaunch)
+            {
+                Process.Start(Process.GetCurrentProcess().MainModule.FileName);
+            }
         }
+        public static bool RetryLaunch = false;
+        public static string[] Arguments;
     }
 }

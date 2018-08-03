@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ServiceProcess;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace SuperCAL
 {
@@ -13,6 +14,7 @@ namespace SuperCAL
         public static Button StopStartCAL;
         public static TableLayoutPanel Table;
         public static ServiceController Service = new ServiceController("MICROS CAL Client");
+        private static string imageName = "WIN7CALStart";
         public static bool IsRunning()
         {
             Service.Refresh();
@@ -33,6 +35,22 @@ namespace SuperCAL
             return Task.Run(() => {
                 Service.Stop();
                 Logger.Good("CAL Stopped.");
+                Process[] procs = Process.GetProcessesByName(imageName);
+                if (procs.Length != 0)
+                {
+                    foreach(Process proc in procs)
+                    {
+                        try
+                        {
+                            proc.Kill();
+                            Logger.Warning("Killed: " + proc.ProcessName + ":" + proc.Id.ToString());
+                        }
+                        catch(Exception)
+                        {
+                            Logger.Error("Killing " + proc.ProcessName + ":" + proc.Id.ToString() + " failed. Process may already be ending.");
+                        }
+                    }
+                }
                 StopStartCAL.Invoke(new Action(() => {
                     StopStartCAL.Text = "Start CAL";
                     Table.Enabled = true;
