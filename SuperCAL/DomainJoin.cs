@@ -10,7 +10,7 @@ namespace SuperCAL
         public static string OU = "";
         public static async Task Join(string NewName)
         {
-            Logger.Log("Adding computer to the domain as " + NewName + ": Please wait for credential prompt...");
+            Logger.Log("Adding computer to the domain as " + NewName + ": Please wait...");
             if (NewName == Environment.MachineName)
             {
                 await Misc.RunPowershell("Add-Computer -DomainName '" + DomainName + "' -Force -Options AccountCreate -Credential 'domain\\username' -OUPath '" + OU + "'");
@@ -25,7 +25,7 @@ namespace SuperCAL
         public static async Task Leave()
         {
             Logger.Log("Joining workgroup...");
-            await Misc.RunPowershell("Add-Computer -Force -WorkGroupName WORKGROUP");
+            await Misc.RunPowershell("Add-Computer -Force -Credential 'domain\\username' -WorkGroupName WORKGROUP");
             Logger.Log("Done.");
         }
         private static bool OnDomain()

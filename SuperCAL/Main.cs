@@ -65,11 +65,11 @@ namespace SuperCAL
         private async void ReCAL_Click(object sender, EventArgs e)
         {
             await Misc.InstallPhaseTwo();
+            CenterToScreen();
+            Left = Left - 440;
             await DomainJoin.Leave();
             await Wipe.Do();
             await WatchDog.WaitForProcessStart();
-            CenterToScreen();
-            Left = Left - 440;
             if (McrsCalSrvc.IsRunning())
             {
                 await WatchDog.WaitForCALBusy();
