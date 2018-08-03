@@ -74,6 +74,8 @@ namespace SuperCAL
         private async void ReDownloadCAL_Click(object sender, EventArgs e)
         {
             await Wipe.Do(true);
+            CenterToScreen();
+            Left = Left - 440;
         }
 
         private void LogRTB_DoubleClick(object sender, EventArgs e)
