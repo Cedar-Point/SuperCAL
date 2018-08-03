@@ -13,11 +13,12 @@ namespace SuperCAL
             Logger.Log("Adding computer to the domain as " + NewName + ": Please wait for credential prompt...");
             if (NewName == Environment.MachineName)
             {
-                await Misc.RunPowershell("Add-Computer -DomainName \"" + DomainName + "\" -Force -Options AccountCreate -Credential \"domain\\username\" -OUPath \"" + OU + "\"");
+                await Misc.RunPowershell("Add-Computer -DomainName '" + DomainName + "' -Force -Options AccountCreate -Credential 'domain\\username' -OUPath '" + OU + "'");
             }
             else
             {
-                await Misc.RunPowershell("Add-Computer -DomainName \"" + DomainName + "\" -Force -Options AccountCreate -Credential \"domain\\username\" -OUPath \"" + OU + "\" -NewName \"" + NewName + "\"");
+                Logger.Log("Join: Mismatch.");
+                await Misc.RunPowershell("Add-Computer -DomainName '" + DomainName + "' -Force -Options AccountCreate -Credential 'domain\\username' -OUPath '" + OU + "' -NewName '" + NewName + "'");
             }
             Logger.Log("Done.");
         }
