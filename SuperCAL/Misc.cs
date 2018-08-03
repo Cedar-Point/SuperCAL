@@ -1,83 +1,102 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SuperCAL
 {
     class Misc
     {
-        public static Task SetAutoLogon(bool normalize = false)
+        public static Task<string> GetCalNameFromRegistry()
         {
-            Logger.Log("Setting auto logon for next boot...");
-            return Task.Run(() =>
-            {
-                string username = "cp.admin";
-                string password = "@xQ6u5Gb26A";
-                string fileName = Process.GetCurrentProcess().MainModule.FileName;
-                string WinLogonRoot = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon";
-                
-                RegistryKey WlgReg32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(WinLogonRoot, true);
-                RegistryKey WlgReg64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).OpenSubKey(WinLogonRoot, true);
-                if (normalize)
+            Logger.Log("Getting DeviceID from Micros Registry.");
+            return Task.Run(() => {
+                string MicrosRegRoot = @"SOFTWARE\MICROS\CAL\Config";
+                try
                 {
-                    WlgReg32.SetValue("DefaultDomain", "");
-                    WlgReg64.SetValue("DefaultDomain", "");
-                    WlgReg32.SetValue("DefaultUserName", "");
-                    WlgReg64.SetValue("DefaultUserName", "");
-                    WlgReg32.SetValue("DefaultPassword", "");
-                    WlgReg64.SetValue("DefaultPassword", "");
-                    WlgReg32.SetValue("AutoAdminLogon", "0");
-                    WlgReg64.SetValue("AutoAdminLogon", "0");
-                    WlgReg32.SetValue("Userinit", @"C:\Windows\system32\userinit.exe,");
-                    WlgReg64.SetValue("Userinit", @"C:\Windows\system32\userinit.exe,");
+                    RegistryKey McrsReg32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(MicrosRegRoot, true);
+                    string devId32 = (string)McrsReg32.GetValue("DeviceId");
+                    McrsReg32.Close();
+                    if (devId32 != null)
+                    {
+                        return devId32;
+                    }
                 }
-                else
+                catch (Exception)
                 {
-                    WlgReg32.SetValue("DefaultDomain", ".");
-                    WlgReg64.SetValue("DefaultDomain", ".");
-                    WlgReg32.SetValue("DefaultUserName", username);
-                    WlgReg64.SetValue("DefaultUserName", username);
-                    WlgReg32.SetValue("DefaultPassword", password);
-                    WlgReg64.SetValue("DefaultPassword", password);
-                    WlgReg32.SetValue("AutoAdminLogon", "1");
-                    WlgReg64.SetValue("AutoAdminLogon", "1");
-                    WlgReg32.SetValue("Userinit", fileName + " 0,");
-                    WlgReg64.SetValue("Userinit", fileName + " 0,");
+                    Logger.Warning("Failed to open Micros registry key: 32 Bit.");
                 }
-                WlgReg32.Close();
-                WlgReg64.Close();
-                Logger.Good("Auto logon set.");
+                try
+                {
+                    RegistryKey McrsReg64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).OpenSubKey(MicrosRegRoot, true);
+                    string devId64 = (string)McrsReg64.GetValue("DeviceId");
+                    McrsReg64.Close();
+                    if (devId64 != null)
+                    {
+                        return devId64;
+                    }
+                }
+                catch (Exception)
+                {
+                    Logger.Warning("Failed to open Micros registry key: 64 Bit.");
+                }
+                return "";
             });
-        }
-        public static string GetCalNameFromRegistry()
-        {
-            string MicrosRegRoot = @"SOFTWARE\MICROS\CAL\Config";
-            RegistryKey McrsReg32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(MicrosRegRoot, true);
-            RegistryKey McrsReg64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).OpenSubKey(MicrosRegRoot, true);
-            string devId32 = (string)McrsReg32.GetValue("DeviceId");
-            string devId64 = (string)McrsReg64.GetValue("DeviceId");
-            McrsReg32.Close();
-            McrsReg64.Close();
-            if (devId32 != null)
-            {
-                return devId32;
-            }
-            if (devId64 != null)
-            {
-                return devId32;
-            }
-            return "";
         }
         public static void RestartWindows()
         {
             Logger.Log("Restarting windows...");
-            Process.Start("shutdown.exe", "-r -t 0");
+            Process.Start("shutdown.exe", "/r /t 0");
+        }
+        public static Task RunPowershell(string Command)
+        {
+            return Task.Run(() => {
+                Process ps = new Process();
+                ps.StartInfo.FileName = "powershell.exe";
+                ps.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                ps.StartInfo.Arguments = "-Command " + Command;
+                ps.Start();
+                ps.WaitForExit();
+            });
+        }
+        public static Task RunCMD(string Command)
+        {
+            return Task.Run(() => {
+                Process ps = new Process();
+                ps.StartInfo.FileName = "cmd.exe";
+                ps.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                ps.StartInfo.Arguments = "/C " + Command;
+                ps.Start();
+                ps.WaitForExit();
+            });
+        }
+        public static Task InstallPhaseTwo(bool install = true)
+        {
+            return Task.Run(() => {
+                if(install)
+                {
+                    Directory.CreateDirectory(@"C:\MICROS\SuperCAL");
+                    Logger.Good(@"C:\MICROS\SuperCAL: Created.");
+                    File.WriteAllBytes(@"C:\MICROS\SuperCAL\PsExec.exe", Properties.Resources.PsExec);
+                    Logger.Good(@"C:\MICROS\SuperCAL\PsExec.exe: Copied.");
+                    File.WriteAllBytes(@"C:\MICROS\SuperCAL\SuperCALTask.xml", Properties.Resources.SuperCALTask);
+                    Logger.Good(@"C:\MICROS\SuperCAL\SuperCALTask.xml: Copied.");
+                    File.Copy("SuperCAL.xml", @"C:\MICROS\SuperCAL\SuperCAL.xml", true);
+                    Logger.Good(@"C:\MICROS\SuperCAL\SuperCAL.xml: Copied.");
+                    File.Copy(Process.GetCurrentProcess().MainModule.FileName, @"C:\MICROS\SuperCAL\SuperCAL.exe", true);
+                    Logger.Good(@"C:\MICROS\SuperCAL\SuperCAL.exe: Copied.");
+                    Logger.Log("Creating SuperCAL task...");
+                    RunCMD(@"schtasks.exe /Create /tn SuperCAL /XML C:\MICROS\SuperCAL\SuperCALTask.xml");
+                    Logger.Good("Done.");
+                }
+                else
+                {
+                    Logger.Log("Removing SuperCAL task...");
+                    RunCMD("schtasks.exe /Delete /f /tn SuperCAL");
+                    Logger.Good("Done.");
+                }
+            });
         }
     }
 }

@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace SuperCAL
@@ -34,22 +28,25 @@ namespace SuperCAL
         {
             if (Program.Arguments.Length != 0 && Program.Arguments[0] == "0")
             {
-                Logger.Log("Initiating phase two...");
+                Logger.Log("Phase two: Join domain...");
                 await WatchDog.WaitForProcessStart();
                 if (McrsCalSrvc.IsRunning())
                 {
                     await McrsCalSrvc.Stop();
-                    string newName = Misc.GetCalNameFromRegistry();
+                    string newName = await Misc.GetCalNameFromRegistry();
                     if(newName != "")
                     {
+                        CenterToScreen();
+                        Left = Left - 440;
                         await DomainJoin.Join(newName);
+                        CenterToScreen();
+                        await Misc.InstallPhaseTwo(false);
                         Misc.RestartWindows();
                     }
                 }
             }
             else
             {
-                Left = Left - 440;
                 Logger.Log("Welcome to Super CAL: Press any button to begin.");
                 if (McrsCalSrvc.IsRunning())
                 {
@@ -71,10 +68,12 @@ namespace SuperCAL
 
         private async void ReCAL_Click(object sender, EventArgs e)
         {
+            await Misc.InstallPhaseTwo();
             await DomainJoin.Leave();
-            await Misc.SetAutoLogon();
             await Wipe.Do();
             await WatchDog.WaitForProcessStart();
+            CenterToScreen();
+            Left = Left - 440;
             if (McrsCalSrvc.IsRunning())
             {
                 await WatchDog.WaitForCALBusy();
@@ -92,6 +91,15 @@ namespace SuperCAL
                 await McrsCalSrvc.Stop();
                 Misc.RestartWindows();
             }
+            else
+            {
+                Logger.Error("ReCAL process failed! Cleaning up...");
+                await Misc.InstallPhaseTwo(false);
+                CenterToScreen();
+                Left = Left - 440;
+                await DomainJoin.Join(Environment.MachineName);
+                CenterToScreen();
+            }
         }
 
         private void ReDownloadCAL_Click(object sender, EventArgs e)
@@ -102,6 +110,14 @@ namespace SuperCAL
         private void LogRTB_DoubleClick(object sender, EventArgs e)
         {
             Logger.Log("Super CAL: Written by Dylan Bickerstaff Aug 2018.");
+        }
+
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(e.CloseReason == CloseReason.WindowsShutDown)
+            {
+                Process.Start("shutdown.exe", "/a");
+            }
         }
     }
 }

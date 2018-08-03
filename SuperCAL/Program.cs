@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.IO;
 
 namespace SuperCAL
 {
@@ -30,7 +28,30 @@ namespace SuperCAL
             }
             if(prePass)
             {
-                Application.Run(new Main());
+                try
+                {
+                    if (File.Exists("SuperCAL.xml"))
+                    {
+                        Config.ReadConfig();
+                        Application.Run(new Main());
+                    }
+                    else
+                    {
+                        Config.GenerateConfig();
+                        Application.Run(new Error("A config XML (SuperCAL.xml) was just generated...\n\nPlease take the time to set it up correctly."));
+                    }
+                }
+                catch(Exception e)
+                {
+                    if (e.InnerException != null)
+                    {
+                        Application.Run(new Error(e.Message + "\n\n" + e.InnerException.Message));
+                    }
+                    else
+                    {
+                        Application.Run(new Error(e.Message));
+                    }
+                }
             }
             if(RetryLaunch)
             {

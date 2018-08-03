@@ -49,6 +49,9 @@
   <PropertyGroup>
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>supercal.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -66,6 +69,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config.cs" />
     <Compile Include="DomainJoin.cs" />
     <Compile Include="Error.cs">
       <SubType>Form</SubType>
@@ -100,6 +104,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\app.manifest">
       <SubType>Designer</SubType>
@@ -126,9 +131,18 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\PsExec.exe" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\SuperCAL.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="supercal.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>mkdir U:\Users\dylan.bickerstaff\source\repos\SuperCAL\SuperCAL\bin\Debug\
-copy $(TargetPath) U:\Users\dylan.bickerstaff\source\repos\SuperCAL\SuperCAL\bin\Debug\SuperCAL.exe</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
