@@ -30,16 +30,12 @@ namespace SuperCAL
             {
                 Table.Enabled = false;
                 Logger.Log("Phase two: Join domain...");
-                string newName = await Misc.GetCalNameFromRegistry();
-                if(newName != "")
-                {
-                    CenterToScreen();
-                    Left = Left - 440;
-                    await DomainJoin.Join(newName);
-                    CenterToScreen();
-                    await Misc.InstallPhaseTwo(false);
-                    Misc.RestartWindows();
-                }
+                CenterToScreen();
+                Left = Left - 440;
+                await DomainJoin.Join();
+                CenterToScreen();
+                await Misc.InstallPhaseTwo(false);
+                Misc.RestartWindows();
             }
             else
             {

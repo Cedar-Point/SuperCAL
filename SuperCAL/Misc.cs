@@ -8,42 +8,6 @@ namespace SuperCAL
 {
     class Misc
     {
-        public static Task<string> GetCalNameFromRegistry()
-        {
-            Logger.Log("Getting DeviceID from Micros Registry.");
-            return Task.Run(() => {
-                string MicrosRegRoot = @"SOFTWARE\MICROS\CAL\Config";
-                try
-                {
-                    RegistryKey McrsReg32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(MicrosRegRoot, true);
-                    string devId32 = (string)McrsReg32.GetValue("DeviceId");
-                    McrsReg32.Close();
-                    if (devId32 != null)
-                    {
-                        return devId32;
-                    }
-                }
-                catch (Exception)
-                {
-                    Logger.Warning("Failed to open Micros registry key: 32 Bit.");
-                }
-                try
-                {
-                    RegistryKey McrsReg64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).OpenSubKey(MicrosRegRoot, true);
-                    string devId64 = (string)McrsReg64.GetValue("DeviceId");
-                    McrsReg64.Close();
-                    if (devId64 != null)
-                    {
-                        return devId64;
-                    }
-                }
-                catch (Exception)
-                {
-                    Logger.Warning("Failed to open Micros registry key: 64 Bit.");
-                }
-                return "";
-            });
-        }
         public static void RestartWindows()
         {
             Logger.Log("Restarting windows...");

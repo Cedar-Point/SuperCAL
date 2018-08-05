@@ -9,20 +9,12 @@ namespace SuperCAL
     {
         public static string DomainName = "";
         public static string OU = "";
-        public static async Task Join(string NewName)
+        public static async Task Join()
         {
-            Logger.Log("Adding computer to the domain as " + NewName + ": Please wait...");
+            Logger.Log("Adding computer to the domain as " + Environment.MachineName + ": Please wait...");
             while (!OnDomain())
             {
-                if (NewName == Environment.MachineName)
-                {
-                    await Misc.RunPowershell("Add-Computer -DomainName '" + DomainName + "' -Force -Options AccountCreate -Credential 'domain\\username' -OUPath '" + OU + "'");
-                }
-                else
-                {
-                    Logger.Log("Join: Mismatch.");
-                    await Misc.RunPowershell("Add-Computer -DomainName '" + DomainName + "' -Force -Options AccountCreate -Credential 'domain\\username' -OUPath '" + OU + "' -NewName '" + NewName + "'");
-                }
+                await Misc.RunPowershell("Add-Computer -DomainName '" + DomainName + "' -Force -Options AccountCreate -Credential 'domain\\username' -OUPath '" + OU + "'");
             }
             Logger.Good("Joined.");
         }
