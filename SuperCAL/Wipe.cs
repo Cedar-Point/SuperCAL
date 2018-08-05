@@ -34,6 +34,31 @@ namespace SuperCAL
                 DeleteDirectory(@"C:\Micros\Simphony");
                 RegClear(false);
                 RegClear(true);
+                if(softWipe)
+                {
+                    Logger.Log("Adding HwConfigured value to the CAL registry key...");
+                    try
+                    {
+                        RegistryKey regKey32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(MicrosRegRoot + @"\CAL", true);
+                        regKey32.SetValue("HwConfigured", 1);
+                        regKey32.Close();
+                    }
+                    catch (Exception)
+                    {
+                        Logger.Warning("Failed to set HwConfigured key in the 32 bit hive.");
+                    }
+                    try
+                    {
+                        RegistryKey regKey64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).OpenSubKey(MicrosRegRoot + @"\CAL", true);
+                        regKey64.SetValue("HwConfigured", 1);
+                        regKey64.Close();
+                    }
+                    catch (Exception)
+                    {
+                        Logger.Warning("Failed to set HwConfigured key in the 64 bit hive.");
+                    }
+                    Logger.Good("Done.");
+                }
             });
             await McrsCalSrvc.Start();
         }
