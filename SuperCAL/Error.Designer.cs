@@ -35,9 +35,9 @@
             // 
             // Exit
             // 
-            this.Exit.Location = new System.Drawing.Point(299, 139);
+            this.Exit.Location = new System.Drawing.Point(256, 139);
             this.Exit.Name = "Exit";
-            this.Exit.Size = new System.Drawing.Size(75, 23);
+            this.Exit.Size = new System.Drawing.Size(64, 23);
             this.Exit.TabIndex = 0;
             this.Exit.Text = "Exit";
             this.Exit.UseVisualStyleBackColor = true;
@@ -46,18 +46,18 @@
             // ErrorBox
             // 
             this.ErrorBox.BackColor = System.Drawing.SystemColors.Control;
-            this.ErrorBox.Location = new System.Drawing.Point(12, 12);
+            this.ErrorBox.Location = new System.Drawing.Point(10, 12);
             this.ErrorBox.Name = "ErrorBox";
             this.ErrorBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedHorizontal;
-            this.ErrorBox.Size = new System.Drawing.Size(362, 113);
+            this.ErrorBox.Size = new System.Drawing.Size(311, 113);
             this.ErrorBox.TabIndex = 1;
             this.ErrorBox.Text = "";
             // 
             // Retry
             // 
-            this.Retry.Location = new System.Drawing.Point(218, 139);
+            this.Retry.Location = new System.Drawing.Point(187, 139);
             this.Retry.Name = "Retry";
-            this.Retry.Size = new System.Drawing.Size(75, 23);
+            this.Retry.Size = new System.Drawing.Size(64, 23);
             this.Retry.TabIndex = 2;
             this.Retry.Text = "Retry";
             this.Retry.UseVisualStyleBackColor = true;
@@ -65,15 +65,14 @@
             // 
             // Error
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(386, 174);
+            this.ClientSize = new System.Drawing.Size(331, 174);
             this.ControlBox = false;
             this.Controls.Add(this.Retry);
             this.Controls.Add(this.ErrorBox);
             this.Controls.Add(this.Exit);
             this.Cursor = System.Windows.Forms.Cursors.Default;
-            this.Font = new System.Drawing.Font("MS PGothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Error";
             this.ShowIcon = false;

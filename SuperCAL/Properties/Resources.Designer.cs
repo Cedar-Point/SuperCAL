@@ -73,9 +73,9 @@ namespace SuperCAL.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] netdom_mui {
+        internal static byte[] netdom_exe {
             get {
-                object obj = ResourceManager.GetObject("netdom_mui", resourceCulture);
+                object obj = ResourceManager.GetObject("netdom_exe", resourceCulture);
                 return ((byte[])(obj));
             }
         }

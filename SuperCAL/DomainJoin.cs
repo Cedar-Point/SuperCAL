@@ -11,10 +11,19 @@ namespace SuperCAL
         public static string OU = "";
         public static async Task Join()
         {
+            bool popKeyboard = false;
             Logger.Log("Adding computer to the domain as " + Environment.MachineName + ": Please wait...");
             while (!OnDomain())
             {
+                if(popKeyboard)
+                {
+                    Logger.Log("Starting On Screen Keyboard...");
+                    #pragma warning disable
+                    Misc.RunCMD(@"C:\Windows\System32\osk.exe");
+                    #pragma warning restore
+                }
                 await Misc.RunPowershell("Add-Computer -DomainName '" + DomainName + "' -Force -Options AccountCreate -Credential 'domain\\username' -OUPath '" + OU + "'");
+                popKeyboard = true;
             }
             Logger.Good("Joined.");
         }

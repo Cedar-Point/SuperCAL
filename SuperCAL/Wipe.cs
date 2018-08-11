@@ -57,10 +57,9 @@ namespace SuperCAL
                     {
                         Logger.Warning("Failed to set HwConfigured key in the 64 bit hive.");
                     }
-                    Logger.Good("Done.");
                 }
+                Logger.Good("Done.");
             });
-            await McrsCalSrvc.Start();
         }
         public static void DeleteDirectory(string path)
         {

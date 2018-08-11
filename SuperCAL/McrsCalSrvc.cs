@@ -11,7 +11,6 @@ namespace SuperCAL
         public static Button StopStartCAL;
         public static TableLayoutPanel Table;
         public static ServiceController Service = new ServiceController("MICROS CAL Client");
-        private static string imageName = "WIN7CALStart";
         public static bool IsRunning()
         {
             Service.Refresh();
@@ -32,22 +31,8 @@ namespace SuperCAL
             return Task.Run(() => {
                 Service.Stop();
                 Logger.Good("CAL Stopped.");
-                Process[] procs = Process.GetProcessesByName(imageName);
-                if (procs.Length != 0)
-                {
-                    foreach(Process proc in procs)
-                    {
-                        try
-                        {
-                            proc.Kill();
-                            Logger.Warning("Killed: " + proc.ProcessName + ":" + proc.Id.ToString());
-                        }
-                        catch(Exception)
-                        {
-                            Logger.Error("Killing " + proc.ProcessName + ":" + proc.Id.ToString() + " failed. Process may already be ending.");
-                        }
-                    }
-                }
+                KillProcesses(Process.GetProcessesByName("WIN7CALStart"));
+                KillProcesses(Process.GetProcessesByName("SarOpsWin32"));
                 StopStartCAL.Invoke(new Action(() => {
                     StopStartCAL.Text = "Start CAL";
                     Table.Enabled = true;
@@ -77,6 +62,24 @@ namespace SuperCAL
             else
             {
                 await Start();
+            }
+        }
+        private static void KillProcesses(Process[] processes)
+        {
+            if (processes.Length != 0)
+            {
+                foreach (Process proc in processes)
+                {
+                    try
+                    {
+                        proc.Kill();
+                        Logger.Good("Killed: " + proc.ProcessName + ":" + proc.Id.ToString());
+                    }
+                    catch (Exception)
+                    {
+                        Logger.Warning("Killing " + proc.ProcessName + ":" + proc.Id.ToString() + " failed. Process may already be ending.");
+                    }
+                }
             }
         }
     }

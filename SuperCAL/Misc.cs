@@ -11,13 +11,13 @@ namespace SuperCAL
         public static void RestartWindows()
         {
             Logger.Log("Restarting windows...");
-            Process.Start("shutdown.exe", "/r /t 0");
+            RunCMD("shutdown.exe /r /t 0");
         }
         public static Task RunPowershell(string Command)
         {
             return Task.Run(() => {
                 Process ps = new Process();
-                ps.StartInfo.FileName = "powershell.exe";
+                ps.StartInfo.FileName = System32Path() + @"WindowsPowerShell\v1.0\powershell.exe";
                 ps.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 ps.StartInfo.Arguments = "-Command " + Command;
                 ps.Start();
@@ -28,7 +28,7 @@ namespace SuperCAL
         {
             return Task.Run(() => {
                 Process ps = new Process();
-                ps.StartInfo.FileName = "cmd.exe";
+                ps.StartInfo.FileName = System32Path() + @"cmd.exe";
                 ps.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 ps.StartInfo.Arguments = "/C " + Command;
                 ps.Start();
@@ -46,10 +46,24 @@ namespace SuperCAL
                     Logger.Good(@"C:\MICROS\SuperCAL\PsExec.exe: Copied.");
                     File.WriteAllBytes(@"C:\MICROS\SuperCAL\SuperCALTask.xml", Properties.Resources.SuperCALTask);
                     Logger.Good(@"C:\MICROS\SuperCAL\SuperCALTask.xml: Copied.");
-                    File.Copy("SuperCAL.xml", @"C:\MICROS\SuperCAL\SuperCAL.xml", true);
-                    Logger.Good(@"C:\MICROS\SuperCAL\SuperCAL.xml: Copied.");
-                    File.Copy(Process.GetCurrentProcess().MainModule.FileName, @"C:\MICROS\SuperCAL\SuperCAL.exe", true);
-                    Logger.Good(@"C:\MICROS\SuperCAL\SuperCAL.exe: Copied.");
+                    try
+                    {
+                        File.Copy("SuperCAL.xml", @"C:\MICROS\SuperCAL\SuperCAL.xml", true);
+                        Logger.Good(@"C:\MICROS\SuperCAL\SuperCAL.xml: Copied.");
+                    }
+                    catch(IOException e)
+                    {
+                        Logger.Warning(e.Message);
+                    }
+                    try
+                    {
+                        File.Copy(Process.GetCurrentProcess().MainModule.FileName, @"C:\MICROS\SuperCAL\SuperCAL.exe", true);
+                        Logger.Good(@"C:\MICROS\SuperCAL\SuperCAL.exe: Copied.");
+                    }
+                    catch(IOException e)
+                    {
+                        Logger.Warning(e.Message);
+                    }
                     Logger.Log("Creating SuperCAL task...");
                     RunCMD(@"schtasks.exe /Create /tn SuperCAL /XML C:\MICROS\SuperCAL\SuperCALTask.xml");
                     Logger.Good("Done.");
@@ -65,11 +79,30 @@ namespace SuperCAL
         public static Task InstallNetdom()
         {
             return Task.Run(() => {
-                File.WriteAllBytes(@"C:\Windows\System32\netdom.exe", Properties.Resources.netdom);
-                Logger.Good(@"C:\Windows\System32\netdom.exe: Copied.");
-                File.WriteAllBytes(@"C:\Windows\System32\en-US\netdom.exe.mui", Properties.Resources.netdom_mui);
-                Logger.Good(@"C:\Windows\System32\en-US\netdom.exe.mui: Copied.");
+                try
+                {
+                    File.WriteAllBytes(System32Path() + @"netdom.exe", Properties.Resources.netdom);
+                    Logger.Good(@"C:\Windows\System32\netdom.exe: Copied.");
+                    File.WriteAllBytes(System32Path() + @"en-US\netdom.exe.mui", Properties.Resources.netdom_exe);
+                    Logger.Good(@"C:\Windows\System32\en-US\netdom.exe.mui: Copied.");
+                    Logger.Good("Done.");
+                }
+                catch(UnauthorizedAccessException e)
+                {
+                    Logger.Warning(e.Message);
+                }
             });
+        }
+        public static string System32Path()
+        {
+            if (Environment.Is64BitOperatingSystem)
+            {
+                return @"C:\Windows\Sysnative\";
+            }
+            else
+            {
+                return @"C:\Windows\System32\";
+            }
         }
     }
 }
