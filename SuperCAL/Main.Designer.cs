@@ -59,7 +59,7 @@
             // ReCAL
             // 
             this.ReCAL.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ReCAL.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ReCAL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ReCAL.Location = new System.Drawing.Point(6, 5);
             this.ReCAL.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.ReCAL.Name = "ReCAL";
@@ -72,7 +72,7 @@
             // ReDownloadCAL
             // 
             this.ReDownloadCAL.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ReDownloadCAL.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ReDownloadCAL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ReDownloadCAL.Location = new System.Drawing.Point(124, 5);
             this.ReDownloadCAL.Margin = new System.Windows.Forms.Padding(0, 5, 0, 5);
             this.ReDownloadCAL.Name = "ReDownloadCAL";
@@ -86,7 +86,7 @@
             // 
             this.StopStartCAL.Dock = System.Windows.Forms.DockStyle.Fill;
             this.StopStartCAL.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlLight;
-            this.StopStartCAL.Font = new System.Drawing.Font("Segoe UI Semibold", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.StopStartCAL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StopStartCAL.Location = new System.Drawing.Point(254, 5);
             this.StopStartCAL.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.StopStartCAL.Name = "StopStartCAL";
@@ -196,7 +196,7 @@
             this.WipeCalButton,
             this.WipeKeepCalButton});
             this.WipeMenu.Name = "WipeMenu";
-            this.WipeMenu.Size = new System.Drawing.Size(180, 22);
+            this.WipeMenu.Size = new System.Drawing.Size(158, 22);
             this.WipeMenu.Text = "Wipe...";
             // 
             // WipeCalButton
@@ -219,7 +219,7 @@
             this.AddSrtTaskButton,
             this.RmvStartTaskButton});
             this.PhaseTwoMenu.Name = "PhaseTwoMenu";
-            this.PhaseTwoMenu.Size = new System.Drawing.Size(180, 22);
+            this.PhaseTwoMenu.Size = new System.Drawing.Size(158, 22);
             this.PhaseTwoMenu.Text = "Phase Two...";
             // 
             // AddSrtTaskButton
@@ -242,27 +242,27 @@
             this.JoinDomainButton,
             this.JoinWorkButton});
             this.DomainMenu.Name = "DomainMenu";
-            this.DomainMenu.Size = new System.Drawing.Size(180, 22);
+            this.DomainMenu.Size = new System.Drawing.Size(158, 22);
             this.DomainMenu.Text = "Domain...";
             // 
             // JoinDomainButton
             // 
             this.JoinDomainButton.Name = "JoinDomainButton";
-            this.JoinDomainButton.Size = new System.Drawing.Size(180, 22);
+            this.JoinDomainButton.Size = new System.Drawing.Size(158, 22);
             this.JoinDomainButton.Text = "Join Domain";
             this.JoinDomainButton.Click += new System.EventHandler(this.JoinDomainButton_Click);
             // 
             // JoinWorkButton
             // 
             this.JoinWorkButton.Name = "JoinWorkButton";
-            this.JoinWorkButton.Size = new System.Drawing.Size(180, 22);
+            this.JoinWorkButton.Size = new System.Drawing.Size(158, 22);
             this.JoinWorkButton.Text = "Join Workgroup";
             this.JoinWorkButton.Click += new System.EventHandler(this.JoinWorkButton_Click);
             // 
             // NetDomButton
             // 
             this.NetDomButton.Name = "NetDomButton";
-            this.NetDomButton.Size = new System.Drawing.Size(180, 22);
+            this.NetDomButton.Size = new System.Drawing.Size(158, 22);
             this.NetDomButton.Text = "Install NETDOM";
             this.NetDomButton.Click += new System.EventHandler(this.NetDomButton_Click);
             // 
@@ -281,7 +281,6 @@
             this.Controls.Add(this.LogRTB);
             this.Controls.Add(this.Table);
             this.Controls.Add(this.MenuBar);
-            this.Font = new System.Drawing.Font("Segoe UI", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.MenuBar;
