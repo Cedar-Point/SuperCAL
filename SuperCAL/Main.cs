@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Drawing;
-using System.Drawing.Text;
 
 namespace SuperCAL
 {

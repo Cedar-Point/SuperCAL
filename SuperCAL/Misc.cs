@@ -1,5 +1,4 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -81,11 +80,24 @@ namespace SuperCAL
             return Task.Run(() => {
                 try
                 {
-                    File.WriteAllBytes(System32Path() + @"netdom.exe", Properties.Resources.netdom);
-                    Logger.Good(@"C:\Windows\System32\netdom.exe: Copied.");
-                    File.WriteAllBytes(System32Path() + @"en-US\netdom.exe.mui", Properties.Resources.netdom_exe);
-                    Logger.Good(@"C:\Windows\System32\en-US\netdom.exe.mui: Copied.");
-                    Logger.Good("Done.");
+                    if (Environment.OSVersion.Version.Build >= 10240)
+                    {
+                        Logger.Log("Installing NETDOM for Windows 10...");
+                        File.WriteAllBytes(System32Path() + @"netdom.exe", Properties.Resources.netdom10);
+                        Logger.Good(@"C:\Windows\System32\netdom.exe: Copied.");
+                        File.WriteAllBytes(System32Path() + @"en-US\netdom.exe.mui", Properties.Resources.netdom10_exe);
+                        Logger.Good(@"C:\Windows\System32\en-US\netdom.exe.mui: Copied.");
+                        Logger.Good("Done.");
+                    }
+                    else
+                    {
+                        Logger.Log("Installing NETDOM for Windows 8.1...");
+                        File.WriteAllBytes(System32Path() + @"netdom.exe", Properties.Resources.netdom8_1);
+                        Logger.Good(@"C:\Windows\System32\netdom.exe: Copied.");
+                        File.WriteAllBytes(System32Path() + @"en-US\netdom.exe.mui", Properties.Resources.netdom8_1_exe);
+                        Logger.Good(@"C:\Windows\System32\en-US\netdom.exe.mui: Copied.");
+                        Logger.Good("Done.");
+                    }
                 }
                 catch(UnauthorizedAccessException e)
                 {

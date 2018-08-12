@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("SuperCAL")]
 [assembly: AssemblyDescription("Micros Simphony Super CAL!")]
-[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyConfiguration("Release")]
 [assembly: AssemblyCompany("Cedar Point")]
 [assembly: AssemblyProduct("SuperCAL")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
