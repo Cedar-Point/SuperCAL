@@ -80,23 +80,36 @@ namespace SuperCAL
             return Task.Run(() => {
                 try
                 {
-                    if (Environment.OSVersion.Version.Build >= 10240)
+                    if (Environment.OSVersion.Version.Build >= 10240 && Environment.Is64BitOperatingSystem)
                     {
-                        Logger.Log("Installing NETDOM for Windows 10...");
+                        Logger.Log("Installing NETDOM for Windows 10 x64...");
+                        File.WriteAllBytes(System32Path() + @"netdom.exe", Properties.Resources.netdom1064);
+                        Logger.Good(@"C:\Windows\System32\netdom.exe: Copied.");
+                        File.WriteAllBytes(System32Path() + @"en-US\netdom.exe.mui", Properties.Resources.netdom1064_exe);
+                        Logger.Good(@"C:\Windows\System32\en-US\netdom.exe.mui: Copied.");
+                        Logger.Good("Done.");
+                    }
+                    else if(Environment.OSVersion.Version.Build >= 10240 && !Environment.Is64BitOperatingSystem)
+                    {
+                        Logger.Log("Installing NETDOM for Windows 10 x86...");
                         File.WriteAllBytes(System32Path() + @"netdom.exe", Properties.Resources.netdom10);
                         Logger.Good(@"C:\Windows\System32\netdom.exe: Copied.");
                         File.WriteAllBytes(System32Path() + @"en-US\netdom.exe.mui", Properties.Resources.netdom10_exe);
                         Logger.Good(@"C:\Windows\System32\en-US\netdom.exe.mui: Copied.");
                         Logger.Good("Done.");
                     }
-                    else
+                    else if(!Environment.Is64BitOperatingSystem)
                     {
-                        Logger.Log("Installing NETDOM for Windows 8.1...");
+                        Logger.Log("Installing NETDOM for Windows 8.1 x86...");
                         File.WriteAllBytes(System32Path() + @"netdom.exe", Properties.Resources.netdom8_1);
                         Logger.Good(@"C:\Windows\System32\netdom.exe: Copied.");
                         File.WriteAllBytes(System32Path() + @"en-US\netdom.exe.mui", Properties.Resources.netdom8_1_exe);
                         Logger.Good(@"C:\Windows\System32\en-US\netdom.exe.mui: Copied.");
                         Logger.Good("Done.");
+                    }
+                    else
+                    {
+                        throw new Exception("SuperCAL is not compatible with this version of Windows!");
                     }
                 }
                 catch(UnauthorizedAccessException e)

@@ -83,6 +83,26 @@ namespace SuperCAL.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] netdom1064 {
+            get {
+                object obj = ResourceManager.GetObject("netdom1064", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] netdom1064_exe {
+            get {
+                object obj = ResourceManager.GetObject("netdom1064_exe", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] netdom8_1 {
             get {
                 object obj = ResourceManager.GetObject("netdom8_1", resourceCulture);
