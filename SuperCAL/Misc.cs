@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -7,6 +8,9 @@ namespace SuperCAL
 {
     class Misc
     {
+        public static string AutoLogonUserName = "";
+        public static string AutoLogonPassword = "";
+        public static string AutoLogonADDomain = "";
         public static void RestartWindows()
         {
             Logger.Log("Restarting windows...");
@@ -41,8 +45,6 @@ namespace SuperCAL
                 {
                     Directory.CreateDirectory(@"C:\MICROS\SuperCAL");
                     Logger.Good(@"C:\MICROS\SuperCAL: Created.");
-                    File.WriteAllBytes(@"C:\MICROS\SuperCAL\PsExec.exe", Properties.Resources.PsExec);
-                    Logger.Good(@"C:\MICROS\SuperCAL\PsExec.exe: Copied.");
                     File.WriteAllBytes(@"C:\MICROS\SuperCAL\SuperCALTask.xml", Properties.Resources.SuperCALTask);
                     Logger.Good(@"C:\MICROS\SuperCAL\SuperCALTask.xml: Copied.");
                     try
@@ -128,6 +130,78 @@ namespace SuperCAL
             {
                 return @"C:\Windows\System32\";
             }
+        }
+        public static Task SetAutoLogon(bool enable = true)
+        {
+            return Task.Run(() =>
+            {
+                Logger.Log("Setting the 32Bit AutoLogon REG...");
+                try
+                {
+                    RegistryKey regKey32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", true);
+                    if (enable)
+                    {
+                        regKey32.SetValue("AutoAdminLogon", "1");
+                        Logger.Good("32Bit Reg: AutoAdminLogon: 1");
+                        regKey32.SetValue("DefaultUserName", AutoLogonUserName);
+                        Logger.Good("32Bit Reg: DefaultUserName: " + AutoLogonUserName);
+                        regKey32.SetValue("DefaultPassword", AutoLogonPassword);
+                        Logger.Good("32Bit Reg: DefaultPassword: " + AutoLogonPassword);
+                        regKey32.SetValue("DefaultDomainName", AutoLogonADDomain);
+                        Logger.Good("32Bit Reg: DefaultDomainName: " + AutoLogonADDomain);
+                    }
+                    else
+                    {
+                        regKey32.SetValue("AutoAdminLogon", "0");
+                        Logger.Good("32Bit Reg: AutoAdminLogon: 0");
+                        regKey32.SetValue("DefaultUserName", "");
+                        Logger.Good("32Bit Reg: DefaultUserName: null");
+                        regKey32.SetValue("DefaultPassword", "");
+                        Logger.Good("32Bit Reg: DefaultPassword: null");
+                        regKey32.SetValue("DefaultDomainName", "");
+                        Logger.Good("32Bit Reg: DefaultDomainName: null");
+                    }
+                    regKey32.Close();
+                }
+                catch (Exception)
+                {
+                    Logger.Warning("Failed to modify the WinLogon key in the 32Bit registry.");
+                }
+                Logger.Log("Done.");
+                Logger.Log("Setting the 64Bit AutoLogon REG...");
+                try
+                {
+                    RegistryKey regKey64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", true);
+                    if (enable)
+                    {
+                        regKey64.SetValue("AutoAdminLogon", "1");
+                        Logger.Good("64Bit Reg: AutoAdminLogon: 1");
+                        regKey64.SetValue("DefaultUserName", AutoLogonUserName);
+                        Logger.Good("64Bit Reg: DefaultUserName: " + AutoLogonUserName);
+                        regKey64.SetValue("DefaultPassword", AutoLogonPassword);
+                        Logger.Good("64Bit Reg: DefaultPassword: " + AutoLogonPassword);
+                        regKey64.SetValue("DefaultDomainName", AutoLogonADDomain);
+                        Logger.Good("64Bit Reg: DefaultDomainName: " + AutoLogonADDomain);
+                    }
+                    else
+                    {
+                        regKey64.SetValue("AutoAdminLogon", "0");
+                        Logger.Good("64Bit Reg: AutoAdminLogon: 0");
+                        regKey64.SetValue("DefaultUserName", "");
+                        Logger.Good("64Bit Reg: DefaultUserName: null");
+                        regKey64.SetValue("DefaultPassword", "");
+                        Logger.Good("64Bit Reg: DefaultPassword: null");
+                        regKey64.SetValue("DefaultDomainName", "");
+                        Logger.Good("64Bit Reg: DefaultDomainName: null");
+                    }
+                    regKey64.Close();
+                }
+                catch (Exception)
+                {
+                    Logger.Warning("Failed to modify the WinLogon key in the 64Bit registry.");
+                }
+                Logger.Log("Done.");
+            });
         }
     }
 }

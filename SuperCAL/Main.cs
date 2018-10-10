@@ -33,6 +33,7 @@ namespace SuperCAL
                 Logger.Log("Phase two: Join domain...");
                 await DomainJoin.Join();
                 await Misc.InstallPhaseTwo(false);
+                await Misc.SetAutoLogon(true);
                 Misc.RestartWindows();
             }
             else
@@ -60,6 +61,7 @@ namespace SuperCAL
         {
             await Misc.InstallPhaseTwo();
             await DomainJoin.Leave();
+            await Misc.SetAutoLogon(false);
             await Wipe.Do();
             CenterToScreen();
             Left = Left - 440;
@@ -135,6 +137,21 @@ namespace SuperCAL
         private async void NetDomButton_Click(object sender, EventArgs e)
         {
             await Misc.InstallNetdom();
+        }
+
+        private void RebootWindows_Click(object sender, EventArgs e)
+        {
+            Misc.RestartWindows();
+        }
+
+        private async void DisableAutoLogon_Click(object sender, EventArgs e)
+        {
+            await Misc.SetAutoLogon(false);
+        }
+
+        private async void EnableAutoLogon_Click(object sender, EventArgs e)
+        {
+            await Misc.SetAutoLogon(true);
         }
     }
 }

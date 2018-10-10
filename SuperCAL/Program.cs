@@ -23,22 +23,29 @@ namespace SuperCAL
             }
             catch (InvalidOperationException e)
             {
-                Application.Run(new Error(e.Message + "\n\nTry and install Micros CAL next time maybe?"));
+                Application.Run(new Error(e.Message + "\n\nTry and install Micros CAL next time maybe?\n\nSuper CAL: " + Application.ProductVersion));
                 prePass = false;
             }
-            if(prePass)
+            if (prePass)
             {
                 try
                 {
                     if (File.Exists("SuperCAL.xml"))
                     {
-                        Config.ReadConfig();
-                        Application.Run(new Main());
+                        if (Arguments.Length != 0 && Arguments[0] == "1")
+                        {
+                            BelowAverage.SecureDesktop.StartProcess(Application.ExecutablePath + " 0");
+                        }
+                        else
+                        {
+                            Config.ReadConfig();
+                            Application.Run(new Main());
+                        }
                     }
                     else
                     {
                         Config.GenerateConfig();
-                        Application.Run(new Error("A config XML (SuperCAL.xml) was just generated...\n\nPlease take the time to set it up correctly."));
+                        Application.Run(new Error("A config XML (SuperCAL.xml) was just generated...\n\nPlease take the time to set it up correctly.\n\nSuper CAL: " + Application.ProductVersion));
                     }
                 }
                 catch(Exception e)
@@ -53,7 +60,7 @@ namespace SuperCAL
                     }
                 }
             }
-            if(RetryLaunch)
+            if (RetryLaunch)
             {
                 Process.Start(Process.GetCurrentProcess().MainModule.FileName);
             }

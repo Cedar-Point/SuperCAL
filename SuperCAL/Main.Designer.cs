@@ -51,7 +51,11 @@
             this.JoinDomainButton = new System.Windows.Forms.ToolStripMenuItem();
             this.JoinWorkButton = new System.Windows.Forms.ToolStripMenuItem();
             this.NetDomButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.RebootWindows = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.AutoLogon = new System.Windows.Forms.ToolStripMenuItem();
+            this.DisableAutoLogon = new System.Windows.Forms.ToolStripMenuItem();
+            this.EnableAutoLogon = new System.Windows.Forms.ToolStripMenuItem();
             this.Table.SuspendLayout();
             this.MenuBar.SuspendLayout();
             this.SuspendLayout();
@@ -106,7 +110,7 @@
             this.Table.Controls.Add(this.StopStartCAL, 2, 0);
             this.Table.Controls.Add(this.ReDownloadCAL, 1, 0);
             this.Table.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Table.Location = new System.Drawing.Point(0, 0);
+            this.Table.Location = new System.Drawing.Point(0, 24);
             this.Table.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Table.Name = "Table";
             this.Table.RowCount = 1;
@@ -185,7 +189,9 @@
             this.WipeMenu,
             this.PhaseTwoMenu,
             this.DomainMenu,
-            this.NetDomButton});
+            this.AutoLogon,
+            this.NetDomButton,
+            this.RebootWindows});
             this.ActionsButton.Name = "ActionsButton";
             this.ActionsButton.Size = new System.Drawing.Size(59, 20);
             this.ActionsButton.Text = "Actions";
@@ -196,7 +202,7 @@
             this.WipeCalButton,
             this.WipeKeepCalButton});
             this.WipeMenu.Name = "WipeMenu";
-            this.WipeMenu.Size = new System.Drawing.Size(158, 22);
+            this.WipeMenu.Size = new System.Drawing.Size(180, 22);
             this.WipeMenu.Text = "Wipe...";
             // 
             // WipeCalButton
@@ -219,7 +225,7 @@
             this.AddSrtTaskButton,
             this.RmvStartTaskButton});
             this.PhaseTwoMenu.Name = "PhaseTwoMenu";
-            this.PhaseTwoMenu.Size = new System.Drawing.Size(158, 22);
+            this.PhaseTwoMenu.Size = new System.Drawing.Size(180, 22);
             this.PhaseTwoMenu.Text = "Phase Two...";
             // 
             // AddSrtTaskButton
@@ -242,7 +248,7 @@
             this.JoinDomainButton,
             this.JoinWorkButton});
             this.DomainMenu.Name = "DomainMenu";
-            this.DomainMenu.Size = new System.Drawing.Size(158, 22);
+            this.DomainMenu.Size = new System.Drawing.Size(180, 22);
             this.DomainMenu.Text = "Domain...";
             // 
             // JoinDomainButton
@@ -262,9 +268,16 @@
             // NetDomButton
             // 
             this.NetDomButton.Name = "NetDomButton";
-            this.NetDomButton.Size = new System.Drawing.Size(158, 22);
+            this.NetDomButton.Size = new System.Drawing.Size(180, 22);
             this.NetDomButton.Text = "Install NETDOM";
             this.NetDomButton.Click += new System.EventHandler(this.NetDomButton_Click);
+            // 
+            // RebootWindows
+            // 
+            this.RebootWindows.Name = "RebootWindows";
+            this.RebootWindows.Size = new System.Drawing.Size(180, 22);
+            this.RebootWindows.Text = "Restart Windows";
+            this.RebootWindows.Click += new System.EventHandler(this.RebootWindows_Click);
             // 
             // AboutButton
             // 
@@ -273,6 +286,29 @@
             this.AboutButton.Size = new System.Drawing.Size(52, 20);
             this.AboutButton.Text = "About";
             this.AboutButton.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // AutoLogon
+            // 
+            this.AutoLogon.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.EnableAutoLogon,
+            this.DisableAutoLogon});
+            this.AutoLogon.Name = "AutoLogon";
+            this.AutoLogon.Size = new System.Drawing.Size(180, 22);
+            this.AutoLogon.Text = "Auto Logon...";
+            // 
+            // DisableAutoLogon
+            // 
+            this.DisableAutoLogon.Name = "DisableAutoLogon";
+            this.DisableAutoLogon.Size = new System.Drawing.Size(180, 22);
+            this.DisableAutoLogon.Text = "Disable Auto Logon";
+            this.DisableAutoLogon.Click += new System.EventHandler(this.DisableAutoLogon_Click);
+            // 
+            // EnableAutoLogon
+            // 
+            this.EnableAutoLogon.Name = "EnableAutoLogon";
+            this.EnableAutoLogon.Size = new System.Drawing.Size(180, 22);
+            this.EnableAutoLogon.Text = "Enable Auto Logon";
+            this.EnableAutoLogon.Click += new System.EventHandler(this.EnableAutoLogon_Click);
             // 
             // Main
             // 
@@ -324,6 +360,10 @@
         private System.Windows.Forms.ToolStripMenuItem JoinDomainButton;
         private System.Windows.Forms.ToolStripMenuItem JoinWorkButton;
         private System.Windows.Forms.ToolStripMenuItem NetDomButton;
+        private System.Windows.Forms.ToolStripMenuItem RebootWindows;
+        private System.Windows.Forms.ToolStripMenuItem AutoLogon;
+        private System.Windows.Forms.ToolStripMenuItem DisableAutoLogon;
+        private System.Windows.Forms.ToolStripMenuItem EnableAutoLogon;
     }
 }
 
