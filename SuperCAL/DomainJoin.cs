@@ -9,11 +9,12 @@ namespace SuperCAL
     {
         public static string DomainName = "";
         public static string OU = "";
-        public static async Task Join()
+        public static async Task<bool> Join()
         {
             bool popKeyboard = false;
-            Logger.Log("Adding computer to the domain as " + Environment.MachineName + ": Please wait...");
-            while (!OnDomain())
+            Logger.Log("Adding computer to domain (" + DomainName + ") in container (" + OU + ")  as (" + Environment.MachineName + "): Please wait...");
+            int tries = 2;
+            while (!OnDomain() && tries-- != 0)
             {
                 if(popKeyboard)
                 {
@@ -25,7 +26,16 @@ namespace SuperCAL
                 await Misc.RunPowershell("Add-Computer -DomainName '" + DomainName + "' -Force -Options AccountCreate -Credential 'domain\\username' -OUPath '" + OU + "'");
                 popKeyboard = true;
             }
-            Logger.Good("Joined.");
+            if(OnDomain())
+            {
+                Logger.Good("Joined.");
+                return true;
+            }
+            else
+            {
+                Logger.Error("Failed to join domain! Too many failed attempts!");
+                return false;
+            }
         }
         public static async Task Leave()
         {

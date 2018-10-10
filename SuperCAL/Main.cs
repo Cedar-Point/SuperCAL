@@ -31,10 +31,12 @@ namespace SuperCAL
             {
                 Table.Enabled = false;
                 Logger.Log("Phase two: Join domain...");
-                await DomainJoin.Join();
-                await Misc.InstallPhaseTwo(false);
-                await Misc.SetAutoLogon(true);
-                Misc.RestartWindows();
+                if(await DomainJoin.Join())
+                {
+                    await Misc.InstallPhaseTwo(false);
+                    await Misc.SetAutoLogon(true);
+                    Misc.RestartWindows();
+                }
             }
             else
             {
