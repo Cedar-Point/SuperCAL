@@ -81,9 +81,18 @@ namespace SuperCAL
 
         private void LogRTB_DoubleClick(object sender, EventArgs e)
         {
-            LogRTB.Location = new Point(LogRTB.Location.X, 105);
-            LogRTB.Height -= 25;
-            MenuBar.Visible = true;
+            if(MenuBar.Visible)
+            {
+                LogRTB.Location = new Point(LogRTB.Location.X, 80);
+                LogRTB.Height += 25;
+                MenuBar.Visible = false;
+            }
+            else
+            {
+                LogRTB.Location = new Point(LogRTB.Location.X, 105);
+                LogRTB.Height -= 25;
+                MenuBar.Visible = true;
+            }
         }
 
         private void TaskMgrButton_Click(object sender, EventArgs e)
