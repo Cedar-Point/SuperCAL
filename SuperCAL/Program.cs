@@ -36,6 +36,10 @@ namespace SuperCAL
                         {
                             BelowAverage.SecureDesktop.StartProcess(Application.ExecutablePath + " 0");
                         }
+                        else if (Arguments.Length != 0 && Arguments[0] == "2")
+                        {
+                            BelowAverage.SecureDesktop.StartProcess(Application.ExecutablePath + " 3");
+                        }
                         else
                         {
                             Config.ReadConfig();

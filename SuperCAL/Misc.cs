@@ -38,14 +38,14 @@ namespace SuperCAL
                 ps.WaitForExit();
             });
         }
-        public static Task InstallPhaseTwo(bool install = true)
+        public static Task InstallScheduledTask(byte[] resource = null)
         {
             return Task.Run(() => {
-                if (install)
+                if (resource != null)
                 {
                     Directory.CreateDirectory(@"C:\MICROS\SuperCAL");
                     Logger.Good(@"C:\MICROS\SuperCAL: Created.");
-                    File.WriteAllBytes(@"C:\MICROS\SuperCAL\SuperCALTask.xml", Properties.Resources.SuperCALTask);
+                    File.WriteAllBytes(@"C:\MICROS\SuperCAL\SuperCALTask.xml", resource);
                     Logger.Good(@"C:\MICROS\SuperCAL\SuperCALTask.xml: Copied.");
                     try
                     {
@@ -73,6 +73,7 @@ namespace SuperCAL
                 {
                     Logger.Log("Removing SuperCAL task...");
                     RunCMD("schtasks.exe /Delete /f /tn SuperCAL");
+                    File.Delete(@"C:\MICROS\SuperCAL\SuperCALTask.xml");
                     Logger.Good("Done.");
                 }
             });
@@ -202,6 +203,49 @@ namespace SuperCAL
                 }
                 Logger.Log("Done.");
             });
+        }
+        public static bool IsAutoLogonSet()
+        {
+            Logger.Log("Checking AutoLogon registry key 32Bit...");
+            bool logonIsSet = false;
+            try
+            {
+                RegistryKey regKey32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32).OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", true);
+                object defaultUsername = regKey32.GetValue("DefaultUsername");
+                if (defaultUsername != null && (string)defaultUsername != "")
+                {
+                    logonIsSet = true;
+                    Logger.Good("32Bit AutoLogon is set.");
+                }
+                else
+                {
+                    Logger.Warning("32Bit AutoLogon is not set.");
+                }
+            }
+            catch (Exception)
+            {
+                Logger.Error("Failed to check the AutoLogon registry 32Bit.");
+            }
+            Logger.Log("Checking AutoLogon registry key 64Bit...");
+            try
+            {
+                RegistryKey regKey64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64).OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", true);
+                object defaultUsername = regKey64.GetValue("DefaultUsername");
+                if (defaultUsername != null && (string)defaultUsername != "")
+                {
+                    logonIsSet = true;
+                    Logger.Good("64Bit AutoLogon is set.");
+                }
+                else
+                {
+                    Logger.Warning("64Bit AutoLogon is not set.");
+                }
+            }
+            catch (Exception)
+            {
+                Logger.Error("Failed to check the AutoLogon registry 64Bit.");
+            }
+            return logonIsSet;
         }
     }
 }

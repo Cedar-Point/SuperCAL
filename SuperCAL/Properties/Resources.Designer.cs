@@ -123,9 +123,19 @@ namespace SuperCAL.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] SuperCALTask {
+        internal static byte[] SuperCALPhaseThree {
             get {
-                object obj = ResourceManager.GetObject("SuperCALTask", resourceCulture);
+                object obj = ResourceManager.GetObject("SuperCALPhaseThree", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] SuperCALPhaseTwo {
+            get {
+                object obj = ResourceManager.GetObject("SuperCALPhaseTwo", resourceCulture);
                 return ((byte[])(obj));
             }
         }

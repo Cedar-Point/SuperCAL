@@ -13,7 +13,7 @@ namespace SuperCAL
         {
             bool popKeyboard = false;
             Logger.Log("Adding computer to domain (" + DomainName + ") in container (" + OU + ")  as (" + Environment.MachineName + "): Please wait...");
-            int tries = 2;
+            int tries = 4;
             while (!OnDomain() && tries-- != 0)
             {
                 if(popKeyboard)

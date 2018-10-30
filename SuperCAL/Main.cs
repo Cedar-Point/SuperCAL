@@ -33,8 +33,26 @@ namespace SuperCAL
                 Logger.Log("Phase two: Join domain...");
                 if(await DomainJoin.Join())
                 {
-                    await Misc.InstallPhaseTwo(false);
+                    await Misc.InstallScheduledTask(null);
+                    await Misc.InstallScheduledTask(Properties.Resources.SuperCALPhaseThree);
                     await Misc.SetAutoLogon(true);
+                    Misc.RestartWindows();
+                }
+            }
+            else if(Program.Arguments.Length != 0 && Program.Arguments[0] == "3")
+            {
+                Table.Enabled = false;
+                Logger.Log("Phase three: Checking for auto-logon...");
+                if(Misc.IsAutoLogonSet())
+                {
+                    Logger.Log("AutoLogon found! Removing scheduled task...");
+                    await Misc.InstallScheduledTask(null);
+                    Close();
+                }
+                else
+                {
+                    Logger.Warning("AutoLogon not set! Requesting GPUPDATE to run synchronously on next boot...");
+                    await Misc.RunCMD("gpupdate.exe /sync");
                     Misc.RestartWindows();
                 }
             }
@@ -61,7 +79,7 @@ namespace SuperCAL
 
         private async void ReCAL_Click(object sender, EventArgs e)
         {
-            await Misc.InstallPhaseTwo();
+            await Misc.InstallScheduledTask(Properties.Resources.SuperCALPhaseTwo);
             await DomainJoin.Leave();
             await Misc.SetAutoLogon(false);
             await Wipe.Do();
@@ -78,7 +96,7 @@ namespace SuperCAL
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Logger.Log("Super CAL V" + Application.ProductVersion + ", by Dylan Bickerstaff Aug 2018.");
+            Logger.Log("Super CAL V" + Application.ProductVersion + ", by Dylan Bickerstaff.");
         }
 
         private void LogRTB_DoubleClick(object sender, EventArgs e)
@@ -127,12 +145,12 @@ namespace SuperCAL
 
         private async void AddSrtTaskButton_Click(object sender, EventArgs e)
         {
-            await Misc.InstallPhaseTwo();
+            await Misc.InstallScheduledTask(Properties.Resources.SuperCALPhaseTwo);
         }
 
         private async void RmvStartTaskButton_Click(object sender, EventArgs e)
         {
-            await Misc.InstallPhaseTwo(false);
+            await Misc.InstallScheduledTask(null);
         }
 
         private async void JoinDomainButton_Click(object sender, EventArgs e)
@@ -163,6 +181,16 @@ namespace SuperCAL
         private async void EnableAutoLogon_Click(object sender, EventArgs e)
         {
             await Misc.SetAutoLogon(true);
+        }
+
+        private async void AddStartupTaskP2_Click(object sender, EventArgs e)
+        {
+            await Misc.InstallScheduledTask(Properties.Resources.SuperCALPhaseThree);
+        }
+
+        private async void RemoveStartupTaskP2_Click(object sender, EventArgs e)
+        {
+            await Misc.InstallScheduledTask(null);
         }
     }
 }

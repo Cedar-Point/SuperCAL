@@ -50,12 +50,15 @@
             this.DomainMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.JoinDomainButton = new System.Windows.Forms.ToolStripMenuItem();
             this.JoinWorkButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.AutoLogon = new System.Windows.Forms.ToolStripMenuItem();
+            this.EnableAutoLogon = new System.Windows.Forms.ToolStripMenuItem();
+            this.DisableAutoLogon = new System.Windows.Forms.ToolStripMenuItem();
             this.NetDomButton = new System.Windows.Forms.ToolStripMenuItem();
             this.RebootWindows = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.AutoLogon = new System.Windows.Forms.ToolStripMenuItem();
-            this.DisableAutoLogon = new System.Windows.Forms.ToolStripMenuItem();
-            this.EnableAutoLogon = new System.Windows.Forms.ToolStripMenuItem();
+            this.PhaseThreeMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.AddStartupTaskP2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.RemoveStartupTaskP2 = new System.Windows.Forms.ToolStripMenuItem();
             this.Table.SuspendLayout();
             this.MenuBar.SuspendLayout();
             this.SuspendLayout();
@@ -188,6 +191,7 @@
             this.ActionsButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.WipeMenu,
             this.PhaseTwoMenu,
+            this.PhaseThreeMenu,
             this.DomainMenu,
             this.AutoLogon,
             this.NetDomButton,
@@ -202,7 +206,7 @@
             this.WipeCalButton,
             this.WipeKeepCalButton});
             this.WipeMenu.Name = "WipeMenu";
-            this.WipeMenu.Size = new System.Drawing.Size(180, 22);
+            this.WipeMenu.Size = new System.Drawing.Size(228, 22);
             this.WipeMenu.Text = "Wipe...";
             // 
             // WipeCalButton
@@ -225,8 +229,8 @@
             this.AddSrtTaskButton,
             this.RmvStartTaskButton});
             this.PhaseTwoMenu.Name = "PhaseTwoMenu";
-            this.PhaseTwoMenu.Size = new System.Drawing.Size(180, 22);
-            this.PhaseTwoMenu.Text = "Phase Two...";
+            this.PhaseTwoMenu.Size = new System.Drawing.Size(228, 22);
+            this.PhaseTwoMenu.Text = "Phase Two (Domain Join)...";
             // 
             // AddSrtTaskButton
             // 
@@ -248,7 +252,7 @@
             this.JoinDomainButton,
             this.JoinWorkButton});
             this.DomainMenu.Name = "DomainMenu";
-            this.DomainMenu.Size = new System.Drawing.Size(180, 22);
+            this.DomainMenu.Size = new System.Drawing.Size(228, 22);
             this.DomainMenu.Text = "Domain...";
             // 
             // JoinDomainButton
@@ -265,17 +269,40 @@
             this.JoinWorkButton.Text = "Join Workgroup";
             this.JoinWorkButton.Click += new System.EventHandler(this.JoinWorkButton_Click);
             // 
+            // AutoLogon
+            // 
+            this.AutoLogon.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.EnableAutoLogon,
+            this.DisableAutoLogon});
+            this.AutoLogon.Name = "AutoLogon";
+            this.AutoLogon.Size = new System.Drawing.Size(228, 22);
+            this.AutoLogon.Text = "Auto Logon...";
+            // 
+            // EnableAutoLogon
+            // 
+            this.EnableAutoLogon.Name = "EnableAutoLogon";
+            this.EnableAutoLogon.Size = new System.Drawing.Size(178, 22);
+            this.EnableAutoLogon.Text = "Enable Auto Logon";
+            this.EnableAutoLogon.Click += new System.EventHandler(this.EnableAutoLogon_Click);
+            // 
+            // DisableAutoLogon
+            // 
+            this.DisableAutoLogon.Name = "DisableAutoLogon";
+            this.DisableAutoLogon.Size = new System.Drawing.Size(178, 22);
+            this.DisableAutoLogon.Text = "Disable Auto Logon";
+            this.DisableAutoLogon.Click += new System.EventHandler(this.DisableAutoLogon_Click);
+            // 
             // NetDomButton
             // 
             this.NetDomButton.Name = "NetDomButton";
-            this.NetDomButton.Size = new System.Drawing.Size(180, 22);
+            this.NetDomButton.Size = new System.Drawing.Size(228, 22);
             this.NetDomButton.Text = "Install NETDOM";
             this.NetDomButton.Click += new System.EventHandler(this.NetDomButton_Click);
             // 
             // RebootWindows
             // 
             this.RebootWindows.Name = "RebootWindows";
-            this.RebootWindows.Size = new System.Drawing.Size(180, 22);
+            this.RebootWindows.Size = new System.Drawing.Size(228, 22);
             this.RebootWindows.Text = "Restart Windows";
             this.RebootWindows.Click += new System.EventHandler(this.RebootWindows_Click);
             // 
@@ -287,28 +314,28 @@
             this.AboutButton.Text = "About";
             this.AboutButton.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
-            // AutoLogon
+            // PhaseThreeMenu
             // 
-            this.AutoLogon.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.EnableAutoLogon,
-            this.DisableAutoLogon});
-            this.AutoLogon.Name = "AutoLogon";
-            this.AutoLogon.Size = new System.Drawing.Size(180, 22);
-            this.AutoLogon.Text = "Auto Logon...";
+            this.PhaseThreeMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AddStartupTaskP2,
+            this.RemoveStartupTaskP2});
+            this.PhaseThreeMenu.Name = "PhaseThreeMenu";
+            this.PhaseThreeMenu.Size = new System.Drawing.Size(228, 22);
+            this.PhaseThreeMenu.Text = "Phase Three (Logon Check)...";
             // 
-            // DisableAutoLogon
+            // AddStartupTaskP2
             // 
-            this.DisableAutoLogon.Name = "DisableAutoLogon";
-            this.DisableAutoLogon.Size = new System.Drawing.Size(180, 22);
-            this.DisableAutoLogon.Text = "Disable Auto Logon";
-            this.DisableAutoLogon.Click += new System.EventHandler(this.DisableAutoLogon_Click);
+            this.AddStartupTaskP2.Name = "AddStartupTaskP2";
+            this.AddStartupTaskP2.Size = new System.Drawing.Size(184, 22);
+            this.AddStartupTaskP2.Text = "Add Startup Task";
+            this.AddStartupTaskP2.Click += new System.EventHandler(this.AddStartupTaskP2_Click);
             // 
-            // EnableAutoLogon
+            // RemoveStartupTaskP2
             // 
-            this.EnableAutoLogon.Name = "EnableAutoLogon";
-            this.EnableAutoLogon.Size = new System.Drawing.Size(180, 22);
-            this.EnableAutoLogon.Text = "Enable Auto Logon";
-            this.EnableAutoLogon.Click += new System.EventHandler(this.EnableAutoLogon_Click);
+            this.RemoveStartupTaskP2.Name = "RemoveStartupTaskP2";
+            this.RemoveStartupTaskP2.Size = new System.Drawing.Size(184, 22);
+            this.RemoveStartupTaskP2.Text = "Remove Startup Task";
+            this.RemoveStartupTaskP2.Click += new System.EventHandler(this.RemoveStartupTaskP2_Click);
             // 
             // Main
             // 
@@ -364,6 +391,9 @@
         private System.Windows.Forms.ToolStripMenuItem AutoLogon;
         private System.Windows.Forms.ToolStripMenuItem DisableAutoLogon;
         private System.Windows.Forms.ToolStripMenuItem EnableAutoLogon;
+        private System.Windows.Forms.ToolStripMenuItem PhaseThreeMenu;
+        private System.Windows.Forms.ToolStripMenuItem AddStartupTaskP2;
+        private System.Windows.Forms.ToolStripMenuItem RemoveStartupTaskP2;
     }
 }
 
