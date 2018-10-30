@@ -47,11 +47,14 @@ namespace SuperCAL
                 {
                     Logger.Log("AutoLogon found! Removing scheduled task...");
                     await Misc.InstallScheduledTask(null);
-                    Close();
+                    Misc.RestartWindows();
                 }
                 else
                 {
-                    Logger.Warning("AutoLogon not set! Requesting GPUPDATE to run synchronously on next boot...");
+                    Logger.Warning("AutoLogon not set!");
+                    Logger.Log("Running: gpupdate /force");
+                    await Misc.RunCMD("gpupdate.exe /force");
+                    Logger.Log("Running: gpupdate /sync");
                     await Misc.RunCMD("gpupdate.exe /sync");
                     Misc.RestartWindows();
                 }
