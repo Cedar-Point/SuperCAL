@@ -34,8 +34,11 @@ namespace SuperCAL
                 if(await DomainJoin.Join())
                 {
                     await Misc.InstallScheduledTask(null);
-                    await Misc.InstallScheduledTask(Properties.Resources.SuperCALPhaseThree);
                     await Misc.SetAutoLogon(true);
+                    if (!Misc.IsAutoLogonSet())
+                    {
+                        await Misc.InstallScheduledTask(Properties.Resources.SuperCALPhaseThree);
+                    }
                     Misc.RestartWindows();
                 }
             }
@@ -86,15 +89,17 @@ namespace SuperCAL
             await DomainJoin.Leave();
             await Misc.SetAutoLogon(false);
             await Wipe.Do();
+            await McrsCalSrvc.Start();
             CenterToScreen();
             Left = Left - 440;
-            await McrsCalSrvc.Start();
         }
 
         private async void ReDownloadCAL_Click(object sender, EventArgs e)
         {
             await Wipe.Do(true);
             await McrsCalSrvc.Start();
+            CenterToScreen();
+            Left = Left - 440;
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
