@@ -66,7 +66,7 @@ namespace SuperCAL
                         Logger.Warning(e.Message);
                     }
                     Logger.Log("Creating SuperCAL task...");
-                    RunCMD(@"schtasks.exe /Create /F /TN SuperCAL /XML C:\MICROS\SuperCAL\SuperCALTask" + taskSuffix + ".xml");
+                    RunCMD(@"schtasks.exe /Create /F /TN SuperCAL" + taskSuffix + @" /XML C:\MICROS\SuperCAL\SuperCALTask" + taskSuffix + ".xml");
                     Logger.Good("Done.");
                 }
                 else
