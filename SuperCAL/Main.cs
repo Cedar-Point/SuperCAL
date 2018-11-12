@@ -33,11 +33,11 @@ namespace SuperCAL
                 Logger.Log("Phase two: Join domain...");
                 if(await DomainJoin.Join())
                 {
-                    await Misc.InstallScheduledTask(null);
+                    await Misc.InstallScheduledTask(null, "2");
                     await Misc.SetAutoLogon(true);
-                    if (!Misc.IsAutoLogonSet())
+                    if(!Misc.IsAutoLogonSet())
                     {
-                        await Misc.InstallScheduledTask(Properties.Resources.SuperCALPhaseThree);
+                        await Misc.InstallScheduledTask(Properties.Resources.SuperCALPhaseThree, "3");
                     }
                     Misc.RestartWindows();
                 }
@@ -49,7 +49,7 @@ namespace SuperCAL
                 if(Misc.IsAutoLogonSet())
                 {
                     Logger.Log("AutoLogon found! Removing scheduled task...");
-                    await Misc.InstallScheduledTask(null);
+                    await Misc.InstallScheduledTask(null, "3");
                     Misc.RestartWindows();
                 }
                 else
@@ -59,6 +59,11 @@ namespace SuperCAL
                     await Misc.RunCMD("gpupdate.exe /force");
                     Logger.Log("Running: gpupdate /sync");
                     await Misc.RunCMD("gpupdate.exe /sync");
+                    if(Misc.IsAutoLogonSet())
+                    {
+                        Logger.Log("AutoLogon found! Removing scheduled task...");
+                        await Misc.InstallScheduledTask(null, "3");
+                    }
                     Misc.RestartWindows();
                 }
             }
@@ -85,7 +90,7 @@ namespace SuperCAL
 
         private async void ReCAL_Click(object sender, EventArgs e)
         {
-            await Misc.InstallScheduledTask(Properties.Resources.SuperCALPhaseTwo);
+            await Misc.InstallScheduledTask(Properties.Resources.SuperCALPhaseTwo, "2");
             await DomainJoin.Leave();
             await Misc.SetAutoLogon(false);
             await Wipe.Do();
@@ -153,12 +158,12 @@ namespace SuperCAL
 
         private async void AddSrtTaskButton_Click(object sender, EventArgs e)
         {
-            await Misc.InstallScheduledTask(Properties.Resources.SuperCALPhaseTwo);
+            await Misc.InstallScheduledTask(Properties.Resources.SuperCALPhaseTwo, "2");
         }
 
         private async void RmvStartTaskButton_Click(object sender, EventArgs e)
         {
-            await Misc.InstallScheduledTask(null);
+            await Misc.InstallScheduledTask(null, "2");
         }
 
         private async void JoinDomainButton_Click(object sender, EventArgs e)
@@ -193,12 +198,12 @@ namespace SuperCAL
 
         private async void AddStartupTaskP2_Click(object sender, EventArgs e)
         {
-            await Misc.InstallScheduledTask(Properties.Resources.SuperCALPhaseThree);
+            await Misc.InstallScheduledTask(Properties.Resources.SuperCALPhaseThree, "3");
         }
 
         private async void RemoveStartupTaskP2_Click(object sender, EventArgs e)
         {
-            await Misc.InstallScheduledTask(null);
+            await Misc.InstallScheduledTask(null, "3");
         }
     }
 }

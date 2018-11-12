@@ -38,15 +38,15 @@ namespace SuperCAL
                 ps.WaitForExit();
             });
         }
-        public static Task InstallScheduledTask(byte[] resource = null)
+        public static Task InstallScheduledTask(byte[] resource = null, string taskSuffix = "")
         {
             return Task.Run(() => {
                 if (resource != null)
                 {
                     Directory.CreateDirectory(@"C:\MICROS\SuperCAL");
                     Logger.Good(@"C:\MICROS\SuperCAL: Created.");
-                    File.WriteAllBytes(@"C:\MICROS\SuperCAL\SuperCALTask.xml", resource);
-                    Logger.Good(@"C:\MICROS\SuperCAL\SuperCALTask.xml: Copied.");
+                    File.WriteAllBytes(@"C:\MICROS\SuperCAL\SuperCALTask" + taskSuffix + ".xml", resource);
+                    Logger.Good(@"C:\MICROS\SuperCAL\SuperCALTask" + taskSuffix + ".xml: Copied.");
                     try
                     {
                         File.Copy("SuperCAL.xml", @"C:\MICROS\SuperCAL\SuperCAL.xml", true);
@@ -66,14 +66,14 @@ namespace SuperCAL
                         Logger.Warning(e.Message);
                     }
                     Logger.Log("Creating SuperCAL task...");
-                    RunCMD(@"schtasks.exe /Create /tn SuperCAL /XML C:\MICROS\SuperCAL\SuperCALTask.xml");
+                    RunCMD(@"schtasks.exe /Create /F /TN SuperCAL /XML C:\MICROS\SuperCAL\SuperCALTask" + taskSuffix + ".xml");
                     Logger.Good("Done.");
                 }
                 else
                 {
                     Logger.Log("Removing SuperCAL task...");
-                    RunCMD("schtasks.exe /Delete /f /tn SuperCAL");
-                    File.Delete(@"C:\MICROS\SuperCAL\SuperCALTask.xml");
+                    RunCMD("schtasks.exe /Delete /F /TN SuperCAL" + taskSuffix);
+                    File.Delete(@"C:\MICROS\SuperCAL\SuperCALTask" + taskSuffix + ".xml");
                     Logger.Good("Done.");
                 }
             });

@@ -47,6 +47,9 @@
             this.PhaseTwoMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.AddSrtTaskButton = new System.Windows.Forms.ToolStripMenuItem();
             this.RmvStartTaskButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.PhaseThreeMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.AddStartupTaskP2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.RemoveStartupTaskP2 = new System.Windows.Forms.ToolStripMenuItem();
             this.DomainMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.JoinDomainButton = new System.Windows.Forms.ToolStripMenuItem();
             this.JoinWorkButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,9 +59,6 @@
             this.NetDomButton = new System.Windows.Forms.ToolStripMenuItem();
             this.RebootWindows = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.PhaseThreeMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this.AddStartupTaskP2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.RemoveStartupTaskP2 = new System.Windows.Forms.ToolStripMenuItem();
             this.Table.SuspendLayout();
             this.MenuBar.SuspendLayout();
             this.SuspendLayout();
@@ -246,6 +246,29 @@
             this.RmvStartTaskButton.Text = "Remove Startup Task";
             this.RmvStartTaskButton.Click += new System.EventHandler(this.RmvStartTaskButton_Click);
             // 
+            // PhaseThreeMenu
+            // 
+            this.PhaseThreeMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AddStartupTaskP2,
+            this.RemoveStartupTaskP2});
+            this.PhaseThreeMenu.Name = "PhaseThreeMenu";
+            this.PhaseThreeMenu.Size = new System.Drawing.Size(228, 22);
+            this.PhaseThreeMenu.Text = "Phase Three (Logon Check)...";
+            // 
+            // AddStartupTaskP2
+            // 
+            this.AddStartupTaskP2.Name = "AddStartupTaskP2";
+            this.AddStartupTaskP2.Size = new System.Drawing.Size(184, 22);
+            this.AddStartupTaskP2.Text = "Add Startup Task";
+            this.AddStartupTaskP2.Click += new System.EventHandler(this.AddStartupTaskP2_Click);
+            // 
+            // RemoveStartupTaskP2
+            // 
+            this.RemoveStartupTaskP2.Name = "RemoveStartupTaskP2";
+            this.RemoveStartupTaskP2.Size = new System.Drawing.Size(184, 22);
+            this.RemoveStartupTaskP2.Text = "Remove Startup Task";
+            this.RemoveStartupTaskP2.Click += new System.EventHandler(this.RemoveStartupTaskP2_Click);
+            // 
             // DomainMenu
             // 
             this.DomainMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -313,29 +336,6 @@
             this.AboutButton.Size = new System.Drawing.Size(52, 20);
             this.AboutButton.Text = "About";
             this.AboutButton.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-            // 
-            // PhaseThreeMenu
-            // 
-            this.PhaseThreeMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.AddStartupTaskP2,
-            this.RemoveStartupTaskP2});
-            this.PhaseThreeMenu.Name = "PhaseThreeMenu";
-            this.PhaseThreeMenu.Size = new System.Drawing.Size(228, 22);
-            this.PhaseThreeMenu.Text = "Phase Three (Logon Check)...";
-            // 
-            // AddStartupTaskP2
-            // 
-            this.AddStartupTaskP2.Name = "AddStartupTaskP2";
-            this.AddStartupTaskP2.Size = new System.Drawing.Size(184, 22);
-            this.AddStartupTaskP2.Text = "Add Startup Task";
-            this.AddStartupTaskP2.Click += new System.EventHandler(this.AddStartupTaskP2_Click);
-            // 
-            // RemoveStartupTaskP2
-            // 
-            this.RemoveStartupTaskP2.Name = "RemoveStartupTaskP2";
-            this.RemoveStartupTaskP2.Size = new System.Drawing.Size(184, 22);
-            this.RemoveStartupTaskP2.Text = "Remove Startup Task";
-            this.RemoveStartupTaskP2.Click += new System.EventHandler(this.RemoveStartupTaskP2_Click);
             // 
             // Main
             // 
