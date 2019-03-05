@@ -81,6 +81,12 @@
     <Compile Include="Error.Designer.cs">
       <DependentUpon>Error.cs</DependentUpon>
     </Compile>
+    <Compile Include="IPConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IPConfig.Designer.cs">
+      <DependentUpon>IPConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="Logger.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
@@ -101,6 +107,9 @@
     <Compile Include="Wipe.cs" />
     <EmbeddedResource Include="Error.resx">
       <DependentUpon>Error.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IPConfig.resx">
+      <DependentUpon>IPConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>

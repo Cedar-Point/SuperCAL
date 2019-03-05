@@ -15,6 +15,10 @@ namespace SuperCAL
         {
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
+
+            Application.Run(new IPConfig());
+
+            return;
             Arguments = args;
             bool prePass = true;
             try
