@@ -4,21 +4,37 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Sockets;
+using System.Net;
 using System.Windows.Forms;
 
 namespace SuperCAL
 {
     class IPInputBox
     {
-        public string IPAddress
+        public IPAddress IPAddress
         {
             get
             {
-                return octetTB1.Text + '.' + octetTB2.Text + '.' + octetTB3.Text + '.' + octetTB4.Text;
+                IPAddress ipAddress = IPAddress.Parse("0.0.0.0");
+                IPAddress.TryParse(octetTB1.Text + '.' + octetTB2.Text + '.' + octetTB3.Text + '.' + octetTB4.Text, out ipAddress);
+                return ipAddress;
             }
             set
             {
-
+                if(value.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    string ipAddress = value.ToString();
+                    string[] octets = ipAddress.Split('.');
+                    octetTB1.Text = octets[0];
+                    octetTB2.Text = octets[1];
+                    octetTB3.Text = octets[2];
+                    octetTB4.Text = octets[3];
+                }
+                else
+                {
+                    throw new Exception("Not a valid IPv4 Address!");
+                }
             }
         }
 
@@ -122,7 +138,6 @@ namespace SuperCAL
             pControl.Controls.Add(octetTB2);
             pControl.Controls.Add(octetTB3);
             pControl.Controls.Add(octetTB4);
-
         }
 
 
@@ -153,16 +168,16 @@ namespace SuperCAL
                 thisTb.Text = octet.ToString();
                 thisTb.SelectionStart = thisTb.TextLength;
             }
+            if(thisTb.Text != "" && int.Parse(thisTb.Text) > 255)
+            {
+                thisTb.Text = "255";
+            }
         }
 
         private void OctetTB_KeyPress(object sender, KeyPressEventArgs e)
         {
             TextBox thisTb = (TextBox)sender;
             if (!char.IsDigit(e.KeyChar) && e.KeyChar != '\b')
-            {
-                e.Handled = true;
-            }
-            if (char.IsDigit(e.KeyChar) && thisTb.SelectionStart == 2 && int.Parse(thisTb.Text + e.KeyChar.ToString()) > 255)
             {
                 e.Handled = true;
             }

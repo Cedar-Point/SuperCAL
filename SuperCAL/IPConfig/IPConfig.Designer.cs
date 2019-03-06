@@ -31,7 +31,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.OSKButton = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.useIPGroup = new System.Windows.Forms.GroupBox();
+            this.UseIPGroup = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -40,13 +40,16 @@
             this.dnsGroup = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
+            this.DNSStaticRadio = new System.Windows.Forms.RadioButton();
+            this.DNSAutoRadio = new System.Windows.Forms.RadioButton();
             this.adaptersDropDown = new System.Windows.Forms.ComboBox();
             this.DNSRadioPanel = new System.Windows.Forms.Panel();
-            this.useIPGroup.SuspendLayout();
+            this.IPRadioPanel = new System.Windows.Forms.Panel();
+            this.ApplyBtn = new System.Windows.Forms.Button();
+            this.UseIPGroup.SuspendLayout();
             this.dnsGroup.SuspendLayout();
             this.DNSRadioPanel.SuspendLayout();
+            this.IPRadioPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -73,24 +76,24 @@
             // button3
             // 
             this.button3.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button3.Location = new System.Drawing.Point(183, 391);
+            this.button3.Location = new System.Drawing.Point(112, 391);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 6;
             this.button3.Text = "Cancel";
             this.button3.UseVisualStyleBackColor = true;
             // 
-            // useIPGroup
+            // UseIPGroup
             // 
-            this.useIPGroup.Controls.Add(this.label4);
-            this.useIPGroup.Controls.Add(this.label3);
-            this.useIPGroup.Controls.Add(this.label2);
-            this.useIPGroup.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.useIPGroup.Location = new System.Drawing.Point(10, 70);
-            this.useIPGroup.Name = "useIPGroup";
-            this.useIPGroup.Size = new System.Drawing.Size(329, 143);
-            this.useIPGroup.TabIndex = 8;
-            this.useIPGroup.TabStop = false;
+            this.UseIPGroup.Controls.Add(this.label4);
+            this.UseIPGroup.Controls.Add(this.label3);
+            this.UseIPGroup.Controls.Add(this.label2);
+            this.UseIPGroup.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.UseIPGroup.Location = new System.Drawing.Point(10, 70);
+            this.UseIPGroup.Name = "UseIPGroup";
+            this.UseIPGroup.Size = new System.Drawing.Size(329, 143);
+            this.UseIPGroup.TabIndex = 8;
+            this.UseIPGroup.TabStop = false;
             // 
             // label4
             // 
@@ -126,25 +129,27 @@
             // 
             this.StaticRadio.AutoSize = true;
             this.StaticRadio.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.StaticRadio.Location = new System.Drawing.Point(16, 68);
+            this.StaticRadio.Location = new System.Drawing.Point(4, 27);
             this.StaticRadio.Name = "StaticRadio";
             this.StaticRadio.Size = new System.Drawing.Size(168, 18);
             this.StaticRadio.TabIndex = 10;
             this.StaticRadio.TabStop = true;
             this.StaticRadio.Text = "Use the following IP address:";
             this.StaticRadio.UseVisualStyleBackColor = true;
+            this.StaticRadio.CheckedChanged += new System.EventHandler(this.StaticRadio_CheckedChanged);
             // 
             // DHCPRadio
             // 
             this.DHCPRadio.AutoSize = true;
             this.DHCPRadio.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.DHCPRadio.Location = new System.Drawing.Point(16, 44);
+            this.DHCPRadio.Location = new System.Drawing.Point(4, 3);
             this.DHCPRadio.Name = "DHCPRadio";
             this.DHCPRadio.Size = new System.Drawing.Size(194, 18);
             this.DHCPRadio.TabIndex = 9;
             this.DHCPRadio.TabStop = true;
             this.DHCPRadio.Text = "Obtain an IP address automatically";
             this.DHCPRadio.UseVisualStyleBackColor = true;
+            this.DHCPRadio.CheckedChanged += new System.EventHandler(this.DHCPRadio_CheckedChanged);
             // 
             // dnsGroup
             // 
@@ -177,29 +182,31 @@
             this.label6.TabIndex = 10;
             this.label6.Text = "Preferred DNS server:";
             // 
-            // radioButton3
+            // DNSStaticRadio
             // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.radioButton3.Location = new System.Drawing.Point(4, 27);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(224, 18);
-            this.radioButton3.TabIndex = 10;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Use the following DNS server addresses:";
-            this.radioButton3.UseVisualStyleBackColor = true;
+            this.DNSStaticRadio.AutoSize = true;
+            this.DNSStaticRadio.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.DNSStaticRadio.Location = new System.Drawing.Point(4, 27);
+            this.DNSStaticRadio.Name = "DNSStaticRadio";
+            this.DNSStaticRadio.Size = new System.Drawing.Size(224, 18);
+            this.DNSStaticRadio.TabIndex = 10;
+            this.DNSStaticRadio.TabStop = true;
+            this.DNSStaticRadio.Text = "Use the following DNS server addresses:";
+            this.DNSStaticRadio.UseVisualStyleBackColor = true;
+            this.DNSStaticRadio.CheckedChanged += new System.EventHandler(this.DNSStaticRadio_CheckedChanged);
             // 
-            // radioButton4
+            // DNSAutoRadio
             // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.radioButton4.Location = new System.Drawing.Point(4, 3);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(224, 18);
-            this.radioButton4.TabIndex = 14;
-            this.radioButton4.TabStop = true;
-            this.radioButton4.Text = "Obtain DNS server address automatically";
-            this.radioButton4.UseVisualStyleBackColor = true;
+            this.DNSAutoRadio.AutoSize = true;
+            this.DNSAutoRadio.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.DNSAutoRadio.Location = new System.Drawing.Point(4, 3);
+            this.DNSAutoRadio.Name = "DNSAutoRadio";
+            this.DNSAutoRadio.Size = new System.Drawing.Size(224, 18);
+            this.DNSAutoRadio.TabIndex = 14;
+            this.DNSAutoRadio.TabStop = true;
+            this.DNSAutoRadio.Text = "Obtain DNS server address automatically";
+            this.DNSAutoRadio.UseVisualStyleBackColor = true;
+            this.DNSAutoRadio.CheckedChanged += new System.EventHandler(this.DNSAutoRadio_CheckedChanged);
             // 
             // adaptersDropDown
             // 
@@ -216,24 +223,44 @@
             // 
             // DNSRadioPanel
             // 
-            this.DNSRadioPanel.Controls.Add(this.radioButton4);
-            this.DNSRadioPanel.Controls.Add(this.radioButton3);
+            this.DNSRadioPanel.Controls.Add(this.DNSAutoRadio);
+            this.DNSRadioPanel.Controls.Add(this.DNSStaticRadio);
             this.DNSRadioPanel.Location = new System.Drawing.Point(15, 229);
             this.DNSRadioPanel.Name = "DNSRadioPanel";
             this.DNSRadioPanel.Size = new System.Drawing.Size(220, 49);
             this.DNSRadioPanel.TabIndex = 16;
+            // 
+            // IPRadioPanel
+            // 
+            this.IPRadioPanel.Controls.Add(this.DHCPRadio);
+            this.IPRadioPanel.Controls.Add(this.StaticRadio);
+            this.IPRadioPanel.Location = new System.Drawing.Point(15, 41);
+            this.IPRadioPanel.Name = "IPRadioPanel";
+            this.IPRadioPanel.Size = new System.Drawing.Size(188, 49);
+            this.IPRadioPanel.TabIndex = 17;
+            // 
+            // ApplyBtn
+            // 
+            this.ApplyBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.ApplyBtn.Location = new System.Drawing.Point(183, 390);
+            this.ApplyBtn.Name = "ApplyBtn";
+            this.ApplyBtn.Size = new System.Drawing.Size(75, 23);
+            this.ApplyBtn.TabIndex = 18;
+            this.ApplyBtn.Text = "Apply";
+            this.ApplyBtn.UseVisualStyleBackColor = true;
+            this.ApplyBtn.Click += new System.EventHandler(this.ApplyBtn_Click);
             // 
             // IPConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(351, 425);
+            this.Controls.Add(this.ApplyBtn);
+            this.Controls.Add(this.IPRadioPanel);
             this.Controls.Add(this.DNSRadioPanel);
             this.Controls.Add(this.adaptersDropDown);
             this.Controls.Add(this.dnsGroup);
-            this.Controls.Add(this.StaticRadio);
-            this.Controls.Add(this.DHCPRadio);
-            this.Controls.Add(this.useIPGroup);
+            this.Controls.Add(this.UseIPGroup);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.OSKButton);
             this.Controls.Add(this.button1);
@@ -246,14 +273,15 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Super CAL: IPv4 Configuration";
             this.TopMost = true;
-            this.useIPGroup.ResumeLayout(false);
-            this.useIPGroup.PerformLayout();
+            this.UseIPGroup.ResumeLayout(false);
+            this.UseIPGroup.PerformLayout();
             this.dnsGroup.ResumeLayout(false);
             this.dnsGroup.PerformLayout();
             this.DNSRadioPanel.ResumeLayout(false);
             this.DNSRadioPanel.PerformLayout();
+            this.IPRadioPanel.ResumeLayout(false);
+            this.IPRadioPanel.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -264,7 +292,7 @@
         private System.Windows.Forms.Button OSKButton;
         private System.Windows.Forms.Button button3;
         
-        private System.Windows.Forms.GroupBox useIPGroup;
+        private System.Windows.Forms.GroupBox UseIPGroup;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
@@ -273,9 +301,11 @@
         private System.Windows.Forms.GroupBox dnsGroup;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.RadioButton radioButton4;
+        private System.Windows.Forms.RadioButton DNSStaticRadio;
+        private System.Windows.Forms.RadioButton DNSAutoRadio;
         private System.Windows.Forms.ComboBox adaptersDropDown;
         private System.Windows.Forms.Panel DNSRadioPanel;
+        private System.Windows.Forms.Panel IPRadioPanel;
+        private System.Windows.Forms.Button ApplyBtn;
     }
 }

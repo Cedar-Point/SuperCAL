@@ -90,7 +90,6 @@
     <Compile Include="IPConfig\IPConfig.Designer.cs">
       <DependentUpon>IPConfig.cs</DependentUpon>
     </Compile>
-    <Compile Include="IPConfig\IPConfigurator.cs" />
     <Compile Include="IPConfig\IPInputBox.cs" />
     <Compile Include="Classes\Logger.cs" />
     <Compile Include="Main.cs">
