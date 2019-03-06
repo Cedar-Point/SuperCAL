@@ -14,6 +14,10 @@ namespace SuperCAL
         {
             InitializeComponent();
 
+            topTimer.Interval = 1000;
+            topTimer.Tick += TopTimer_Tick;
+            topTimer.Start();
+
             IPInput = new IPInputBox(UseIPGroup);
             SubnetInput = new IPInputBox(UseIPGroup);
             DGInput = new IPInputBox(UseIPGroup);
@@ -39,7 +43,6 @@ namespace SuperCAL
 
             InitializeAdapterList();
         }
-
 
         private bool AllowInterfaceUpdate = true;
         private NetworkInterface[] networkInterfaces = null;
@@ -243,6 +246,21 @@ namespace SuperCAL
         private void CloseBtn_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void TopTimer_Tick(object sender, EventArgs e)
+        {
+            BringToFront();
+        }
+
+        private void adaptersDropDown_DropDown(object sender, EventArgs e)
+        {
+            topTimer.Stop();
+        }
+
+        private void adaptersDropDown_DropDownClosed(object sender, EventArgs e)
+        {
+            topTimer.Start();
         }
     }
 }

@@ -59,6 +59,7 @@
             this.NetDomButton = new System.Windows.Forms.ToolStripMenuItem();
             this.RebootWindows = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.IPConfigMenuBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.Table.SuspendLayout();
             this.MenuBar.SuspendLayout();
             this.SuspendLayout();
@@ -66,6 +67,7 @@
             // ReCAL
             // 
             this.ReCAL.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ReCAL.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.ReCAL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ReCAL.Location = new System.Drawing.Point(6, 5);
             this.ReCAL.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
@@ -79,6 +81,7 @@
             // ReDownloadCAL
             // 
             this.ReDownloadCAL.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.ReDownloadCAL.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.ReDownloadCAL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ReDownloadCAL.Location = new System.Drawing.Point(124, 5);
             this.ReDownloadCAL.Margin = new System.Windows.Forms.Padding(0, 5, 0, 5);
@@ -93,6 +96,7 @@
             // 
             this.StopStartCAL.Dock = System.Windows.Forms.DockStyle.Fill;
             this.StopStartCAL.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlLight;
+            this.StopStartCAL.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.StopStartCAL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.StopStartCAL.Location = new System.Drawing.Point(254, 5);
             this.StopStartCAL.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
@@ -113,7 +117,7 @@
             this.Table.Controls.Add(this.StopStartCAL, 2, 0);
             this.Table.Controls.Add(this.ReDownloadCAL, 1, 0);
             this.Table.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Table.Location = new System.Drawing.Point(0, 24);
+            this.Table.Location = new System.Drawing.Point(0, 0);
             this.Table.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Table.Name = "Table";
             this.Table.RowCount = 1;
@@ -154,10 +158,11 @@
             this.ToolsButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TaskMgrButton,
             this.CMDButton,
+            this.IPConfigMenuBtn,
             this.ToolsSeperator,
             this.OSKButton});
             this.ToolsButton.Name = "ToolsButton";
-            this.ToolsButton.Size = new System.Drawing.Size(46, 20);
+            this.ToolsButton.Size = new System.Drawing.Size(47, 20);
             this.ToolsButton.Text = "Tools";
             // 
             // TaskMgrButton
@@ -206,7 +211,7 @@
             this.WipeCalButton,
             this.WipeKeepCalButton});
             this.WipeMenu.Name = "WipeMenu";
-            this.WipeMenu.Size = new System.Drawing.Size(227, 22);
+            this.WipeMenu.Size = new System.Drawing.Size(228, 22);
             this.WipeMenu.Text = "Wipe...";
             // 
             // WipeCalButton
@@ -229,20 +234,20 @@
             this.AddSrtTaskButton,
             this.RmvStartTaskButton});
             this.PhaseTwoMenu.Name = "PhaseTwoMenu";
-            this.PhaseTwoMenu.Size = new System.Drawing.Size(227, 22);
+            this.PhaseTwoMenu.Size = new System.Drawing.Size(228, 22);
             this.PhaseTwoMenu.Text = "Phase Two (Domain Join)...";
             // 
             // AddSrtTaskButton
             // 
             this.AddSrtTaskButton.Name = "AddSrtTaskButton";
-            this.AddSrtTaskButton.Size = new System.Drawing.Size(183, 22);
+            this.AddSrtTaskButton.Size = new System.Drawing.Size(184, 22);
             this.AddSrtTaskButton.Text = "Add Startup Task";
             this.AddSrtTaskButton.Click += new System.EventHandler(this.AddSrtTaskButton_Click);
             // 
             // RmvStartTaskButton
             // 
             this.RmvStartTaskButton.Name = "RmvStartTaskButton";
-            this.RmvStartTaskButton.Size = new System.Drawing.Size(183, 22);
+            this.RmvStartTaskButton.Size = new System.Drawing.Size(184, 22);
             this.RmvStartTaskButton.Text = "Remove Startup Task";
             this.RmvStartTaskButton.Click += new System.EventHandler(this.RmvStartTaskButton_Click);
             // 
@@ -252,20 +257,20 @@
             this.AddStartupTaskP2,
             this.RemoveStartupTaskP2});
             this.PhaseThreeMenu.Name = "PhaseThreeMenu";
-            this.PhaseThreeMenu.Size = new System.Drawing.Size(227, 22);
+            this.PhaseThreeMenu.Size = new System.Drawing.Size(228, 22);
             this.PhaseThreeMenu.Text = "Phase Three (Logon Check)...";
             // 
             // AddStartupTaskP2
             // 
             this.AddStartupTaskP2.Name = "AddStartupTaskP2";
-            this.AddStartupTaskP2.Size = new System.Drawing.Size(183, 22);
+            this.AddStartupTaskP2.Size = new System.Drawing.Size(184, 22);
             this.AddStartupTaskP2.Text = "Add Startup Task";
             this.AddStartupTaskP2.Click += new System.EventHandler(this.AddStartupTaskP2_Click);
             // 
             // RemoveStartupTaskP2
             // 
             this.RemoveStartupTaskP2.Name = "RemoveStartupTaskP2";
-            this.RemoveStartupTaskP2.Size = new System.Drawing.Size(183, 22);
+            this.RemoveStartupTaskP2.Size = new System.Drawing.Size(184, 22);
             this.RemoveStartupTaskP2.Text = "Remove Startup Task";
             this.RemoveStartupTaskP2.Click += new System.EventHandler(this.RemoveStartupTaskP2_Click);
             // 
@@ -275,7 +280,7 @@
             this.JoinDomainButton,
             this.JoinWorkButton});
             this.DomainMenu.Name = "DomainMenu";
-            this.DomainMenu.Size = new System.Drawing.Size(227, 22);
+            this.DomainMenu.Size = new System.Drawing.Size(228, 22);
             this.DomainMenu.Text = "Domain...";
             // 
             // JoinDomainButton
@@ -298,7 +303,7 @@
             this.EnableAutoLogon,
             this.DisableAutoLogon});
             this.AutoLogon.Name = "AutoLogon";
-            this.AutoLogon.Size = new System.Drawing.Size(227, 22);
+            this.AutoLogon.Size = new System.Drawing.Size(228, 22);
             this.AutoLogon.Text = "Auto Logon...";
             // 
             // EnableAutoLogon
@@ -318,14 +323,14 @@
             // NetDomButton
             // 
             this.NetDomButton.Name = "NetDomButton";
-            this.NetDomButton.Size = new System.Drawing.Size(227, 22);
+            this.NetDomButton.Size = new System.Drawing.Size(228, 22);
             this.NetDomButton.Text = "Install NETDOM";
             this.NetDomButton.Click += new System.EventHandler(this.NetDomButton_Click);
             // 
             // RebootWindows
             // 
             this.RebootWindows.Name = "RebootWindows";
-            this.RebootWindows.Size = new System.Drawing.Size(227, 22);
+            this.RebootWindows.Size = new System.Drawing.Size(228, 22);
             this.RebootWindows.Text = "Restart Windows";
             this.RebootWindows.Click += new System.EventHandler(this.RebootWindows_Click);
             // 
@@ -336,6 +341,13 @@
             this.AboutButton.Size = new System.Drawing.Size(52, 20);
             this.AboutButton.Text = "About";
             this.AboutButton.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // IPConfigMenuBtn
+            // 
+            this.IPConfigMenuBtn.Name = "IPConfigMenuBtn";
+            this.IPConfigMenuBtn.Size = new System.Drawing.Size(181, 22);
+            this.IPConfigMenuBtn.Text = "IP Configuration...";
+            this.IPConfigMenuBtn.Click += new System.EventHandler(this.IPConfigMenuBtn_Click);
             // 
             // Main
             // 
@@ -394,6 +406,7 @@
         private System.Windows.Forms.ToolStripMenuItem PhaseThreeMenu;
         private System.Windows.Forms.ToolStripMenuItem AddStartupTaskP2;
         private System.Windows.Forms.ToolStripMenuItem RemoveStartupTaskP2;
+        private System.Windows.Forms.ToolStripMenuItem IPConfigMenuBtn;
     }
 }
 

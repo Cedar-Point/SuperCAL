@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.CloseBtn = new System.Windows.Forms.Button();
             this.OSKButton = new System.Windows.Forms.Button();
             this.UseIPGroup = new System.Windows.Forms.GroupBox();
@@ -45,6 +46,7 @@
             this.DNSRadioPanel = new System.Windows.Forms.Panel();
             this.IPRadioPanel = new System.Windows.Forms.Panel();
             this.ApplyBtn = new System.Windows.Forms.Button();
+            this.topTimer = new System.Windows.Forms.Timer(this.components);
             this.UseIPGroup.SuspendLayout();
             this.dnsGroup.SuspendLayout();
             this.DNSRadioPanel.SuspendLayout();
@@ -207,7 +209,9 @@
             this.adaptersDropDown.Size = new System.Drawing.Size(327, 21);
             this.adaptersDropDown.Sorted = true;
             this.adaptersDropDown.TabIndex = 15;
+            this.adaptersDropDown.DropDown += new System.EventHandler(this.adaptersDropDown_DropDown);
             this.adaptersDropDown.SelectedIndexChanged += new System.EventHandler(this.adaptersDropDown_SelectedIndexChanged);
+            this.adaptersDropDown.DropDownClosed += new System.EventHandler(this.adaptersDropDown_DropDownClosed);
             // 
             // DNSRadioPanel
             // 
@@ -244,6 +248,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(351, 420);
+            this.ControlBox = false;
             this.Controls.Add(this.ApplyBtn);
             this.Controls.Add(this.IPRadioPanel);
             this.Controls.Add(this.DNSRadioPanel);
@@ -294,5 +299,6 @@
         private System.Windows.Forms.Panel DNSRadioPanel;
         private System.Windows.Forms.Panel IPRadioPanel;
         private System.Windows.Forms.Button ApplyBtn;
+        private System.Windows.Forms.Timer topTimer;
     }
 }

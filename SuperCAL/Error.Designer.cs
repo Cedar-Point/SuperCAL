@@ -35,6 +35,7 @@
             // 
             // Exit
             // 
+            this.Exit.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.Exit.Location = new System.Drawing.Point(256, 139);
             this.Exit.Name = "Exit";
             this.Exit.Size = new System.Drawing.Size(64, 23);
@@ -55,6 +56,7 @@
             // 
             // Retry
             // 
+            this.Retry.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.Retry.Location = new System.Drawing.Point(187, 139);
             this.Retry.Name = "Retry";
             this.Retry.Size = new System.Drawing.Size(64, 23);

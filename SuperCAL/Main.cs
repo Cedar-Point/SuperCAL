@@ -205,5 +205,20 @@ namespace SuperCAL
         {
             await Misc.InstallScheduledTask(null, "3");
         }
+
+        private void IPConfigMenuBtn_Click(object sender, EventArgs e)
+        {
+            Logger.Log("IP Configuration: Starting...");
+            Enabled = false;
+            Form ipConfig = new IPConfig();
+            ipConfig.FormClosed += IpConfig_FormClosed;
+            ipConfig.Show(this);
+        }
+
+        private void IpConfig_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Logger.Good("IP Configuration: Done.");
+            Enabled = true;
+        }
     }
 }
