@@ -27,6 +27,8 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -61,6 +63,8 @@
     <Reference Include="System.Core" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Management" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -68,34 +72,35 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config.cs" />
-    <Compile Include="DomainJoin.cs" />
+    <Compile Include="Classes\Config.cs" />
+    <Compile Include="Classes\DomainJoin.cs" />
     <Compile Include="Error.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Error.Designer.cs">
       <DependentUpon>Error.cs</DependentUpon>
     </Compile>
-    <Compile Include="IPConfig.cs">
+    <Compile Include="IPConfig\IPConfig.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="IPConfig.Designer.cs">
+    <Compile Include="IPConfig\IPConfig.Designer.cs">
       <DependentUpon>IPConfig.cs</DependentUpon>
     </Compile>
-    <Compile Include="Logger.cs" />
+    <Compile Include="IPConfig\IPConfigurator.cs" />
+    <Compile Include="IPConfig\IPInputBox.cs" />
+    <Compile Include="Classes\Logger.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="McrsCalSrvc.cs" />
-    <Compile Include="Misc.cs" />
+    <Compile Include="Classes\McrsCalSrvc.cs" />
+    <Compile Include="Classes\Misc.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -103,12 +108,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SecureDesktop.cs" />
-    <Compile Include="Wipe.cs" />
+    <Compile Include="Classes\SecureDesktop.cs" />
+    <Compile Include="Classes\Wipe.cs" />
     <EmbeddedResource Include="Error.resx">
       <DependentUpon>Error.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="IPConfig.resx">
+    <EmbeddedResource Include="IPConfig\IPConfig.resx">
       <DependentUpon>IPConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
@@ -119,6 +124,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\app.manifest">
       <SubType>Designer</SubType>
     </None>

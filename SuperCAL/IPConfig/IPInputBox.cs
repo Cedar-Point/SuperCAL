@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -10,23 +8,57 @@ using System.Windows.Forms;
 
 namespace SuperCAL
 {
-    public partial class IPConfig : Form
+    class IPInputBox
     {
-        public IPConfig()
+        public string IPAddress
         {
-            InitializeComponent();
-            new IPTextField(this, 0, 0);
+            get
+            {
+                return octetTB1.Text + '.' + octetTB2.Text + '.' + octetTB3.Text + '.' + octetTB4.Text;
+            }
+            set
+            {
+
+            }
         }
-    }
 
-    public class IPTextField
-    {
-        public string ipAddress = "0.0.0.0";
+        public int TabIndex
+        {
+            get
+            {
+                return octetTB1.TabIndex;
+            }
+            set
+            {
+                octetTB1.TabIndex = value;
+                octetTB2.TabIndex = value + 1;
+                octetTB3.TabIndex = value + 2;
+                octetTB4.TabIndex = value + 3;
+            }
+        }
 
-        public IPTextField(Control parentControl, int xPos = 0, int yPos = 0)
+        public Point Location
+        {
+            get
+            {
+                return outlineLbl.Location;
+            }
+            set
+            {
+                outlineLbl.Location = value;
+                octetTB1.Location = new Point(value.X + 7, value.Y + 7);
+                octetTB2.Location = new Point(value.X + 38, value.Y + 7);
+                octetTB3.Location = new Point(value.X + 68, value.Y + 7);
+                octetTB4.Location = new Point(value.X + 98, value.Y + 7);
+            }
+        }
+
+        public IPInputBox(Control parentControl)
         {
             pControl = parentControl;
             Initialize();
+            Location = new Point(0, 0);
+            TabIndex = 0;
             BringToFront();
         }
 
@@ -54,7 +86,7 @@ namespace SuperCAL
             outlineLbl.BackColor = octetTB1.BackColor = octetTB2.BackColor = octetTB3.BackColor = octetTB4.BackColor = Color.White;
             outlineLbl.BorderStyle = BorderStyle.Fixed3D;
             outlineLbl.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
-            outlineLbl.Location = new Point(147, 24);
+            outlineLbl.Location = new Point(0, 0);
             outlineLbl.Name = "outlineLbl";
             outlineLbl.Size = new Size(126, 25);
             outlineLbl.Text = ".    .    .";
@@ -66,20 +98,9 @@ namespace SuperCAL
             octetTB1.TextAlign = octetTB2.TextAlign = octetTB3.TextAlign = octetTB4.TextAlign = HorizontalAlignment.Center;
 
             octetTB1.Name = "octetTB1";
-            octetTB1.TabIndex = 0;
-            octetTB1.Location = new Point(153, 31);
-
             octetTB2.Name = "octetTB2";
-            octetTB2.TabIndex = 1;
-            octetTB2.Location = new Point(183, 31);
-
             octetTB3.Name = "octetTB3";
-            octetTB3.TabIndex = 2;
-            octetTB3.Location = new Point(214, 31);
-
             octetTB4.Name = "octetTB4";
-            octetTB4.TabIndex = 3;
-            octetTB4.Location = new Point(244, 31);
 
             octetTB1.KeyDown += OctetTB_KeyDown;
             octetTB2.KeyDown += OctetTB_KeyDown;
@@ -91,13 +112,18 @@ namespace SuperCAL
             octetTB3.KeyPress += OctetTB_KeyPress;
             octetTB4.KeyPress += OctetTB_KeyPress;
 
+            octetTB1.TextChanged += OctetTB_TextChanged;
+            octetTB2.TextChanged += OctetTB_TextChanged;
+            octetTB3.TextChanged += OctetTB_TextChanged;
+            octetTB4.TextChanged += OctetTB_TextChanged;
+
             pControl.Controls.Add(outlineLbl);
             pControl.Controls.Add(octetTB1);
             pControl.Controls.Add(octetTB2);
             pControl.Controls.Add(octetTB3);
             pControl.Controls.Add(octetTB4);
-        }
 
+        }
 
 
         private void prev(TextBox thisTb)
@@ -118,9 +144,25 @@ namespace SuperCAL
             }
         }
 
+        private void OctetTB_TextChanged(object sender, EventArgs e)
+        {
+            TextBox thisTb = (TextBox)sender;
+            int octet = 0;
+            if (int.TryParse(thisTb.Text, out octet))
+            {
+                thisTb.Text = octet.ToString();
+                thisTb.SelectionStart = thisTb.TextLength;
+            }
+        }
+
         private void OctetTB_KeyPress(object sender, KeyPressEventArgs e)
         {
+            TextBox thisTb = (TextBox)sender;
             if (!char.IsDigit(e.KeyChar) && e.KeyChar != '\b')
+            {
+                e.Handled = true;
+            }
+            if (char.IsDigit(e.KeyChar) && thisTb.SelectionStart == 2 && int.Parse(thisTb.Text + e.KeyChar.ToString()) > 255)
             {
                 e.Handled = true;
             }

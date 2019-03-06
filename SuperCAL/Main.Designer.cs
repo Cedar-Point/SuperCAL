@@ -157,7 +157,7 @@
             this.ToolsSeperator,
             this.OSKButton});
             this.ToolsButton.Name = "ToolsButton";
-            this.ToolsButton.Size = new System.Drawing.Size(47, 20);
+            this.ToolsButton.Size = new System.Drawing.Size(46, 20);
             this.ToolsButton.Text = "Tools";
             // 
             // TaskMgrButton
@@ -206,7 +206,7 @@
             this.WipeCalButton,
             this.WipeKeepCalButton});
             this.WipeMenu.Name = "WipeMenu";
-            this.WipeMenu.Size = new System.Drawing.Size(228, 22);
+            this.WipeMenu.Size = new System.Drawing.Size(227, 22);
             this.WipeMenu.Text = "Wipe...";
             // 
             // WipeCalButton
@@ -229,20 +229,20 @@
             this.AddSrtTaskButton,
             this.RmvStartTaskButton});
             this.PhaseTwoMenu.Name = "PhaseTwoMenu";
-            this.PhaseTwoMenu.Size = new System.Drawing.Size(228, 22);
+            this.PhaseTwoMenu.Size = new System.Drawing.Size(227, 22);
             this.PhaseTwoMenu.Text = "Phase Two (Domain Join)...";
             // 
             // AddSrtTaskButton
             // 
             this.AddSrtTaskButton.Name = "AddSrtTaskButton";
-            this.AddSrtTaskButton.Size = new System.Drawing.Size(184, 22);
+            this.AddSrtTaskButton.Size = new System.Drawing.Size(183, 22);
             this.AddSrtTaskButton.Text = "Add Startup Task";
             this.AddSrtTaskButton.Click += new System.EventHandler(this.AddSrtTaskButton_Click);
             // 
             // RmvStartTaskButton
             // 
             this.RmvStartTaskButton.Name = "RmvStartTaskButton";
-            this.RmvStartTaskButton.Size = new System.Drawing.Size(184, 22);
+            this.RmvStartTaskButton.Size = new System.Drawing.Size(183, 22);
             this.RmvStartTaskButton.Text = "Remove Startup Task";
             this.RmvStartTaskButton.Click += new System.EventHandler(this.RmvStartTaskButton_Click);
             // 
@@ -252,20 +252,20 @@
             this.AddStartupTaskP2,
             this.RemoveStartupTaskP2});
             this.PhaseThreeMenu.Name = "PhaseThreeMenu";
-            this.PhaseThreeMenu.Size = new System.Drawing.Size(228, 22);
+            this.PhaseThreeMenu.Size = new System.Drawing.Size(227, 22);
             this.PhaseThreeMenu.Text = "Phase Three (Logon Check)...";
             // 
             // AddStartupTaskP2
             // 
             this.AddStartupTaskP2.Name = "AddStartupTaskP2";
-            this.AddStartupTaskP2.Size = new System.Drawing.Size(184, 22);
+            this.AddStartupTaskP2.Size = new System.Drawing.Size(183, 22);
             this.AddStartupTaskP2.Text = "Add Startup Task";
             this.AddStartupTaskP2.Click += new System.EventHandler(this.AddStartupTaskP2_Click);
             // 
             // RemoveStartupTaskP2
             // 
             this.RemoveStartupTaskP2.Name = "RemoveStartupTaskP2";
-            this.RemoveStartupTaskP2.Size = new System.Drawing.Size(184, 22);
+            this.RemoveStartupTaskP2.Size = new System.Drawing.Size(183, 22);
             this.RemoveStartupTaskP2.Text = "Remove Startup Task";
             this.RemoveStartupTaskP2.Click += new System.EventHandler(this.RemoveStartupTaskP2_Click);
             // 
@@ -275,7 +275,7 @@
             this.JoinDomainButton,
             this.JoinWorkButton});
             this.DomainMenu.Name = "DomainMenu";
-            this.DomainMenu.Size = new System.Drawing.Size(228, 22);
+            this.DomainMenu.Size = new System.Drawing.Size(227, 22);
             this.DomainMenu.Text = "Domain...";
             // 
             // JoinDomainButton
@@ -298,7 +298,7 @@
             this.EnableAutoLogon,
             this.DisableAutoLogon});
             this.AutoLogon.Name = "AutoLogon";
-            this.AutoLogon.Size = new System.Drawing.Size(228, 22);
+            this.AutoLogon.Size = new System.Drawing.Size(227, 22);
             this.AutoLogon.Text = "Auto Logon...";
             // 
             // EnableAutoLogon
@@ -318,14 +318,14 @@
             // NetDomButton
             // 
             this.NetDomButton.Name = "NetDomButton";
-            this.NetDomButton.Size = new System.Drawing.Size(228, 22);
+            this.NetDomButton.Size = new System.Drawing.Size(227, 22);
             this.NetDomButton.Text = "Install NETDOM";
             this.NetDomButton.Click += new System.EventHandler(this.NetDomButton_Click);
             // 
             // RebootWindows
             // 
             this.RebootWindows.Name = "RebootWindows";
-            this.RebootWindows.Size = new System.Drawing.Size(228, 22);
+            this.RebootWindows.Size = new System.Drawing.Size(227, 22);
             this.RebootWindows.Text = "Restart Windows";
             this.RebootWindows.Click += new System.EventHandler(this.RebootWindows_Click);
             // 
