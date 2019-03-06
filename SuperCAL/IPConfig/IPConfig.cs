@@ -38,7 +38,6 @@ namespace SuperCAL
             NetworkChange.NetworkAddressChanged += NetworkChange_NetworkAddressChanged;
 
             InitializeAdapterList();
-
         }
 
 
@@ -62,6 +61,7 @@ namespace SuperCAL
         private void GetCurrentInterface()
         {
             if (!AllowInterfaceUpdate) return;
+
             networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
             NetworkInterface cInterface = null;
             foreach(NetworkInterface networkInt in networkInterfaces)
@@ -72,12 +72,13 @@ namespace SuperCAL
                     break;
                 }
             }
+
             IPInterfaceProperties cInterfaceProperties = cInterface.GetIPProperties();
             IPv4InterfaceProperties cV4InterfaceProperties = cInterfaceProperties.GetIPv4Properties();
             
             string nameServer = (string)Registry.LocalMachine.OpenSubKey(@"SYSTEM\ControlSet001\Services\Tcpip\Parameters\Interfaces\" + cInterface.Id, false).GetValue("NameServer");
-            DHCP_IP(cV4InterfaceProperties.IsDhcpEnabled);
             DHCP_DNS(nameServer == "");
+            DHCP_IP(cV4InterfaceProperties.IsDhcpEnabled);
 
             foreach (UnicastIPAddressInformation addressInfo in cInterfaceProperties.UnicastAddresses)
             {
@@ -88,6 +89,7 @@ namespace SuperCAL
                     break;
                 }
             }
+
             bool gwIsSet = false;
             foreach (GatewayIPAddressInformation gatewayInfo in cInterfaceProperties.GatewayAddresses)
             {
@@ -98,10 +100,12 @@ namespace SuperCAL
                     break;
                 }
             }
+
             if (!gwIsSet)
             {
                 DGInput.IPAddress = IPAddress.Parse("0.0.0.0");
             }
+
             int dnsCount = 0;
             foreach (IPAddress dnsAddress in cInterfaceProperties.DnsAddresses)
             {
@@ -123,6 +127,7 @@ namespace SuperCAL
                     dnsCount++;
                 }
             }
+
             if (dnsCount == 0)
             {
                 DNSInput1.IPAddress = DNSInput2.IPAddress = IPAddress.Parse("0.0.0.0");
@@ -206,6 +211,7 @@ namespace SuperCAL
 
         private void adaptersDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ApplyBtn.Enabled = true;
             GetCurrentInterface();
         }
 
@@ -232,6 +238,11 @@ namespace SuperCAL
         private void ApplyBtn_Click(object sender, EventArgs e)
         {
             SetIPConfig();
+        }
+
+        private void CloseBtn_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

@@ -16,8 +16,9 @@ namespace SuperCAL
         {
             get
             {
-                IPAddress ipAddress = IPAddress.Parse("0.0.0.0");
+                IPAddress ipAddress = null;
                 IPAddress.TryParse(octetTB1.Text + '.' + octetTB2.Text + '.' + octetTB3.Text + '.' + octetTB4.Text, out ipAddress);
+                if (ipAddress == null) ipAddress = IPAddress.Parse("0.0.0.0");
                 return ipAddress;
             }
             set
