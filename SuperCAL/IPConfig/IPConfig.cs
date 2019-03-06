@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Net;
-using System.Linq;
 using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace SuperCAL
 {
@@ -46,8 +41,8 @@ namespace SuperCAL
 
         }
 
-      
 
+        private bool AllowInterfaceUpdate = true;
         private NetworkInterface[] networkInterfaces = null;
         private IPInputBox IPInput = null;
         private IPInputBox SubnetInput = null;
@@ -66,6 +61,7 @@ namespace SuperCAL
 
         private void GetCurrentInterface()
         {
+            if (!AllowInterfaceUpdate) return;
             networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
             NetworkInterface cInterface = null;
             foreach(NetworkInterface networkInt in networkInterfaces)
@@ -78,8 +74,11 @@ namespace SuperCAL
             }
             IPInterfaceProperties cInterfaceProperties = cInterface.GetIPProperties();
             IPv4InterfaceProperties cV4InterfaceProperties = cInterfaceProperties.GetIPv4Properties();
+            
+            string nameServer = (string)Registry.LocalMachine.OpenSubKey(@"SYSTEM\ControlSet001\Services\Tcpip\Parameters\Interfaces\" + cInterface.Id, false).GetValue("NameServer");
             DHCP_IP(cV4InterfaceProperties.IsDhcpEnabled);
-            DHCP_DNS(cInterfaceProperties.IsDynamicDnsEnabled);
+            DHCP_DNS(nameServer == "");
+
             foreach (UnicastIPAddressInformation addressInfo in cInterfaceProperties.UnicastAddresses)
             {
                 if (addressInfo.Address.AddressFamily == AddressFamily.InterNetwork)
@@ -163,6 +162,8 @@ namespace SuperCAL
 
         private async void SetIPConfig()
         {
+            AllowInterfaceUpdate = false;
+            Enabled = false;
             if (DHCPRadio.Checked)
             {
                 await Misc.RunCMD("netsh.exe interface ipv4 set address \"" + adaptersDropDown.SelectedItem + "\" source=dhcp");
@@ -174,8 +175,7 @@ namespace SuperCAL
                     " \"" + adaptersDropDown.SelectedItem +
                     "\" static " + IPInput.IPAddress.ToString() +
                     " " + SubnetInput.IPAddress.ToString() + 
-                    " " + DGInput.IPAddress.ToString() +
-                    " 0"
+                    " " + DGInput.IPAddress.ToString()
                 );
             }
             if (DNSAutoRadio.Checked)
@@ -187,12 +187,16 @@ namespace SuperCAL
                 await Misc.RunCMD("netsh.exe interface ipv4 set dnsservers \"" + adaptersDropDown.SelectedItem + "\" static " + DNSInput1.IPAddress.ToString());
                 await Misc.RunCMD("netsh.exe interface ipv4 add dnsservers \"" + adaptersDropDown.SelectedItem + "\" " + DNSInput2.IPAddress.ToString());
             }
+            AllowInterfaceUpdate = true;
             GetCurrentInterface();
+            Enabled = true;
         }
 
         private void NetworkChange_NetworkAddressChanged(object sender, EventArgs e)
         {
-            Console.WriteLine("asdf");
+            Invoke(new Action(() => {
+                GetCurrentInterface();
+            }));
         }
 
         private void OSKButton_Click(object sender, EventArgs e)

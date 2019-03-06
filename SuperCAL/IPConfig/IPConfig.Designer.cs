@@ -30,7 +30,6 @@
         {
             this.button1 = new System.Windows.Forms.Button();
             this.OSKButton = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             this.UseIPGroup = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -46,6 +45,7 @@
             this.DNSRadioPanel = new System.Windows.Forms.Panel();
             this.IPRadioPanel = new System.Windows.Forms.Panel();
             this.ApplyBtn = new System.Windows.Forms.Button();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.UseIPGroup.SuspendLayout();
             this.dnsGroup.SuspendLayout();
             this.DNSRadioPanel.SuspendLayout();
@@ -55,33 +55,23 @@
             // button1
             // 
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button1.Location = new System.Drawing.Point(264, 391);
+            this.button1.Location = new System.Drawing.Point(265, 387);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 4;
-            this.button1.Text = "Save";
+            this.button1.Text = "Close";
             this.button1.UseVisualStyleBackColor = true;
             // 
             // OSKButton
             // 
             this.OSKButton.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.OSKButton.Location = new System.Drawing.Point(12, 391);
+            this.OSKButton.Location = new System.Drawing.Point(10, 387);
             this.OSKButton.Name = "OSKButton";
             this.OSKButton.Size = new System.Drawing.Size(74, 23);
             this.OSKButton.TabIndex = 5;
             this.OSKButton.Text = "Keyboard";
             this.OSKButton.UseVisualStyleBackColor = true;
             this.OSKButton.Click += new System.EventHandler(this.OSKButton_Click);
-            // 
-            // button3
-            // 
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.button3.Location = new System.Drawing.Point(112, 391);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 6;
-            this.button3.Text = "Cancel";
-            this.button3.UseVisualStyleBackColor = true;
             // 
             // UseIPGroup
             // 
@@ -242,7 +232,7 @@
             // ApplyBtn
             // 
             this.ApplyBtn.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.ApplyBtn.Location = new System.Drawing.Point(183, 390);
+            this.ApplyBtn.Location = new System.Drawing.Point(184, 387);
             this.ApplyBtn.Name = "ApplyBtn";
             this.ApplyBtn.Size = new System.Drawing.Size(75, 23);
             this.ApplyBtn.TabIndex = 18;
@@ -250,18 +240,26 @@
             this.ApplyBtn.UseVisualStyleBackColor = true;
             this.ApplyBtn.Click += new System.EventHandler(this.ApplyBtn_Click);
             // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 420);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(351, 22);
+            this.statusStrip1.TabIndex = 19;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
             // IPConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(351, 425);
+            this.ClientSize = new System.Drawing.Size(351, 442);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.ApplyBtn);
             this.Controls.Add(this.IPRadioPanel);
             this.Controls.Add(this.DNSRadioPanel);
             this.Controls.Add(this.adaptersDropDown);
             this.Controls.Add(this.dnsGroup);
             this.Controls.Add(this.UseIPGroup);
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.OSKButton);
             this.Controls.Add(this.button1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
@@ -282,6 +280,7 @@
             this.IPRadioPanel.ResumeLayout(false);
             this.IPRadioPanel.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -290,7 +289,6 @@
         
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button OSKButton;
-        private System.Windows.Forms.Button button3;
         
         private System.Windows.Forms.GroupBox UseIPGroup;
         private System.Windows.Forms.Label label4;
@@ -307,5 +305,6 @@
         private System.Windows.Forms.Panel DNSRadioPanel;
         private System.Windows.Forms.Panel IPRadioPanel;
         private System.Windows.Forms.Button ApplyBtn;
+        private System.Windows.Forms.StatusStrip statusStrip1;
     }
 }
