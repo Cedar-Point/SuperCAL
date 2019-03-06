@@ -40,9 +40,13 @@ namespace SuperCAL
             DNSInput1.Location = new Point(185, 30);
             DNSInput2.Location = new Point(185, 60);
 
+            NetworkChange.NetworkAddressChanged += NetworkChange_NetworkAddressChanged;
+
             InitializeAdapterList();
 
         }
+
+      
 
         private NetworkInterface[] networkInterfaces = null;
         private IPInputBox IPInput = null;
@@ -63,7 +67,15 @@ namespace SuperCAL
         private void GetCurrentInterface()
         {
             networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
-            NetworkInterface cInterface = networkInterfaces[adaptersDropDown.SelectedIndex];
+            NetworkInterface cInterface = null;
+            foreach(NetworkInterface networkInt in networkInterfaces)
+            {
+                if(networkInt.Name == (string)adaptersDropDown.SelectedItem)
+                {
+                    cInterface = networkInt;
+                    break;
+                }
+            }
             IPInterfaceProperties cInterfaceProperties = cInterface.GetIPProperties();
             IPv4InterfaceProperties cV4InterfaceProperties = cInterfaceProperties.GetIPv4Properties();
             DHCP_IP(cV4InterfaceProperties.IsDhcpEnabled);
@@ -176,6 +188,11 @@ namespace SuperCAL
                 await Misc.RunCMD("netsh.exe interface ipv4 add dnsservers \"" + adaptersDropDown.SelectedItem + "\" " + DNSInput2.IPAddress.ToString());
             }
             GetCurrentInterface();
+        }
+
+        private void NetworkChange_NetworkAddressChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine("asdf");
         }
 
         private void OSKButton_Click(object sender, EventArgs e)
