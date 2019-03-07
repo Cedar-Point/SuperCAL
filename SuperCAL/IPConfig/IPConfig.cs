@@ -44,7 +44,7 @@ namespace SuperCAL
             InitializeAdapterList();
         }
 
-        private bool AllowInterfaceUpdate = true;
+        private bool AllowInterfaceUpdate = false;
         private NetworkInterface[] networkInterfaces = null;
         private IPInputBox IPInput = null;
         private IPInputBox SubnetInput = null;
@@ -57,6 +57,7 @@ namespace SuperCAL
             networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();
             foreach (NetworkInterface netInterface in networkInterfaces)
             {
+                if (netInterface.Name.Contains("Loopback Pseudo-Interface")) continue;
                 adaptersDropDown.Items.Add(netInterface.Name);
             }
         }
@@ -78,8 +79,14 @@ namespace SuperCAL
 
             IPInterfaceProperties cInterfaceProperties = cInterface.GetIPProperties();
             IPv4InterfaceProperties cV4InterfaceProperties = cInterfaceProperties.GetIPv4Properties();
-            
-            string nameServer = (string)Registry.LocalMachine.OpenSubKey(@"SYSTEM\ControlSet001\Services\Tcpip\Parameters\Interfaces\" + cInterface.Id, false).GetValue("NameServer");
+
+            string nameServer = "";
+            RegistryKey AdapterReg = Registry.LocalMachine.OpenSubKey(@"SYSTEM\ControlSet001\Services\Tcpip\Parameters\Interfaces\" + cInterface.Id, false);
+            if (AdapterReg != null)
+            {
+                nameServer = (string)AdapterReg.GetValue("NameServer");
+            }
+
             DHCP_DNS(nameServer == "");
             DHCP_IP(cV4InterfaceProperties.IsDhcpEnabled);
 
@@ -202,7 +209,8 @@ namespace SuperCAL
 
         private void NetworkChange_NetworkAddressChanged(object sender, EventArgs e)
         {
-            Invoke(new Action(() => {
+            Invoke(new Action(() =>
+            {
                 GetCurrentInterface();
             }));
         }
@@ -214,8 +222,12 @@ namespace SuperCAL
 
         private void adaptersDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ApplyBtn.Enabled = true;
-            GetCurrentInterface();
+            if ((string)adaptersDropDown.SelectedItem != null)
+            {
+                ApplyBtn.Enabled = true;
+                AllowInterfaceUpdate = true;
+                GetCurrentInterface();
+            }
         }
 
         private void DHCPRadio_CheckedChanged(object sender, EventArgs e)
@@ -261,6 +273,11 @@ namespace SuperCAL
         private void adaptersDropDown_DropDownClosed(object sender, EventArgs e)
         {
             topTimer.Start();
+        }
+
+        private void IPConfig_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            NetworkChange.NetworkAddressChanged -= NetworkChange_NetworkAddressChanged;
         }
     }
 }

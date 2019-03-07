@@ -38,6 +38,7 @@
             this.ToolsButton = new System.Windows.Forms.ToolStripMenuItem();
             this.TaskMgrButton = new System.Windows.Forms.ToolStripMenuItem();
             this.CMDButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.IPConfigMenuBtn = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolsSeperator = new System.Windows.Forms.ToolStripSeparator();
             this.OSKButton = new System.Windows.Forms.ToolStripMenuItem();
             this.ActionsButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,7 +60,10 @@
             this.NetDomButton = new System.Windows.Forms.ToolStripMenuItem();
             this.RebootWindows = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.IPConfigMenuBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.StartPhaseTwoMenuBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.PhaseTwoSeperator = new System.Windows.Forms.ToolStripSeparator();
+            this.StartPhaseThreeMenuBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.PhaseThreeSeperator = new System.Windows.Forms.ToolStripSeparator();
             this.Table.SuspendLayout();
             this.MenuBar.SuspendLayout();
             this.SuspendLayout();
@@ -117,7 +121,7 @@
             this.Table.Controls.Add(this.StopStartCAL, 2, 0);
             this.Table.Controls.Add(this.ReDownloadCAL, 1, 0);
             this.Table.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Table.Location = new System.Drawing.Point(0, 0);
+            this.Table.Location = new System.Drawing.Point(0, 24);
             this.Table.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Table.Name = "Table";
             this.Table.RowCount = 1;
@@ -162,7 +166,7 @@
             this.ToolsSeperator,
             this.OSKButton});
             this.ToolsButton.Name = "ToolsButton";
-            this.ToolsButton.Size = new System.Drawing.Size(47, 20);
+            this.ToolsButton.Size = new System.Drawing.Size(46, 20);
             this.ToolsButton.Text = "Tools";
             // 
             // TaskMgrButton
@@ -178,6 +182,13 @@
             this.CMDButton.Size = new System.Drawing.Size(181, 22);
             this.CMDButton.Text = "Command Prompt";
             this.CMDButton.Click += new System.EventHandler(this.CMDButton_Click);
+            // 
+            // IPConfigMenuBtn
+            // 
+            this.IPConfigMenuBtn.Name = "IPConfigMenuBtn";
+            this.IPConfigMenuBtn.Size = new System.Drawing.Size(181, 22);
+            this.IPConfigMenuBtn.Text = "IP Configuration";
+            this.IPConfigMenuBtn.Click += new System.EventHandler(this.IPConfigMenuBtn_Click);
             // 
             // ToolsSeperator
             // 
@@ -211,66 +222,70 @@
             this.WipeCalButton,
             this.WipeKeepCalButton});
             this.WipeMenu.Name = "WipeMenu";
-            this.WipeMenu.Size = new System.Drawing.Size(228, 22);
-            this.WipeMenu.Text = "Wipe...";
+            this.WipeMenu.Size = new System.Drawing.Size(218, 22);
+            this.WipeMenu.Text = "Wipe";
             // 
             // WipeCalButton
             // 
             this.WipeCalButton.Name = "WipeCalButton";
-            this.WipeCalButton.Size = new System.Drawing.Size(180, 22);
-            this.WipeCalButton.Text = "Wipe (Remove CAL)";
+            this.WipeCalButton.Size = new System.Drawing.Size(189, 22);
+            this.WipeCalButton.Text = "Wipe (Remove CAL)...";
             this.WipeCalButton.Click += new System.EventHandler(this.WipeCalButton_Click);
             // 
             // WipeKeepCalButton
             // 
             this.WipeKeepCalButton.Name = "WipeKeepCalButton";
-            this.WipeKeepCalButton.Size = new System.Drawing.Size(180, 22);
-            this.WipeKeepCalButton.Text = "Wipe (Keep CAL)";
+            this.WipeKeepCalButton.Size = new System.Drawing.Size(189, 22);
+            this.WipeKeepCalButton.Text = "Wipe (Keep CAL)...";
             this.WipeKeepCalButton.Click += new System.EventHandler(this.WipeKeepCalButton_Click);
             // 
             // PhaseTwoMenu
             // 
             this.PhaseTwoMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.StartPhaseTwoMenuBtn,
+            this.PhaseTwoSeperator,
             this.AddSrtTaskButton,
             this.RmvStartTaskButton});
             this.PhaseTwoMenu.Name = "PhaseTwoMenu";
-            this.PhaseTwoMenu.Size = new System.Drawing.Size(228, 22);
-            this.PhaseTwoMenu.Text = "Phase Two (Domain Join)...";
+            this.PhaseTwoMenu.Size = new System.Drawing.Size(218, 22);
+            this.PhaseTwoMenu.Text = "Phase Two (Domain Join)";
             // 
             // AddSrtTaskButton
             // 
             this.AddSrtTaskButton.Name = "AddSrtTaskButton";
-            this.AddSrtTaskButton.Size = new System.Drawing.Size(184, 22);
-            this.AddSrtTaskButton.Text = "Add Startup Task";
+            this.AddSrtTaskButton.Size = new System.Drawing.Size(192, 22);
+            this.AddSrtTaskButton.Text = "Add Startup Task...";
             this.AddSrtTaskButton.Click += new System.EventHandler(this.AddSrtTaskButton_Click);
             // 
             // RmvStartTaskButton
             // 
             this.RmvStartTaskButton.Name = "RmvStartTaskButton";
-            this.RmvStartTaskButton.Size = new System.Drawing.Size(184, 22);
-            this.RmvStartTaskButton.Text = "Remove Startup Task";
+            this.RmvStartTaskButton.Size = new System.Drawing.Size(192, 22);
+            this.RmvStartTaskButton.Text = "Remove Startup Task...";
             this.RmvStartTaskButton.Click += new System.EventHandler(this.RmvStartTaskButton_Click);
             // 
             // PhaseThreeMenu
             // 
             this.PhaseThreeMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.StartPhaseThreeMenuBtn,
+            this.PhaseThreeSeperator,
             this.AddStartupTaskP2,
             this.RemoveStartupTaskP2});
             this.PhaseThreeMenu.Name = "PhaseThreeMenu";
-            this.PhaseThreeMenu.Size = new System.Drawing.Size(228, 22);
-            this.PhaseThreeMenu.Text = "Phase Three (Logon Check)...";
+            this.PhaseThreeMenu.Size = new System.Drawing.Size(218, 22);
+            this.PhaseThreeMenu.Text = "Phase Three (Logon Check)";
             // 
             // AddStartupTaskP2
             // 
             this.AddStartupTaskP2.Name = "AddStartupTaskP2";
-            this.AddStartupTaskP2.Size = new System.Drawing.Size(184, 22);
+            this.AddStartupTaskP2.Size = new System.Drawing.Size(183, 22);
             this.AddStartupTaskP2.Text = "Add Startup Task";
             this.AddStartupTaskP2.Click += new System.EventHandler(this.AddStartupTaskP2_Click);
             // 
             // RemoveStartupTaskP2
             // 
             this.RemoveStartupTaskP2.Name = "RemoveStartupTaskP2";
-            this.RemoveStartupTaskP2.Size = new System.Drawing.Size(184, 22);
+            this.RemoveStartupTaskP2.Size = new System.Drawing.Size(183, 22);
             this.RemoveStartupTaskP2.Text = "Remove Startup Task";
             this.RemoveStartupTaskP2.Click += new System.EventHandler(this.RemoveStartupTaskP2_Click);
             // 
@@ -280,21 +295,21 @@
             this.JoinDomainButton,
             this.JoinWorkButton});
             this.DomainMenu.Name = "DomainMenu";
-            this.DomainMenu.Size = new System.Drawing.Size(228, 22);
-            this.DomainMenu.Text = "Domain...";
+            this.DomainMenu.Size = new System.Drawing.Size(218, 22);
+            this.DomainMenu.Text = "Domain";
             // 
             // JoinDomainButton
             // 
             this.JoinDomainButton.Name = "JoinDomainButton";
-            this.JoinDomainButton.Size = new System.Drawing.Size(158, 22);
-            this.JoinDomainButton.Text = "Join Domain";
+            this.JoinDomainButton.Size = new System.Drawing.Size(180, 22);
+            this.JoinDomainButton.Text = "Join Domain...";
             this.JoinDomainButton.Click += new System.EventHandler(this.JoinDomainButton_Click);
             // 
             // JoinWorkButton
             // 
             this.JoinWorkButton.Name = "JoinWorkButton";
-            this.JoinWorkButton.Size = new System.Drawing.Size(158, 22);
-            this.JoinWorkButton.Text = "Join Workgroup";
+            this.JoinWorkButton.Size = new System.Drawing.Size(180, 22);
+            this.JoinWorkButton.Text = "Join Workgroup...";
             this.JoinWorkButton.Click += new System.EventHandler(this.JoinWorkButton_Click);
             // 
             // AutoLogon
@@ -303,35 +318,35 @@
             this.EnableAutoLogon,
             this.DisableAutoLogon});
             this.AutoLogon.Name = "AutoLogon";
-            this.AutoLogon.Size = new System.Drawing.Size(228, 22);
-            this.AutoLogon.Text = "Auto Logon...";
+            this.AutoLogon.Size = new System.Drawing.Size(218, 22);
+            this.AutoLogon.Text = "Auto Logon";
             // 
             // EnableAutoLogon
             // 
             this.EnableAutoLogon.Name = "EnableAutoLogon";
-            this.EnableAutoLogon.Size = new System.Drawing.Size(178, 22);
-            this.EnableAutoLogon.Text = "Enable Auto Logon";
+            this.EnableAutoLogon.Size = new System.Drawing.Size(187, 22);
+            this.EnableAutoLogon.Text = "Enable Auto Logon...";
             this.EnableAutoLogon.Click += new System.EventHandler(this.EnableAutoLogon_Click);
             // 
             // DisableAutoLogon
             // 
             this.DisableAutoLogon.Name = "DisableAutoLogon";
-            this.DisableAutoLogon.Size = new System.Drawing.Size(178, 22);
-            this.DisableAutoLogon.Text = "Disable Auto Logon";
+            this.DisableAutoLogon.Size = new System.Drawing.Size(187, 22);
+            this.DisableAutoLogon.Text = "Disable Auto Logon...";
             this.DisableAutoLogon.Click += new System.EventHandler(this.DisableAutoLogon_Click);
             // 
             // NetDomButton
             // 
             this.NetDomButton.Name = "NetDomButton";
-            this.NetDomButton.Size = new System.Drawing.Size(228, 22);
-            this.NetDomButton.Text = "Install NETDOM";
+            this.NetDomButton.Size = new System.Drawing.Size(218, 22);
+            this.NetDomButton.Text = "Install NETDOM...";
             this.NetDomButton.Click += new System.EventHandler(this.NetDomButton_Click);
             // 
             // RebootWindows
             // 
             this.RebootWindows.Name = "RebootWindows";
-            this.RebootWindows.Size = new System.Drawing.Size(228, 22);
-            this.RebootWindows.Text = "Restart Windows";
+            this.RebootWindows.Size = new System.Drawing.Size(218, 22);
+            this.RebootWindows.Text = "Restart Windows...";
             this.RebootWindows.Click += new System.EventHandler(this.RebootWindows_Click);
             // 
             // AboutButton
@@ -342,12 +357,29 @@
             this.AboutButton.Text = "About";
             this.AboutButton.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
-            // IPConfigMenuBtn
+            // StartPhaseTwoMenuBtn
             // 
-            this.IPConfigMenuBtn.Name = "IPConfigMenuBtn";
-            this.IPConfigMenuBtn.Size = new System.Drawing.Size(181, 22);
-            this.IPConfigMenuBtn.Text = "IP Configuration...";
-            this.IPConfigMenuBtn.Click += new System.EventHandler(this.IPConfigMenuBtn_Click);
+            this.StartPhaseTwoMenuBtn.Name = "StartPhaseTwoMenuBtn";
+            this.StartPhaseTwoMenuBtn.Size = new System.Drawing.Size(192, 22);
+            this.StartPhaseTwoMenuBtn.Text = "Start Phase Two...";
+            this.StartPhaseTwoMenuBtn.Click += new System.EventHandler(this.StartPhaseTwoMenuBtn_Click);
+            // 
+            // PhaseTwoSeperator
+            // 
+            this.PhaseTwoSeperator.Name = "PhaseTwoSeperator";
+            this.PhaseTwoSeperator.Size = new System.Drawing.Size(189, 6);
+            // 
+            // StartPhaseThreeMenuBtn
+            // 
+            this.StartPhaseThreeMenuBtn.Name = "StartPhaseThreeMenuBtn";
+            this.StartPhaseThreeMenuBtn.Size = new System.Drawing.Size(183, 22);
+            this.StartPhaseThreeMenuBtn.Text = "Start Phase Three...";
+            this.StartPhaseThreeMenuBtn.Click += new System.EventHandler(this.StartPhaseThreeMenuBtn_Click);
+            // 
+            // PhaseThreeSeperator
+            // 
+            this.PhaseThreeSeperator.Name = "PhaseThreeSeperator";
+            this.PhaseThreeSeperator.Size = new System.Drawing.Size(180, 6);
             // 
             // Main
             // 
@@ -407,6 +439,10 @@
         private System.Windows.Forms.ToolStripMenuItem AddStartupTaskP2;
         private System.Windows.Forms.ToolStripMenuItem RemoveStartupTaskP2;
         private System.Windows.Forms.ToolStripMenuItem IPConfigMenuBtn;
+        private System.Windows.Forms.ToolStripMenuItem StartPhaseTwoMenuBtn;
+        private System.Windows.Forms.ToolStripSeparator PhaseTwoSeperator;
+        private System.Windows.Forms.ToolStripMenuItem StartPhaseThreeMenuBtn;
+        private System.Windows.Forms.ToolStripSeparator PhaseThreeSeperator;
     }
 }
 

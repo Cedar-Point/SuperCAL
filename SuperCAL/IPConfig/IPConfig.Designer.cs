@@ -266,6 +266,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Super CAL: IPv4 Configuration";
             this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.IPConfig_FormClosing);
             this.UseIPGroup.ResumeLayout(false);
             this.UseIPGroup.PerformLayout();
             this.dnsGroup.ResumeLayout(false);

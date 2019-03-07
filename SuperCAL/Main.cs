@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Forms;
+using System.Net.NetworkInformation;
 using System.Drawing;
 
 namespace SuperCAL
@@ -25,46 +26,28 @@ namespace SuperCAL
             BringToFront();
         }
 
-        private async void Window_Load(object sender, EventArgs e)
+        private void Window_Load(object sender, EventArgs e)
         {
-            if (Program.Arguments.Length != 0 && Program.Arguments[0] == "0")
+            if(Program.Arguments.Length != 0)
             {
-                Table.Enabled = false;
-                Logger.Log("Phase two: Join domain...");
-                if(await DomainJoin.Join())
+                string firstArg = Program.Arguments[0].ToLower();
+                if (firstArg == "0")
                 {
-                    await Misc.InstallScheduledTask(null, "2");
-                    await Misc.SetAutoLogon(true);
-                    if(!Misc.IsAutoLogonSet())
-                    {
-                        await Misc.InstallScheduledTask(Properties.Resources.SuperCALPhaseThree, "3");
-                    }
-                    Misc.RestartWindows();
+                    PhaseTwo();
                 }
-            }
-            else if(Program.Arguments.Length != 0 && Program.Arguments[0] == "3")
-            {
-                Table.Enabled = false;
-                Logger.Log("Phase three: Checking for auto-logon...");
-                if(Misc.IsAutoLogonSet())
+                if (firstArg == "3")
                 {
-                    Logger.Log("AutoLogon found! Removing scheduled task...");
-                    await Misc.InstallScheduledTask(null, "3");
-                    Misc.RestartWindows();
+                    PhaseThree();
                 }
-                else
+                if (firstArg == "/recal" || firstArg == "-recal")
                 {
-                    Logger.Warning("AutoLogon not set!");
-                    Logger.Log("Running: gpupdate /force");
-                    await Misc.RunCMD("gpupdate.exe /force");
-                    Logger.Log("Running: gpupdate /sync");
-                    await Misc.RunCMD("gpupdate.exe /sync");
-                    if(Misc.IsAutoLogonSet())
-                    {
-                        Logger.Log("AutoLogon found! Removing scheduled task...");
-                        await Misc.InstallScheduledTask(null, "3");
-                    }
-                    Misc.RestartWindows();
+                    Logger.Log("ReCAL: ReCAL Switch Passed in CLI, Starting ReCAL process...");
+                    ReCAL.PerformClick();
+                }
+                if (firstArg == "/redownload" || firstArg == "-redownload")
+                {
+                    Logger.Log("ReDownload: ReDownload Switch Passed in CLI, Starting ReDownload process...");
+                    ReDownloadCAL.PerformClick();
                 }
             }
             else
@@ -80,6 +63,70 @@ namespace SuperCAL
                     Logger.Warning("CAL Service is not running.");
                     StopStartCAL.Text = "Start CAL";
                 }
+            }
+        }
+
+        private async void PhaseTwo()
+        {
+            Ping ping = new Ping();
+            Table.Enabled = false;
+            Logger.Log("Phase two: Join domain...");
+            Logger.Log("Pinging " + DomainJoin.DomainName + "...");
+            PingReply reply = null;
+            try
+            {
+                reply = await ping.SendPingAsync(DomainJoin.DomainName);
+            }
+            catch(PingException)
+            {
+                Logger.Error("Ping: Unknown Failure. (Usually a failed hostname lookup)");
+            }
+            if(reply == null || reply.Status != IPStatus.Success)
+            {
+                if(reply != null)
+                {
+                    Logger.Error("Ping: " + reply.Status.ToString() + '.');
+                }
+                Logger.Log("\n\nTo help resolve network issues, check the IP settings by double pressing anywhere on SuperCAL, and then by selecting \"Tools\" -> \"IP Configuration\"");
+                Logger.Log("\n\nIf you would like to retry this phase, double press anywhere on SuperCAL, and then select \"Actions\" -> \"Phase Two (Domain Join)\" -> \"Start Phase Two...\"");
+                return;
+            }
+            Logger.Good("Ping: Success.");
+            if (await DomainJoin.Join())
+            {
+                await Misc.InstallScheduledTask(null, "2");
+                await Misc.SetAutoLogon(true);
+                if (!Misc.IsAutoLogonSet())
+                {
+                    await Misc.InstallScheduledTask(Properties.Resources.SuperCALPhaseThree, "3");
+                }
+                Misc.RestartWindows();
+            }
+        }
+
+        private async void PhaseThree()
+        {
+            Table.Enabled = false;
+            Logger.Log("Phase three: Checking for auto-logon...");
+            if (Misc.IsAutoLogonSet())
+            {
+                Logger.Log("AutoLogon found! Removing scheduled task...");
+                await Misc.InstallScheduledTask(null, "3");
+                Misc.RestartWindows();
+            }
+            else
+            {
+                Logger.Warning("AutoLogon not set!");
+                Logger.Log("Running: gpupdate /force");
+                await Misc.RunCMD("gpupdate.exe /force");
+                Logger.Log("Running: gpupdate /sync");
+                await Misc.RunCMD("gpupdate.exe /sync");
+                if (Misc.IsAutoLogonSet())
+                {
+                    Logger.Log("AutoLogon found! Removing scheduled task...");
+                    await Misc.InstallScheduledTask(null, "3");
+                }
+                Misc.RestartWindows();
             }
         }
 
@@ -219,6 +266,16 @@ namespace SuperCAL
         {
             Logger.Good("IP Configuration: Done.");
             Enabled = true;
+        }
+
+        private void StartPhaseTwoMenuBtn_Click(object sender, EventArgs e)
+        {
+            PhaseTwo();
+        }
+
+        private void StartPhaseThreeMenuBtn_Click(object sender, EventArgs e)
+        {
+            PhaseThree();
         }
     }
 }
