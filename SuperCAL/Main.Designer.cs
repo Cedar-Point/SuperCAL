@@ -121,7 +121,7 @@
             this.Table.Controls.Add(this.StopStartCAL, 2, 0);
             this.Table.Controls.Add(this.ReDownloadCAL, 1, 0);
             this.Table.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Table.Location = new System.Drawing.Point(0, 24);
+            this.Table.Location = new System.Drawing.Point(0, 0);
             this.Table.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Table.Name = "Table";
             this.Table.RowCount = 1;
