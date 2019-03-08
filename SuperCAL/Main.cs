@@ -79,6 +79,10 @@ namespace SuperCAL
                 }
                 Misc.RestartWindows();
             }
+            else
+            {
+                Logger.Log("\n\nIf you would like to retry this phase, double press anywhere on SuperCAL, and then select \"Actions\" -> \"Phase Two (Domain Join)\" -> \"Start Phase Two...\"");
+            }
         }
 
         private async void PhaseThree()

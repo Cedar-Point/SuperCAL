@@ -30,7 +30,6 @@ namespace SuperCAL
                     Logger.Error("Ping: " + reply.Status.ToString() + '.');
                 }
                 Logger.Log("\n\nTo help resolve network issues, check the IP settings by double pressing anywhere on SuperCAL, and then by selecting \"Tools\" -> \"IP Configuration\"");
-                Logger.Log("\n\nIf you would like to retry this phase, double press anywhere on SuperCAL, and then select \"Actions\" -> \"Phase Two (Domain Join)\" -> \"Start Phase Two...\"");
                 return false;
             }
             Logger.Good("Ping: Success.");
