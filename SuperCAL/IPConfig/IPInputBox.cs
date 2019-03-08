@@ -197,6 +197,7 @@ namespace SuperCAL
             if (
                 (
                     e.KeyCode == Keys.Decimal
+                    || e.KeyCode == Keys.OemPeriod
                     || (
                         thisTb.SelectionStart == thisTb.TextLength
                         && e.KeyCode == Keys.Right
