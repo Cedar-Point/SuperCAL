@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Forms;
-using System.Net.NetworkInformation;
 using System.Drawing;
 
 namespace SuperCAL
@@ -68,30 +67,8 @@ namespace SuperCAL
 
         private async void PhaseTwo()
         {
-            Ping ping = new Ping();
             Table.Enabled = false;
             Logger.Log("Phase two: Join domain...");
-            Logger.Log("Pinging " + DomainJoin.DomainName + "...");
-            PingReply reply = null;
-            try
-            {
-                reply = await ping.SendPingAsync(DomainJoin.DomainName);
-            }
-            catch(PingException)
-            {
-                Logger.Error("Ping: Unknown Failure. (Usually a failed hostname lookup)");
-            }
-            if(reply == null || reply.Status != IPStatus.Success)
-            {
-                if(reply != null)
-                {
-                    Logger.Error("Ping: " + reply.Status.ToString() + '.');
-                }
-                Logger.Log("\n\nTo help resolve network issues, check the IP settings by double pressing anywhere on SuperCAL, and then by selecting \"Tools\" -> \"IP Configuration\"");
-                Logger.Log("\n\nIf you would like to retry this phase, double press anywhere on SuperCAL, and then select \"Actions\" -> \"Phase Two (Domain Join)\" -> \"Start Phase Two...\"");
-                return;
-            }
-            Logger.Good("Ping: Success.");
             if (await DomainJoin.Join())
             {
                 await Misc.InstallScheduledTask(null, "2");
@@ -140,18 +117,22 @@ namespace SuperCAL
             await Misc.InstallScheduledTask(Properties.Resources.SuperCALPhaseTwo, "2");
             await DomainJoin.Leave();
             await Misc.SetAutoLogon(false);
-            await Wipe.Do();
-            await McrsCalSrvc.Start();
-            CenterToScreen();
-            Left = Left - 440;
+            if (await Wipe.Do())
+            {
+                await McrsCalSrvc.Start();
+                CenterToScreen();
+                Left = Left - 440;
+            }
         }
 
         private async void ReDownloadCAL_Click(object sender, EventArgs e)
         {
-            await Wipe.Do(true);
-            await McrsCalSrvc.Start();
-            CenterToScreen();
-            Left = Left - 440;
+            if(await Wipe.Do(true))
+            {
+                await McrsCalSrvc.Start();
+                CenterToScreen();
+                Left = Left - 440;
+            }
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)

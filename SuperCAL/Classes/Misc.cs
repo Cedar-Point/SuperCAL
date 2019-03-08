@@ -86,6 +86,11 @@ namespace SuperCAL
         public static Task InstallNetdom()
         {
             return Task.Run(() => {
+                if (File.Exists(System32Path() + @"netdom.exe") && File.Exists(System32Path() + @"en-US\netdom.exe.mui"))
+                {
+                    Logger.Log("NETDOM already installed, Skipping installation.");
+                    return;
+                }
                 try
                 {
                     if (Environment.OSVersion.Version.Build >= 10240 && Environment.Is64BitOperatingSystem)

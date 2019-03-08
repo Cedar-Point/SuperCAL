@@ -42,6 +42,11 @@ namespace SuperCAL
             NetworkChange.NetworkAddressChanged += NetworkChange_NetworkAddressChanged;
 
             InitializeAdapterList();
+
+            if(adaptersDropDown.Items.Count == 1)
+            {
+                adaptersDropDown.SelectedIndex = 0;
+            }
         }
 
         private bool AllowInterfaceUpdate = false;
@@ -58,7 +63,10 @@ namespace SuperCAL
             foreach (NetworkInterface netInterface in networkInterfaces)
             {
                 if (netInterface.Name.Contains("Loopback Pseudo-Interface")) continue;
-                adaptersDropDown.Items.Add(netInterface.Name);
+                if (netInterface.Supports(NetworkInterfaceComponent.IPv4))
+                {
+                    adaptersDropDown.Items.Add(netInterface.Name);
+                }
             }
         }
 

@@ -2,6 +2,7 @@
 using System.DirectoryServices.ActiveDirectory;
 using System.DirectoryServices;
 using System;
+using System.Net.NetworkInformation;
 
 namespace SuperCAL
 {
@@ -11,9 +12,31 @@ namespace SuperCAL
         public static string OU = "";
         public static async Task<bool> Join()
         {
-            bool popKeyboard = false;
+            Ping ping = new Ping();
+            Logger.Log("Pinging " + DomainJoin.DomainName + "...");
+            PingReply reply = null;
+            try
+            {
+                reply = await ping.SendPingAsync(DomainJoin.DomainName);
+            }
+            catch (PingException)
+            {
+                Logger.Error("Ping: Unknown Failure. (Usually a failed hostname lookup)");
+            }
+            if (reply == null || reply.Status != IPStatus.Success)
+            {
+                if (reply != null)
+                {
+                    Logger.Error("Ping: " + reply.Status.ToString() + '.');
+                }
+                Logger.Log("\n\nTo help resolve network issues, check the IP settings by double pressing anywhere on SuperCAL, and then by selecting \"Tools\" -> \"IP Configuration\"");
+                Logger.Log("\n\nIf you would like to retry this phase, double press anywhere on SuperCAL, and then select \"Actions\" -> \"Phase Two (Domain Join)\" -> \"Start Phase Two...\"");
+                return false;
+            }
+            Logger.Good("Ping: Success.");
             Logger.Log("Adding computer to domain (" + DomainName + ") in container (" + OU + ")  as (" + Environment.MachineName + "): Please wait...");
             int tries = 4;
+            bool popKeyboard = false;
             while (!OnDomain() && tries-- != 0)
             {
                 if(popKeyboard)

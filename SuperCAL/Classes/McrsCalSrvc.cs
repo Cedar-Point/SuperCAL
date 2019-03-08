@@ -30,9 +30,12 @@ namespace SuperCAL
             Logger.Log("Stopping CAL...");
             return Task.Run(() => {
                 Service.Stop();
+                TryStopService("World Wide Web Publishing Service");
+                TryStopService("MICROS KDS Controller");
+                TryStopProcesses(Process.GetProcessesByName("WIN7CALStart"));
+                TryStopProcesses(Process.GetProcessesByName("SarOpsWin32"));
+                TryStopProcesses(Process.GetProcessesByName("KDSDisplay"));
                 Logger.Good("CAL Stopped.");
-                KillProcesses(Process.GetProcessesByName("WIN7CALStart"));
-                KillProcesses(Process.GetProcessesByName("SarOpsWin32"));
                 StopStartCAL.Invoke(new Action(() => {
                     StopStartCAL.Text = "Start CAL";
                     Table.Enabled = true;
@@ -45,6 +48,8 @@ namespace SuperCAL
             StopStartCAL.Text = "Starting CAL...";
             Logger.Log("Starting CAL...");
             return Task.Run(() => {
+                TryStartService("World Wide Web Publishing Service");
+                TryStartService("MICROS KDS Controller");
                 Service.Start();
                 Logger.Good("CAL Started.");
                 StopStartCAL.Invoke(new Action(() => {
@@ -64,7 +69,20 @@ namespace SuperCAL
                 await Start();
             }
         }
-        private static void KillProcesses(Process[] processes)
+        public static ServiceController GetService(string serviceName)
+        {
+            ServiceController service = null;
+            foreach (ServiceController serviceController in ServiceController.GetServices())
+            {
+                if (serviceController.DisplayName == serviceName)
+                {
+                    service = serviceController;
+                    break;
+                }
+            }
+            return service;
+        }
+        private static void TryStopProcesses(Process[] processes)
         {
             if (processes.Length != 0)
             {
@@ -80,6 +98,50 @@ namespace SuperCAL
                         Logger.Warning("Killing " + proc.ProcessName + ":" + proc.Id.ToString() + " failed. Process may already be ending.");
                     }
                 }
+            }
+        }
+        private static void TryStopService(string serviceName)
+        {
+            Logger.Log(serviceName + ": Checking if service exists...");
+            ServiceController service = GetService(serviceName);
+            if (service != null)
+            {
+                try
+                {
+                    Logger.Log(serviceName + ": Stopping...");
+                    service.Stop();
+                    Logger.Good(serviceName + ": Stopped.");
+                }
+                catch (Exception e)
+                {
+                    Logger.Warning(serviceName + ": " + e.Message);
+                }
+            }
+            else
+            {
+                Logger.Log(serviceName + ": Service does not exist.");
+            }
+        }
+        private static void TryStartService(string serviceName)
+        {
+            Logger.Log(serviceName + ": Checking if service exists...");
+            ServiceController service = GetService(serviceName);
+            if (service != null)
+            {
+                try
+                {
+                    Logger.Log(serviceName + ": Starting...");
+                    service.Start();
+                    Logger.Good(serviceName + ": Started.");
+                }
+                catch (Exception e)
+                {
+                    Logger.Warning(serviceName + ": " + e.Message);
+                }
+            }
+            else
+            {
+                Logger.Log(serviceName + ": Service does not exist.");
             }
         }
     }

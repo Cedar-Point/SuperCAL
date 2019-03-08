@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Win32;
 using System.IO;
+using System.ServiceProcess;
 
 namespace SuperCAL
 {
@@ -13,13 +14,13 @@ namespace SuperCAL
         public static string EGatewayHost = "";
         private static Dictionary<string, object> RegDictionary = null;
         private static string MicrosRegRoot = @"SOFTWARE\MICROS";
-        public async static Task Do(bool softWipe = false)
+        public async static Task<bool> Do(bool softWipe = false)
         {
             if (McrsCalSrvc.IsRunning())
             {
                 await McrsCalSrvc.Stop();
             }
-            await Task.Run(() => {
+            return await Task.Run(() => {
                 RegDictionary = new Dictionary<string, object>
                 {
                     ["ActiveHostIpAddress"] = EGatewayURL,
@@ -31,16 +32,18 @@ namespace SuperCAL
                     SaveImportantKeys(false);
                     SaveImportantKeys(true);
                 }
-                if (Directory.Exists(@"C:\MICROS")) //NEEDS FIXED!!!
+                if (!DeleteDirectory(@"C:\MICROS"))
                 {
-                    foreach (string directory in Directory.EnumerateDirectories(@"C:\MICROS"))
-                    {
-                        if (directory != @"C:\MICROS\SuperCAL")
-                        {
-                            DeleteDirectory(directory);
-                        }
-                    }
+                    return false;
                 }
+                ServiceController w3Svc = McrsCalSrvc.GetService("World Wide Web Publishing Service");
+                if (w3Svc != null)
+                {
+                    Logger.Log("Disabling IIS...");
+                    Misc.RunCMD("sc.exe config \"" + w3Svc.ServiceName + "\" start=disabled").Wait();
+                    Logger.Good("Done.");
+                }
+                TryUninstallService("MICROS KDS Controller");
                 RegClear(false);
                 RegClear(true);
                 if (softWipe)
@@ -68,9 +71,10 @@ namespace SuperCAL
                     }
                 }
                 Logger.Good("Done.");
+                return true;
             });
         }
-        public static void DeleteDirectory(string path)
+        public static bool DeleteDirectory(string path)
         {
             if (Directory.Exists(path))
             {
@@ -79,7 +83,20 @@ namespace SuperCAL
                 {
                     foreach (string file in files)
                     {
-                        File.Delete(file);
+                        try
+                        {
+                            File.Delete(file);
+                        }
+                        catch(UnauthorizedAccessException)
+                        {
+                            Logger.Error(file + ": Failed to delete: Access Denied! (The file may be open or in use)");
+                            return false;
+                        }
+                        catch (Exception e)
+                        {
+                            Logger.Error(file + ": " + e.Message);
+                            return false;
+                        }
                         Logger.Good(file + ": Deleted.");
                     }
                 }
@@ -88,11 +105,33 @@ namespace SuperCAL
                 {
                     foreach (string dir in dirs)
                     {
-                        DeleteDirectory(dir);
+                        if (dir != @"C:\MICROS\SuperCAL")
+                        {
+                            if(!DeleteDirectory(dir))
+                            {
+                                return false;
+                            }
+                        }
                     }
                 }
-                Directory.Delete(path);
+                try
+                {
+                    if (path != @"C:\MICROS")
+                    {
+                        Directory.Delete(path);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Logger.Error(path + ": " + e.Message);
+                    return false;
+                }
                 Logger.Good(path + ": Deleted.");
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
         private static void RegClear(bool bit64)
@@ -163,6 +202,16 @@ namespace SuperCAL
             catch (Exception)
             {
                 Logger.Warning("Failed to save the Micros key in the " + bit + " bit registry.");
+            }
+        }
+        private static void TryUninstallService(string serviceName)
+        {
+            ServiceController service = McrsCalSrvc.GetService(serviceName);
+            if (service != null)
+            {
+                Logger.Log(serviceName + ": Uninstalling Service...");
+                Misc.RunCMD("sc delete \"" + service.ServiceName + "\"").Wait();
+                Logger.Good(serviceName + ": Service Uninstalled.");
             }
         }
     }
