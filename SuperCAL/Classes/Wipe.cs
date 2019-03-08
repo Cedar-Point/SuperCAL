@@ -36,13 +36,6 @@ namespace SuperCAL
                 {
                     return false;
                 }
-                ServiceController w3Svc = McrsCalSrvc.GetService("World Wide Web Publishing Service");
-                if (w3Svc != null)
-                {
-                    Logger.Log("Disabling IIS...");
-                    Misc.RunCMD("sc.exe config \"" + w3Svc.ServiceName + "\" start=disabled").Wait();
-                    Logger.Good("Done.");
-                }
                 TryUninstallService("MICROS KDS Controller");
                 RegClear(false);
                 RegClear(true);
@@ -149,7 +142,10 @@ namespace SuperCAL
             try
             {
                 RegistryKey regKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, view).OpenSubKey(MicrosRegRoot, true);
-                regKey.DeleteSubKeyTree("CAL");
+                foreach(string subKey in regKey.GetSubKeyNames())
+                {
+                    regKey.DeleteSubKeyTree(subKey);
+                }
                 RegistryKey newKey = regKey.CreateSubKey(@"CAL\Config");
                 regKey.Close();
                 foreach (KeyValuePair<string, object> kv in RegDictionary)

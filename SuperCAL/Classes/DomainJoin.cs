@@ -13,11 +13,11 @@ namespace SuperCAL
         public static async Task<bool> Join()
         {
             Ping ping = new Ping();
-            Logger.Log("Pinging " + DomainJoin.DomainName + "...");
+            Logger.Log("Pinging " + DomainName + "...");
             PingReply reply = null;
             try
             {
-                reply = await ping.SendPingAsync(DomainJoin.DomainName);
+                reply = await ping.SendPingAsync(DomainName);
             }
             catch (PingException)
             {
