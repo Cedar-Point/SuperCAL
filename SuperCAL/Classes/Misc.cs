@@ -73,7 +73,12 @@ namespace SuperCAL
                 {
                     Logger.Log("Removing SuperCAL task...");
                     RunCMD("schtasks.exe /Delete /F /TN SuperCAL" + taskSuffix);
-                    File.Delete(@"C:\MICROS\SuperCAL\SuperCALTask" + taskSuffix + ".xml");
+                    string XMLPath = @"C:\MICROS\SuperCAL\SuperCALTask" + taskSuffix + ".xml";
+                    if (File.Exists(XMLPath))
+                    {
+                        Logger.Good(XMLPath + ": Deleted.");
+                        File.Delete(XMLPath);
+                    }
                     Logger.Good("Done.");
                 }
             });

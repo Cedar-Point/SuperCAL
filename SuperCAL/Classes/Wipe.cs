@@ -26,15 +26,24 @@ namespace SuperCAL
                     ["ActiveHost"] = EGatewayHost,
                     ["POSType"] = 101
                 };
-                if(softWipe)
+                if (softWipe)
                 {
                     SaveImportantKeys(false);
                     SaveImportantKeys(true);
                 }
-                DeleteDirectory(@"C:\Micros\Simphony");
+                if (Directory.Exists(@"C:\MICROS")) //NEEDS FIXED!!!
+                {
+                    foreach (string directory in Directory.EnumerateDirectories(@"C:\MICROS"))
+                    {
+                        if (directory != @"C:\MICROS\SuperCAL")
+                        {
+                            DeleteDirectory(directory);
+                        }
+                    }
+                }
                 RegClear(false);
                 RegClear(true);
-                if(softWipe)
+                if (softWipe)
                 {
                     Logger.Log("Adding HwConfigured value to the CAL registry key...");
                     try
@@ -63,21 +72,21 @@ namespace SuperCAL
         }
         public static void DeleteDirectory(string path)
         {
-            if(Directory.Exists(path))
+            if (Directory.Exists(path))
             {
                 string[] files = Directory.EnumerateFiles(path).ToArray();
                 if (files.Length != 0)
                 {
-                    foreach(string file in files)
+                    foreach (string file in files)
                     {
                         File.Delete(file);
                         Logger.Good(file + ": Deleted.");
                     }
                 }
                 string[] dirs = Directory.EnumerateDirectories(path).ToArray();
-                if(dirs.Length != 0)
+                if (dirs.Length != 0)
                 {
-                    foreach(string dir in dirs)
+                    foreach (string dir in dirs)
                     {
                         DeleteDirectory(dir);
                     }
