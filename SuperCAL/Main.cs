@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace SuperCAL
 {
@@ -51,6 +52,17 @@ namespace SuperCAL
             }
             else
             {
+                if(Pin.UnlockPin != "")
+                {
+                    Logger.Warning("SuperCAL Locked: Showing PIN Screen.");
+                    Task.Run(() => {
+                        Invoke(new Action(() => {
+                            Enabled = false;
+                            new Pin().ShowDialog(this);
+                            Enabled = true;
+                        }));
+                    });
+                }
                 Logger.Log("Welcome to Super CAL: Press any button to begin.");
                 if (McrsCalSrvc.IsRunning())
                 {

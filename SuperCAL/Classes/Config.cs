@@ -13,7 +13,9 @@ namespace SuperCAL
                 new XElement("DomainJoinOU", "OU=Micros,DC=ad,DC=contoso,DC=com"),
                 new XElement("AutoLogonUserName", "username"),
                 new XElement("AutoLogonPassword", "password"),
-                new XElement("AutoLogonADDomain", "addomain")
+                new XElement("AutoLogonADDomain", "addomain"),
+                new XElement("UnlockMessage", "Enter Unlock PIN"),
+                new XElement("UnlockPIN", "1234")
             )).Save("SuperCAL.xml");
         }
         public static void ReadConfig()
@@ -26,6 +28,8 @@ namespace SuperCAL
             Misc.AutoLogonUserName = root.Element("AutoLogonUserName").Value;
             Misc.AutoLogonPassword = root.Element("AutoLogonPassword").Value;
             Misc.AutoLogonADDomain = root.Element("AutoLogonADDomain").Value;
+            Pin.UnlockMessage = root.Element("UnlockMessage").Value;
+            Pin.UnlockPin = root.Element("UnlockPIN").Value;
         }
     }
 }

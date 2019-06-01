@@ -100,6 +100,12 @@
     </Compile>
     <Compile Include="Classes\McrsCalSrvc.cs" />
     <Compile Include="Classes\Misc.cs" />
+    <Compile Include="Pin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pin.Designer.cs">
+      <DependentUpon>Pin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -117,6 +123,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pin.resx">
+      <DependentUpon>Pin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -159,7 +168,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>copy $(TargetPath) \\cp-gc-dylantest\c$\$(TargetFileName)</PostBuildEvent>
   </PropertyGroup>
 </Project>

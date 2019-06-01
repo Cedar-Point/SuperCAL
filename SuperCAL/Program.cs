@@ -13,9 +13,6 @@ namespace SuperCAL
         [STAThread]
         static void Main(string[] args)
         {
-            //Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
-
             Arguments = args;
             bool prePass = true;
             try
