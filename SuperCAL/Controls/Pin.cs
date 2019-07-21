@@ -3,18 +3,14 @@ using System.Windows.Forms;
 
 namespace SuperCAL
 {
-    public partial class Pin : Form
+    public partial class Pin : UserControl
     {
         public static string UnlockPin = "";
         public static string UnlockMessage = "";
         private string pinBuffer = "";
-        private Timer topTimer = new Timer();
         public Pin()
         {
             InitializeComponent();
-            topTimer.Interval = 1000;
-            topTimer.Tick += TopTimer_Tick;
-            topTimer.Start();
             lblDisplay.Text = UnlockMessage;
         }
         private void TopTimer_Tick(object sender, EventArgs e)
@@ -27,7 +23,14 @@ namespace SuperCAL
             lblDisplay.Focus();
             if(thisButton.Text == "Enter")
             {
-                Close();
+                if (pinBuffer == UnlockPin)
+                {
+                    Dispose();
+                }
+                else
+                {
+                    Application.Exit();
+                }
             }
             else
             {
@@ -43,17 +46,6 @@ namespace SuperCAL
                 starDisplay += '*';
             }
             lblDisplay.Text = starDisplay;
-        }
-        private void Pin_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (pinBuffer == UnlockPin)
-            {
-                Close();
-            }
-            else
-            {
-                Application.Exit();
-            }
         }
     }
 }

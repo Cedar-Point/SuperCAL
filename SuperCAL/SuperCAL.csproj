@@ -100,10 +100,10 @@
     </Compile>
     <Compile Include="Classes\McrsCalSrvc.cs" />
     <Compile Include="Classes\Misc.cs" />
-    <Compile Include="Pin.cs">
-      <SubType>Form</SubType>
+    <Compile Include="Controls\Pin.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Pin.Designer.cs">
+    <Compile Include="Controls\Pin.Designer.cs">
       <DependentUpon>Pin.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -124,7 +124,7 @@
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pin.resx">
+    <EmbeddedResource Include="Controls\Pin.resx">
       <DependentUpon>Pin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -168,6 +168,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy $(TargetPath) \\cp-gc-dylantest\c$\$(TargetFileName)</PostBuildEvent>
+    <PostBuildEvent>copy $(TargetPath) \\cpmdylanbick\c$\$(TargetFileName)</PostBuildEvent>
   </PropertyGroup>
 </Project>

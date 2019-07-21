@@ -14,7 +14,7 @@ namespace SuperCAL
         {
             InitializeComponent();
             Logger.LogRTB = LogRTB;
-            topTimer.Interval = 1000;
+            topTimer.Interval = 500;
             topTimer.Tick += TopTimer_Tick;
             topTimer.Start();
             McrsCalSrvc.StopStartCAL = StopStartCAL;
@@ -55,13 +55,13 @@ namespace SuperCAL
                 if(Pin.UnlockPin != "")
                 {
                     Logger.Warning("SuperCAL Locked: Showing PIN Screen.");
-                    Task.Run(() => {
-                        Invoke(new Action(() => {
-                            Enabled = false;
-                            new Pin().ShowDialog(this);
-                            Enabled = true;
-                        }));
-                    });
+                    Control pin = new Pin();
+                    Controls.Add(pin);
+                    pin.Width = ClientSize.Width;
+                    pin.Height = ClientSize.Height;
+                    pin.Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left;
+                    pin.BringToFront();
+                    pin.Show();
                 }
                 Logger.Log("Welcome to Super CAL: Press any button to begin.");
                 if (McrsCalSrvc.IsRunning())
