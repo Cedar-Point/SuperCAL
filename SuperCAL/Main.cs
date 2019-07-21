@@ -110,14 +110,17 @@ namespace SuperCAL
             else
             {
                 Logger.Warning("AutoLogon not set!");
-                Logger.Log("Running: gpupdate /force");
-                await Misc.RunCMD("gpupdate.exe /force");
-                Logger.Log("Running: gpupdate /sync");
-                await Misc.RunCMD("gpupdate.exe /sync");
+                Logger.Log("Running: gpupdate.exe /Target:Computer /Force /Wait:300");
+                await Misc.RunCMD("gpupdate.exe /Target:Computer /Force /Wait:300");
                 if (Misc.IsAutoLogonSet())
                 {
                     Logger.Log("AutoLogon found! Removing scheduled task...");
                     await Misc.InstallScheduledTask(null, "3");
+                }
+                else
+                {
+                    Logger.Log("Running: gpupdate.exe /Target:Computer /Boot /Sync");
+                    await Misc.RunCMD("gpupdate.exe /Target:Computer /Boot /Sync");
                 }
                 Misc.RestartWindows();
             }
