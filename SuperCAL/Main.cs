@@ -28,33 +28,37 @@ namespace SuperCAL
 
         private void Window_Load(object sender, EventArgs e)
         {
+            bool allowContinue = true;
             if(Program.Arguments.Length != 0)
             {
                 string firstArg = Program.Arguments[0].ToLower();
                 if (firstArg == "0")
                 {
                     PhaseTwo();
+                    allowContinue = false;
                 }
                 if (firstArg == "3")
                 {
                     PhaseThree();
+                    allowContinue = false;
                 }
                 if (firstArg == "/recal" || firstArg == "-recal")
                 {
                     Logger.Log("ReCAL: ReCAL Switch Passed in CLI, Starting ReCAL process...");
                     ReCAL.PerformClick();
+                    allowContinue = false;
                 }
                 if (firstArg == "/redownload" || firstArg == "-redownload")
                 {
                     Logger.Log("ReDownload: ReDownload Switch Passed in CLI, Starting ReDownload process...");
                     ReDownloadCAL.PerformClick();
+                    allowContinue = false;
                 }
             }
-            else
+            if (allowContinue)
             {
-                if(Pin.UnlockPin != "")
+                if (Pin.UnlockPin != "")
                 {
-                    Logger.Warning("SuperCAL Locked: Showing PIN Screen.");
                     Control pin = new Pin();
                     Controls.Add(pin);
                     pin.Width = ClientSize.Width;
