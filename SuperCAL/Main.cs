@@ -139,6 +139,7 @@ namespace SuperCAL
 
         private async void ReCAL_Click(object sender, EventArgs e)
         {
+            Enabled = false;
             await Misc.InstallScheduledTask(Properties.Resources.SuperCALPhaseTwo, "2");
             await DomainJoin.Leave();
             await Misc.SetAutoLogon(false);
@@ -148,16 +149,19 @@ namespace SuperCAL
                 CenterToScreen();
                 Left = Left - 440;
             }
+            Enabled = true;
         }
 
         private async void ReDownloadCAL_Click(object sender, EventArgs e)
         {
+            Enabled = false;
             if(await Wipe.Do(true))
             {
                 await McrsCalSrvc.Start();
                 CenterToScreen();
                 Left = Left - 440;
             }
+            Enabled = true;
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -201,62 +205,85 @@ namespace SuperCAL
 
         private async void WipeCalButton_Click(object sender, EventArgs e)
         {
+            Enabled = false;
             await Wipe.Do();
+            Enabled = true;
         }
 
         private async void WipeKeepCalButton_Click(object sender, EventArgs e)
         {
+            Enabled = false;
             await Wipe.Do(true);
+            Enabled = true;
         }
 
         private async void AddSrtTaskButton_Click(object sender, EventArgs e)
         {
+            Enabled = false;
             await Misc.InstallScheduledTask(Properties.Resources.SuperCALPhaseTwo, "2");
+            Enabled = true;
         }
 
         private async void RmvStartTaskButton_Click(object sender, EventArgs e)
         {
+            Enabled = false;
             await Misc.InstallScheduledTask(null, "2");
+            Enabled = true;
         }
 
         private async void JoinDomainButton_Click(object sender, EventArgs e)
         {
+            Enabled = false;
             await DomainJoin.Join();
+            Enabled = true;
         }
 
         private async void JoinWorkButton_Click(object sender, EventArgs e)
         {
+            Enabled = false;
             await DomainJoin.Leave();
+            Enabled = true;
         }
 
         private async void NetDomButton_Click(object sender, EventArgs e)
         {
+            Enabled = false;
             await Misc.InstallNetdom();
+            Enabled = true;
         }
 
         private void RebootWindows_Click(object sender, EventArgs e)
         {
+            Enabled = false;
             Misc.RestartWindows();
         }
 
         private async void DisableAutoLogon_Click(object sender, EventArgs e)
         {
+            Enabled = false;
             await Misc.SetAutoLogon(false);
+            Enabled = true;
         }
 
         private async void EnableAutoLogon_Click(object sender, EventArgs e)
         {
+            Enabled = false;
             await Misc.SetAutoLogon(true);
+            Enabled = true;
         }
 
         private async void AddStartupTaskP2_Click(object sender, EventArgs e)
         {
+            Enabled = false;
             await Misc.InstallScheduledTask(Properties.Resources.SuperCALPhaseThree, "3");
+            Enabled = true;
         }
 
         private async void RemoveStartupTaskP2_Click(object sender, EventArgs e)
         {
+            Enabled = false;
             await Misc.InstallScheduledTask(null, "3");
+            Enabled = true;
         }
 
         private void IPConfigMenuBtn_Click(object sender, EventArgs e)
