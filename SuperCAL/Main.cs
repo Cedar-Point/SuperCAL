@@ -18,7 +18,6 @@ namespace SuperCAL
             topTimer.Tick += TopTimer_Tick;
             topTimer.Start();
             McrsCalSrvc.StopStartCAL = StopStartCAL;
-            McrsCalSrvc.Table = Table;
         }
 
         private void TopTimer_Tick(object sender, EventArgs e)
@@ -67,6 +66,7 @@ namespace SuperCAL
                     pin.BringToFront();
                     pin.Show();
                 }
+                LogRTB_DoubleClick(null, null);
                 Logger.Log("Welcome to Super CAL: Press any button to begin.");
                 if (McrsCalSrvc.IsRunning())
                 {
@@ -132,7 +132,9 @@ namespace SuperCAL
 
         private async void StopStartCAL_Click(object sender, EventArgs e)
         {
+            Enabled = false;
             await McrsCalSrvc.ToggleCal();
+            Enabled = true;
         }
 
         private async void ReCAL_Click(object sender, EventArgs e)

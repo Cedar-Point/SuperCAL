@@ -168,6 +168,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy $(TargetPath) \\cpmdylanbick\c$\$(TargetFileName)</PostBuildEvent>
+    <PostBuildEvent>rem copy $(TargetPath) \\cpmdylanbick\c$\$(TargetFileName)</PostBuildEvent>
   </PropertyGroup>
 </Project>

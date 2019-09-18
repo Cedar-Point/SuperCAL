@@ -13,6 +13,7 @@ namespace SuperCAL
         [STAThread]
         static void Main(string[] args)
         {
+            Application.EnableVisualStyles();
             Arguments = args;
             bool prePass = true;
             try

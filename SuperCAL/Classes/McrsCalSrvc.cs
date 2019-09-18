@@ -9,7 +9,6 @@ namespace SuperCAL
     class McrsCalSrvc
     {
         public static Button StopStartCAL;
-        public static TableLayoutPanel Table;
         public static ServiceController Service = new ServiceController("MICROS CAL Client");
         public static bool IsRunning()
         {
@@ -25,37 +24,51 @@ namespace SuperCAL
         }
         public static Task Stop()
         {
-            Table.Enabled = false;
             StopStartCAL.Text = "Stopping CAL...";
             Logger.Log("Stopping CAL...");
-            return Task.Run(() => {
-                Service.Stop();
-                TryStopService("World Wide Web Publishing Service");
-                TryStopService("MICROS KDS Controller");
-                TryStopProcesses(Process.GetProcessesByName("WIN7CALStart"));
-                TryStopProcesses(Process.GetProcessesByName("SarOpsWin32"));
-                TryStopProcesses(Process.GetProcessesByName("KDSDisplay"));
-                Logger.Good("CAL Stopped.");
-                StopStartCAL.Invoke(new Action(() => {
-                    StopStartCAL.Text = "Start CAL";
-                    Table.Enabled = true;
-                }));
+            return Task.Run(async () => {
+                try
+                {
+                    Service.Stop();
+                    TryStopService("World Wide Web Publishing Service");
+                    TryStopService("MICROS KDS Controller");
+                    TryStopProcesses(Process.GetProcessesByName("WIN7CALStart"));
+                    TryStopProcesses(Process.GetProcessesByName("SarOpsWin32"));
+                    TryStopProcesses(Process.GetProcessesByName("KDSDisplay"));
+                    Logger.Good("CAL Stopped.");
+                    StopStartCAL.Invoke(new Action(() => {
+                        StopStartCAL.Text = "Start CAL";
+                    }));
+                }
+                catch (Exception e)
+                {
+                    Logger.Warning("Failed to stop Micros CAL: " + e.Message);
+                    await Task.Delay(1000);
+                    await Stop();
+                }
             });
         }
         public static Task Start()
         {
-            Table.Enabled = false;
             StopStartCAL.Text = "Starting CAL...";
             Logger.Log("Starting CAL...");
-            return Task.Run(() => {
-                TryStartService("World Wide Web Publishing Service");
-                TryStartService("MICROS KDS Controller");
-                Service.Start();
-                Logger.Good("CAL Started.");
-                StopStartCAL.Invoke(new Action(() => {
-                    StopStartCAL.Text = "Stop CAL";
-                    Table.Enabled = true;
-                }));
+            return Task.Run(async () => {
+                try
+                {
+                    TryStartService("World Wide Web Publishing Service");
+                    TryStartService("MICROS KDS Controller");
+                    Service.Start();
+                    Logger.Good("CAL Started.");
+                    StopStartCAL.Invoke(new Action(() => {
+                        StopStartCAL.Text = "Stop CAL";
+                    }));
+                }
+                catch(Exception e)
+                {
+                    Logger.Warning("Failed to start Micros CAL: " + e.Message);
+                    await Task.Delay(1000);
+                    await Start();
+                }
             });
         }
         public static async Task ToggleCal()

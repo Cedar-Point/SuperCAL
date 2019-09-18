@@ -46,9 +46,13 @@
             this.WipeCalButton = new System.Windows.Forms.ToolStripMenuItem();
             this.WipeKeepCalButton = new System.Windows.Forms.ToolStripMenuItem();
             this.PhaseTwoMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.StartPhaseTwoMenuBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.PhaseTwoSeperator = new System.Windows.Forms.ToolStripSeparator();
             this.AddSrtTaskButton = new System.Windows.Forms.ToolStripMenuItem();
             this.RmvStartTaskButton = new System.Windows.Forms.ToolStripMenuItem();
             this.PhaseThreeMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.StartPhaseThreeMenuBtn = new System.Windows.Forms.ToolStripMenuItem();
+            this.PhaseThreeSeperator = new System.Windows.Forms.ToolStripSeparator();
             this.AddStartupTaskP2 = new System.Windows.Forms.ToolStripMenuItem();
             this.RemoveStartupTaskP2 = new System.Windows.Forms.ToolStripMenuItem();
             this.DomainMenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,10 +64,6 @@
             this.NetDomButton = new System.Windows.Forms.ToolStripMenuItem();
             this.RebootWindows = new System.Windows.Forms.ToolStripMenuItem();
             this.AboutButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.StartPhaseTwoMenuBtn = new System.Windows.Forms.ToolStripMenuItem();
-            this.PhaseTwoSeperator = new System.Windows.Forms.ToolStripSeparator();
-            this.StartPhaseThreeMenuBtn = new System.Windows.Forms.ToolStripMenuItem();
-            this.PhaseThreeSeperator = new System.Windows.Forms.ToolStripSeparator();
             this.Table.SuspendLayout();
             this.MenuBar.SuspendLayout();
             this.SuspendLayout();
@@ -78,6 +78,7 @@
             this.ReCAL.Name = "ReCAL";
             this.ReCAL.Size = new System.Drawing.Size(112, 69);
             this.ReCAL.TabIndex = 1;
+            this.ReCAL.TabStop = false;
             this.ReCAL.Text = "Re CAL";
             this.ReCAL.UseVisualStyleBackColor = false;
             this.ReCAL.Click += new System.EventHandler(this.ReCAL_Click);
@@ -92,6 +93,7 @@
             this.ReDownloadCAL.Name = "ReDownloadCAL";
             this.ReDownloadCAL.Size = new System.Drawing.Size(124, 69);
             this.ReDownloadCAL.TabIndex = 2;
+            this.ReDownloadCAL.TabStop = false;
             this.ReDownloadCAL.Text = "Re Download";
             this.ReDownloadCAL.UseVisualStyleBackColor = false;
             this.ReDownloadCAL.Click += new System.EventHandler(this.ReDownloadCAL_Click);
@@ -107,6 +109,7 @@
             this.StopStartCAL.Name = "StopStartCAL";
             this.StopStartCAL.Size = new System.Drawing.Size(113, 69);
             this.StopStartCAL.TabIndex = 3;
+            this.StopStartCAL.TabStop = false;
             this.StopStartCAL.Text = "CAL Srvc Toggle";
             this.StopStartCAL.UseVisualStyleBackColor = false;
             this.StopStartCAL.Click += new System.EventHandler(this.StopStartCAL_Click);
@@ -250,6 +253,18 @@
             this.PhaseTwoMenu.Size = new System.Drawing.Size(218, 22);
             this.PhaseTwoMenu.Text = "Phase Two (Domain Join)";
             // 
+            // StartPhaseTwoMenuBtn
+            // 
+            this.StartPhaseTwoMenuBtn.Name = "StartPhaseTwoMenuBtn";
+            this.StartPhaseTwoMenuBtn.Size = new System.Drawing.Size(192, 22);
+            this.StartPhaseTwoMenuBtn.Text = "Start Phase Two...";
+            this.StartPhaseTwoMenuBtn.Click += new System.EventHandler(this.StartPhaseTwoMenuBtn_Click);
+            // 
+            // PhaseTwoSeperator
+            // 
+            this.PhaseTwoSeperator.Name = "PhaseTwoSeperator";
+            this.PhaseTwoSeperator.Size = new System.Drawing.Size(189, 6);
+            // 
             // AddSrtTaskButton
             // 
             this.AddSrtTaskButton.Name = "AddSrtTaskButton";
@@ -274,6 +289,18 @@
             this.PhaseThreeMenu.Name = "PhaseThreeMenu";
             this.PhaseThreeMenu.Size = new System.Drawing.Size(218, 22);
             this.PhaseThreeMenu.Text = "Phase Three (Logon Check)";
+            // 
+            // StartPhaseThreeMenuBtn
+            // 
+            this.StartPhaseThreeMenuBtn.Name = "StartPhaseThreeMenuBtn";
+            this.StartPhaseThreeMenuBtn.Size = new System.Drawing.Size(183, 22);
+            this.StartPhaseThreeMenuBtn.Text = "Start Phase Three...";
+            this.StartPhaseThreeMenuBtn.Click += new System.EventHandler(this.StartPhaseThreeMenuBtn_Click);
+            // 
+            // PhaseThreeSeperator
+            // 
+            this.PhaseThreeSeperator.Name = "PhaseThreeSeperator";
+            this.PhaseThreeSeperator.Size = new System.Drawing.Size(180, 6);
             // 
             // AddStartupTaskP2
             // 
@@ -301,14 +328,14 @@
             // JoinDomainButton
             // 
             this.JoinDomainButton.Name = "JoinDomainButton";
-            this.JoinDomainButton.Size = new System.Drawing.Size(180, 22);
+            this.JoinDomainButton.Size = new System.Drawing.Size(167, 22);
             this.JoinDomainButton.Text = "Join Domain...";
             this.JoinDomainButton.Click += new System.EventHandler(this.JoinDomainButton_Click);
             // 
             // JoinWorkButton
             // 
             this.JoinWorkButton.Name = "JoinWorkButton";
-            this.JoinWorkButton.Size = new System.Drawing.Size(180, 22);
+            this.JoinWorkButton.Size = new System.Drawing.Size(167, 22);
             this.JoinWorkButton.Text = "Join Workgroup...";
             this.JoinWorkButton.Click += new System.EventHandler(this.JoinWorkButton_Click);
             // 
@@ -357,30 +384,6 @@
             this.AboutButton.Text = "About";
             this.AboutButton.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
-            // StartPhaseTwoMenuBtn
-            // 
-            this.StartPhaseTwoMenuBtn.Name = "StartPhaseTwoMenuBtn";
-            this.StartPhaseTwoMenuBtn.Size = new System.Drawing.Size(192, 22);
-            this.StartPhaseTwoMenuBtn.Text = "Start Phase Two...";
-            this.StartPhaseTwoMenuBtn.Click += new System.EventHandler(this.StartPhaseTwoMenuBtn_Click);
-            // 
-            // PhaseTwoSeperator
-            // 
-            this.PhaseTwoSeperator.Name = "PhaseTwoSeperator";
-            this.PhaseTwoSeperator.Size = new System.Drawing.Size(189, 6);
-            // 
-            // StartPhaseThreeMenuBtn
-            // 
-            this.StartPhaseThreeMenuBtn.Name = "StartPhaseThreeMenuBtn";
-            this.StartPhaseThreeMenuBtn.Size = new System.Drawing.Size(183, 22);
-            this.StartPhaseThreeMenuBtn.Text = "Start Phase Three...";
-            this.StartPhaseThreeMenuBtn.Click += new System.EventHandler(this.StartPhaseThreeMenuBtn_Click);
-            // 
-            // PhaseThreeSeperator
-            // 
-            this.PhaseThreeSeperator.Name = "PhaseThreeSeperator";
-            this.PhaseThreeSeperator.Size = new System.Drawing.Size(180, 6);
-            // 
             // Main
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -388,7 +391,6 @@
             this.Controls.Add(this.LogRTB);
             this.Controls.Add(this.Table);
             this.Controls.Add(this.MenuBar);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.MenuBar;
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
