@@ -64,6 +64,7 @@ namespace SuperCAL
                     pin.Height = ClientSize.Height;
                     pin.Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left;
                     pin.BringToFront();
+                    pin.Select();
                     pin.Show();
                 }
                 LogRTB_DoubleClick(null, null);
@@ -80,7 +81,6 @@ namespace SuperCAL
                 }
             }
         }
-
         private async void PhaseTwo()
         {
             Table.Enabled = false;
@@ -100,7 +100,6 @@ namespace SuperCAL
                 Logger.Log("\n\nIf you would like to retry this phase, double press anywhere on SuperCAL, and then select \"Actions\" -> \"Phase Two (Domain Join)\" -> \"Start Phase Two...\"");
             }
         }
-
         private async void PhaseThree()
         {
             Table.Enabled = false;
@@ -129,14 +128,12 @@ namespace SuperCAL
                 Misc.RestartWindows();
             }
         }
-
         private async void StopStartCAL_Click(object sender, EventArgs e)
         {
             Enabled = false;
             await McrsCalSrvc.ToggleCal();
             Enabled = true;
         }
-
         private async void ReCAL_Click(object sender, EventArgs e)
         {
             Enabled = false;
@@ -151,7 +148,6 @@ namespace SuperCAL
             }
             Enabled = true;
         }
-
         private async void ReDownloadCAL_Click(object sender, EventArgs e)
         {
             Enabled = false;
@@ -168,7 +164,6 @@ namespace SuperCAL
         {
             Logger.Log("Super CAL V" + Application.ProductVersion + ", by Dylan Bickerstaff.");
         }
-
         private void LogRTB_DoubleClick(object sender, EventArgs e)
         {
             if(MenuBar.Visible)
@@ -184,108 +179,92 @@ namespace SuperCAL
                 MenuBar.Visible = true;
             }
         }
-
         private void TaskMgrButton_Click(object sender, EventArgs e)
         {
             Logger.Log("Starting Task Manager...");
             Process.Start(Misc.System32Path() + "taskmgr.exe");
         }
-
         private void CMDButton_Click(object sender, EventArgs e)
         {
             Logger.Log("Starting Command Prompt...");
             Process.Start(Misc.System32Path() + "cmd.exe");
         }
-
         private void OSKButton_Click(object sender, EventArgs e)
         {
             Logger.Log("Starting On Screen Keyboard...");
             Misc.RunCMD(@"C:\Windows\System32\osk.exe");
         }
-
         private async void WipeCalButton_Click(object sender, EventArgs e)
         {
             Enabled = false;
             await Wipe.Do();
             Enabled = true;
         }
-
         private async void WipeKeepCalButton_Click(object sender, EventArgs e)
         {
             Enabled = false;
             await Wipe.Do(true);
             Enabled = true;
         }
-
         private async void AddSrtTaskButton_Click(object sender, EventArgs e)
         {
             Enabled = false;
             await Misc.InstallScheduledTask(Properties.Resources.SuperCALPhaseTwo, "2");
             Enabled = true;
         }
-
         private async void RmvStartTaskButton_Click(object sender, EventArgs e)
         {
             Enabled = false;
             await Misc.InstallScheduledTask(null, "2");
             Enabled = true;
         }
-
         private async void JoinDomainButton_Click(object sender, EventArgs e)
         {
             Enabled = false;
             await DomainJoin.Join();
             Enabled = true;
         }
-
         private async void JoinWorkButton_Click(object sender, EventArgs e)
         {
             Enabled = false;
             await DomainJoin.Leave();
             Enabled = true;
         }
-
         private async void NetDomButton_Click(object sender, EventArgs e)
         {
             Enabled = false;
             await Misc.InstallNetdom();
             Enabled = true;
         }
-
         private void RebootWindows_Click(object sender, EventArgs e)
         {
             Enabled = false;
             Misc.RestartWindows();
         }
-
         private async void DisableAutoLogon_Click(object sender, EventArgs e)
         {
             Enabled = false;
             await Misc.SetAutoLogon(false);
             Enabled = true;
         }
-
         private async void EnableAutoLogon_Click(object sender, EventArgs e)
         {
             Enabled = false;
             await Misc.SetAutoLogon(true);
             Enabled = true;
         }
-
         private async void AddStartupTaskP2_Click(object sender, EventArgs e)
         {
             Enabled = false;
             await Misc.InstallScheduledTask(Properties.Resources.SuperCALPhaseThree, "3");
             Enabled = true;
         }
-
         private async void RemoveStartupTaskP2_Click(object sender, EventArgs e)
         {
             Enabled = false;
             await Misc.InstallScheduledTask(null, "3");
             Enabled = true;
         }
-
         private void IPConfigMenuBtn_Click(object sender, EventArgs e)
         {
             Logger.Log("IP Configuration: Starting...");
@@ -294,18 +273,15 @@ namespace SuperCAL
             ipConfig.FormClosed += IpConfig_FormClosed;
             ipConfig.Show(this);
         }
-
         private void IpConfig_FormClosed(object sender, FormClosedEventArgs e)
         {
             Logger.Good("IP Configuration: Done.");
             Enabled = true;
         }
-
         private void StartPhaseTwoMenuBtn_Click(object sender, EventArgs e)
         {
             PhaseTwo();
         }
-
         private void StartPhaseThreeMenuBtn_Click(object sender, EventArgs e)
         {
             PhaseThree();

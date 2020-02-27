@@ -38,6 +38,21 @@ namespace SuperCAL
             }
             UpdateDisplay();
         }
+        public void Pin_KeyDown(object sender, KeyEventArgs e)
+        {
+            e.Handled = true;
+            e.SuppressKeyPress = true;
+            int key;
+            if (int.TryParse(e.KeyCode.ToString().Replace("NumPad", "").Replace("D", ""), out key))
+            {
+                pinBuffer += key.ToString();
+                UpdateDisplay();
+            }
+            else if (e.KeyCode == Keys.Enter)
+            {
+                btnEnter.PerformClick();
+            }
+        }
         private void UpdateDisplay()
         {
             string starDisplay = "";

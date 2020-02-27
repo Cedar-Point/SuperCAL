@@ -29,7 +29,7 @@ namespace SuperCAL
             return Task.Run(async () => {
                 try
                 {
-                    Service.Stop();
+                    if (Service.Status != ServiceControllerStatus.Stopped) Service.Stop();
                     TryStopService("World Wide Web Publishing Service");
                     TryStopService("MICROS KDS Controller");
                     TryStopProcesses(Process.GetProcessesByName("WIN7CALStart"));

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Pin));
             this.DigitTable = new System.Windows.Forms.TableLayoutPanel();
             this.btnEnter = new System.Windows.Forms.Button();
             this.btn0 = new System.Windows.Forms.Button();
@@ -72,7 +71,7 @@
             this.DigitTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.DigitTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.DigitTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.DigitTable.Size = new System.Drawing.Size(373, 380);
+            this.DigitTable.Size = new System.Drawing.Size(376, 369);
             this.DigitTable.TabIndex = 0;
             // 
             // btnEnter
@@ -81,9 +80,9 @@
             this.btnEnter.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnEnter.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnEnter.Font = new System.Drawing.Font("MS PGothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEnter.Location = new System.Drawing.Point(127, 288);
+            this.btnEnter.Location = new System.Drawing.Point(128, 279);
             this.btnEnter.Name = "btnEnter";
-            this.btnEnter.Size = new System.Drawing.Size(243, 89);
+            this.btnEnter.Size = new System.Drawing.Size(245, 87);
             this.btnEnter.TabIndex = 11;
             this.btnEnter.TabStop = false;
             this.btnEnter.Text = "Enter";
@@ -95,9 +94,9 @@
             this.btn0.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn0.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btn0.Font = new System.Drawing.Font("MS PGothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn0.Location = new System.Drawing.Point(3, 288);
+            this.btn0.Location = new System.Drawing.Point(3, 279);
             this.btn0.Name = "btn0";
-            this.btn0.Size = new System.Drawing.Size(118, 89);
+            this.btn0.Size = new System.Drawing.Size(119, 87);
             this.btn0.TabIndex = 9;
             this.btn0.TabStop = false;
             this.btn0.Text = "0";
@@ -109,9 +108,9 @@
             this.btn3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn3.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btn3.Font = new System.Drawing.Font("MS PGothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn3.Location = new System.Drawing.Point(251, 193);
+            this.btn3.Location = new System.Drawing.Point(253, 187);
             this.btn3.Name = "btn3";
-            this.btn3.Size = new System.Drawing.Size(119, 89);
+            this.btn3.Size = new System.Drawing.Size(120, 86);
             this.btn3.TabIndex = 8;
             this.btn3.TabStop = false;
             this.btn3.Text = "3";
@@ -123,9 +122,9 @@
             this.btn2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn2.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btn2.Font = new System.Drawing.Font("MS PGothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn2.Location = new System.Drawing.Point(127, 193);
+            this.btn2.Location = new System.Drawing.Point(128, 187);
             this.btn2.Name = "btn2";
-            this.btn2.Size = new System.Drawing.Size(118, 89);
+            this.btn2.Size = new System.Drawing.Size(119, 86);
             this.btn2.TabIndex = 7;
             this.btn2.TabStop = false;
             this.btn2.Text = "2";
@@ -137,9 +136,9 @@
             this.btn1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn1.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btn1.Font = new System.Drawing.Font("MS PGothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn1.Location = new System.Drawing.Point(3, 193);
+            this.btn1.Location = new System.Drawing.Point(3, 187);
             this.btn1.Name = "btn1";
-            this.btn1.Size = new System.Drawing.Size(118, 89);
+            this.btn1.Size = new System.Drawing.Size(119, 86);
             this.btn1.TabIndex = 6;
             this.btn1.TabStop = false;
             this.btn1.Text = "1";
@@ -151,9 +150,9 @@
             this.btn6.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn6.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btn6.Font = new System.Drawing.Font("MS PGothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn6.Location = new System.Drawing.Point(251, 98);
+            this.btn6.Location = new System.Drawing.Point(253, 95);
             this.btn6.Name = "btn6";
-            this.btn6.Size = new System.Drawing.Size(119, 89);
+            this.btn6.Size = new System.Drawing.Size(120, 86);
             this.btn6.TabIndex = 5;
             this.btn6.TabStop = false;
             this.btn6.Text = "6";
@@ -165,9 +164,9 @@
             this.btn5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn5.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btn5.Font = new System.Drawing.Font("MS PGothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn5.Location = new System.Drawing.Point(127, 98);
+            this.btn5.Location = new System.Drawing.Point(128, 95);
             this.btn5.Name = "btn5";
-            this.btn5.Size = new System.Drawing.Size(118, 89);
+            this.btn5.Size = new System.Drawing.Size(119, 86);
             this.btn5.TabIndex = 4;
             this.btn5.TabStop = false;
             this.btn5.Text = "5";
@@ -179,9 +178,9 @@
             this.btn4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn4.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btn4.Font = new System.Drawing.Font("MS PGothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn4.Location = new System.Drawing.Point(3, 98);
+            this.btn4.Location = new System.Drawing.Point(3, 95);
             this.btn4.Name = "btn4";
-            this.btn4.Size = new System.Drawing.Size(118, 89);
+            this.btn4.Size = new System.Drawing.Size(119, 86);
             this.btn4.TabIndex = 3;
             this.btn4.TabStop = false;
             this.btn4.Text = "4";
@@ -193,9 +192,9 @@
             this.btn9.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn9.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btn9.Font = new System.Drawing.Font("MS PGothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn9.Location = new System.Drawing.Point(251, 3);
+            this.btn9.Location = new System.Drawing.Point(253, 3);
             this.btn9.Name = "btn9";
-            this.btn9.Size = new System.Drawing.Size(119, 89);
+            this.btn9.Size = new System.Drawing.Size(120, 86);
             this.btn9.TabIndex = 2;
             this.btn9.TabStop = false;
             this.btn9.Text = "9";
@@ -207,9 +206,9 @@
             this.btn8.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn8.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btn8.Font = new System.Drawing.Font("MS PGothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn8.Location = new System.Drawing.Point(127, 3);
+            this.btn8.Location = new System.Drawing.Point(128, 3);
             this.btn8.Name = "btn8";
-            this.btn8.Size = new System.Drawing.Size(118, 89);
+            this.btn8.Size = new System.Drawing.Size(119, 86);
             this.btn8.TabIndex = 1;
             this.btn8.TabStop = false;
             this.btn8.Text = "8";
@@ -223,7 +222,7 @@
             this.btn7.Font = new System.Drawing.Font("MS PGothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn7.Location = new System.Drawing.Point(3, 3);
             this.btn7.Name = "btn7";
-            this.btn7.Size = new System.Drawing.Size(118, 89);
+            this.btn7.Size = new System.Drawing.Size(119, 86);
             this.btn7.TabIndex = 0;
             this.btn7.TabStop = false;
             this.btn7.Text = "7";
@@ -237,25 +236,20 @@
             this.lblDisplay.Font = new System.Drawing.Font("MS UI Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDisplay.Location = new System.Drawing.Point(0, 0);
             this.lblDisplay.Name = "lblDisplay";
-            this.lblDisplay.Size = new System.Drawing.Size(373, 60);
+            this.lblDisplay.Size = new System.Drawing.Size(376, 60);
             this.lblDisplay.TabIndex = 1;
             this.lblDisplay.Text = "Enter Unlock PIN";
             this.lblDisplay.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Pin
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(373, 440);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(376, 429);
             this.Controls.Add(this.lblDisplay);
             this.Controls.Add(this.DigitTable);
-            //this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
-            //this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Pin";
-            //this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "SuperCAL";
-            //this.TopMost = true;
-            //this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Pin_FormClosing);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Pin_KeyDown);
             this.DigitTable.ResumeLayout(false);
             this.ResumeLayout(false);
 
