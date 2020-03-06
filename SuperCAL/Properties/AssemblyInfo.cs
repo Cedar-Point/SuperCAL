@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("Release")]
 [assembly: AssemblyCompany("Dylan Bickerstaff")]
 [assembly: AssemblyProduct("SuperCAL")]
-[assembly: AssemblyCopyright("Copyright © 2020"]
+[assembly: AssemblyCopyright("Copyright © 2020")]
 [assembly: AssemblyTrademark("Dylan Bickerstaff")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(true)]
