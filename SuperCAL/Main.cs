@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Windows.Forms;
 using System.Drawing;
-using System.Threading.Tasks;
 
 namespace SuperCAL
 {
@@ -19,12 +18,10 @@ namespace SuperCAL
             topTimer.Start();
             McrsCalSrvc.StopStartCAL = StopStartCAL;
         }
-
         private void TopTimer_Tick(object sender, EventArgs e)
         {
             BringToFront();
         }
-
         private void Window_Load(object sender, EventArgs e)
         {
             bool allowContinue = true;
@@ -59,6 +56,7 @@ namespace SuperCAL
                 if (Pin.UnlockPin != "")
                 {
                     Control pin = new Pin();
+                    pin.Disposed += Pin_Disposed;
                     Controls.Add(pin);
                     pin.Width = ClientSize.Width;
                     pin.Height = ClientSize.Height;
@@ -67,18 +65,30 @@ namespace SuperCAL
                     pin.Select();
                     pin.Show();
                 }
-                LogRTB_DoubleClick(null, null);
-                Logger.Log("Welcome to Super CAL: Press any button to begin.");
-                if (McrsCalSrvc.IsRunning())
-                {
-                    Logger.Good("CAL Service is running.");
-                    StopStartCAL.Text = "Stop CAL";
-                }
                 else
                 {
-                    Logger.Warning("CAL Service is not running.");
-                    StopStartCAL.Text = "Start CAL";
+                    if (McrsCalSrvc.IsRunning())
+                    {
+                        StopStartCAL.PerformClick();
+                    }
+                    else
+                    {
+                        StopStartCAL.Text = "Start CAL";
+                    }
                 }
+                LogRTB_DoubleClick(null, null);
+                Logger.Log("Welcome to Super CAL: Press any button to begin.");
+            }
+        }
+        private void Pin_Disposed(object sender, EventArgs e)
+        {
+            if (McrsCalSrvc.IsRunning())
+            {
+                StopStartCAL.PerformClick();
+            }
+            else
+            {
+                StopStartCAL.Text = "Start CAL";
             }
         }
         private async void PhaseTwo()
@@ -159,7 +169,6 @@ namespace SuperCAL
             }
             Enabled = true;
         }
-
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Logger.Log("Super CAL V" + Application.ProductVersion + ", by Dylan Bickerstaff.");
