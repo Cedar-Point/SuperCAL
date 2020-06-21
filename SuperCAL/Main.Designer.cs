@@ -124,7 +124,7 @@
             this.Table.Controls.Add(this.StopStartCAL, 2, 0);
             this.Table.Controls.Add(this.ReDownloadCAL, 1, 0);
             this.Table.Dock = System.Windows.Forms.DockStyle.Top;
-            this.Table.Location = new System.Drawing.Point(0, 0);
+            this.Table.Location = new System.Drawing.Point(0, 24);
             this.Table.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Table.Name = "Table";
             this.Table.RowCount = 1;
@@ -328,14 +328,14 @@
             // JoinDomainButton
             // 
             this.JoinDomainButton.Name = "JoinDomainButton";
-            this.JoinDomainButton.Size = new System.Drawing.Size(167, 22);
+            this.JoinDomainButton.Size = new System.Drawing.Size(180, 22);
             this.JoinDomainButton.Text = "Join Domain...";
             this.JoinDomainButton.Click += new System.EventHandler(this.JoinDomainButton_Click);
             // 
             // JoinWorkButton
             // 
             this.JoinWorkButton.Name = "JoinWorkButton";
-            this.JoinWorkButton.Size = new System.Drawing.Size(167, 22);
+            this.JoinWorkButton.Size = new System.Drawing.Size(180, 22);
             this.JoinWorkButton.Text = "Join Workgroup...";
             this.JoinWorkButton.Click += new System.EventHandler(this.JoinWorkButton_Click);
             // 

@@ -83,7 +83,16 @@ namespace SuperCAL
                         catch(UnauthorizedAccessException)
                         {
                             Logger.Error(file + ": Failed to delete: Access Denied! (The file may be open or in use)");
-                            return false;
+                            Logger.Warning("Attempting deletion method #2");
+                            Misc.RunCMD("del " + file);
+                            if(File.Exists(file))
+                            {
+                                Logger.Error(file + ": Failed to delete using method #2.\n\nTry manually deleting the file using CMD.");
+                                return false;
+                            } else
+                            {
+                                Logger.Good(file + ": Deleted using method #2!");
+                            }
                         }
                         catch (Exception e)
                         {
