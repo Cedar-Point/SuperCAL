@@ -26,6 +26,11 @@ namespace SuperCAL
         }
         private static void WriteLine(string message, Color color)
         {
+            if (LogRTB == null)
+            {
+                Console.WriteLine(message);
+                return;
+            }
             Action append = new Action(() => {
                 LogRTB.SelectionColor = color;
                 LogRTB.AppendText(DateTime.Now.ToLocalTime().ToShortTimeString() + ": " + message + "\n");

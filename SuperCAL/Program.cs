@@ -55,11 +55,11 @@ namespace SuperCAL
                 {
                     if (e.InnerException != null)
                     {
-                        Application.Run(new Error(e.Message + "\n\n" + e.InnerException.Message));
+                        Application.Run(new Error(e.Message + "\n\n" + e.StackTrace + "\n\n" + e.InnerException.Message + "\n\n" + e.InnerException.StackTrace));
                     }
                     else
                     {
-                        Application.Run(new Error(e.Message));
+                        Application.Run(new Error(e.Message + "\n\n" + e.StackTrace));
                     }
                 }
             }

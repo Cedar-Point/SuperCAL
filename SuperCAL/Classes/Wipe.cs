@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Win32;
 using System.IO;
@@ -32,10 +31,18 @@ namespace SuperCAL
                     SaveImportantKeys(false);
                     SaveImportantKeys(true);
                 }
-                if (!DeleteDirectory(@"C:\MICROS"))
+                Logger.Log("Deleting the specified files and folders...");
+                foreach (string file in Config2.Settings["FilesToDelete"].Split('|'))
                 {
-                    return false;
+                    if (file == "") break;
+                    if (!DeleteFile(file)) return false;
                 }
+                foreach (string folder in Config2.Settings["FoldersToDelete"].Split('|'))
+                {
+                    if (folder == "") break;
+                    if (!DeleteDirectory(folder)) return false;
+                }
+                Logger.Good("Files and folders deleted.");
                 TryUninstallService("MICROS KDS Controller");
                 RegClear(false);
                 RegClear(true);
@@ -69,61 +76,35 @@ namespace SuperCAL
         }
         public static bool DeleteDirectory(string path)
         {
-            if (Directory.Exists(path))
+            try
             {
-                string[] files = Directory.EnumerateFiles(path).ToArray();
-                if (files.Length != 0)
+                if (Directory.Exists(path))
                 {
-                    foreach (string file in files)
-                    {
-                        try
-                        {
-                            File.Delete(file);
-                        }
-                        catch(UnauthorizedAccessException)
-                        {
-                            Logger.Error(file + ": Failed to delete: Access Denied! (The file may be open or in use)");
-                            return false;
-                        }
-                        catch (Exception e)
-                        {
-                            Logger.Error(file + ": " + e.Message);
-                            return false;
-                        }
-                        Logger.Good(file + ": Deleted.");
-                    }
+                    Logger.Log("Deleting directory: " + path + "...");
+                    Directory.Delete(path, true);
                 }
-                string[] dirs = Directory.EnumerateDirectories(path).ToArray();
-                if (dirs.Length != 0)
-                {
-                    foreach (string dir in dirs)
-                    {
-                        if (dir != @"C:\MICROS\SuperCAL")
-                        {
-                            if(!DeleteDirectory(dir))
-                            {
-                                return false;
-                            }
-                        }
-                    }
-                }
-                try
-                {
-                    if (path != @"C:\MICROS")
-                    {
-                        Directory.Delete(path);
-                    }
-                }
-                catch (Exception e)
-                {
-                    Logger.Error(path + ": " + e.Message);
-                    return false;
-                }
-                Logger.Good(path + ": Deleted.");
                 return true;
             }
-            else
+            catch (Exception e)
             {
+                Logger.Error("Failed to delete directory: " + path + "!\n\n" + e.Message + "\n\n");
+                return false;
+            }
+        }
+        public static bool DeleteFile(string path)
+        {
+            try
+            {
+                if (File.Exists(path)) 
+                {
+                    Logger.Log("Deleting file: " + path + "...");
+                    File.Delete(path);
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                Logger.Error("Failed to delete file: " + path + "!\n\n" + e.Message + "\n\n");
                 return false;
             }
         }

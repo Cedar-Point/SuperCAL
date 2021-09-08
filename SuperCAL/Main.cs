@@ -75,8 +75,8 @@ namespace SuperCAL
                     {
                         StopStartCAL.Text = "Start CAL";
                     }
+                    Menu = MenuBar;
                 }
-                LogRTB_DoubleClick(null, null);
                 Logger.Log("Welcome to Super CAL: Press any button to begin.");
             }
         }
@@ -90,6 +90,7 @@ namespace SuperCAL
             {
                 StopStartCAL.Text = "Start CAL";
             }
+            Menu = MenuBar;
         }
         private async void PhaseTwo()
         {
@@ -175,17 +176,13 @@ namespace SuperCAL
         }
         private void LogRTB_DoubleClick(object sender, EventArgs e)
         {
-            if(MenuBar.Visible)
+            if(Menu != null)
             {
-                LogRTB.Location = new Point(LogRTB.Location.X, 80);
-                LogRTB.Height += 25;
-                MenuBar.Visible = false;
+                Menu = null;
             }
             else
             {
-                LogRTB.Location = new Point(LogRTB.Location.X, 105);
-                LogRTB.Height -= 25;
-                MenuBar.Visible = true;
+                Menu = MenuBar;
             }
         }
         private void TaskMgrButton_Click(object sender, EventArgs e)
