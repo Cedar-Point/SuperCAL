@@ -98,6 +98,7 @@ namespace SuperCAL
                 if (File.Exists(path)) 
                 {
                     Logger.Log("Deleting file: " + path + "...");
+                    File.SetAttributes(path, FileAttributes.Normal);
                     File.Delete(path);
                 }
                 return true;
