@@ -10,6 +10,8 @@ namespace SuperCAL
     {
         public static Button StopStartCAL;
         public static ServiceController Service = new ServiceController("MICROS CAL Client");
+        private static int StopTries = 3;
+        private static int StartTries = 3;
         public static bool IsRunning()
         {
             Service.Refresh();
@@ -30,11 +32,8 @@ namespace SuperCAL
                 try
                 {
                     if (Service.Status != ServiceControllerStatus.Stopped) Service.Stop();
-                    TryStopService("World Wide Web Publishing Service");
-                    TryStopService("MICROS KDS Controller");
-                    TryStopProcesses(Process.GetProcessesByName("WIN7CALStart"));
-                    TryStopProcesses(Process.GetProcessesByName("SarOpsWin32"));
-                    TryStopProcesses(Process.GetProcessesByName("KDSDisplay"));
+                    foreach (string srvs in Config2.Settings["ServicesToStop"].Split('|')) TryStopService(srvs);
+                    foreach (string proc in Config2.Settings["ProcessesToStop"].Split('|')) TryStopProcesses(Process.GetProcessesByName(proc));
                     Logger.Good("CAL Stopped.");
                     StopStartCAL.Invoke(new Action(() => {
                         StopStartCAL.Text = "Start CAL";
@@ -44,7 +43,18 @@ namespace SuperCAL
                 {
                     Logger.Warning("Failed to stop Micros CAL: " + e.Message);
                     await Task.Delay(1000);
-                    await Stop();
+                    if (--StopTries == 0)
+                    {
+                        StopTries = 3;
+                        Logger.Error("Failed to stop Micros CAL! Tried 3 times.");
+                        StopStartCAL.Invoke(new Action(() => {
+                            StopStartCAL.Text = "Stop CAL";
+                        }));
+                    }
+                    else
+                    {
+                        await Stop();
+                    }
                 }
             });
         }
@@ -55,8 +65,7 @@ namespace SuperCAL
             return Task.Run(async () => {
                 try
                 {
-                    TryStartService("World Wide Web Publishing Service");
-                    TryStartService("MICROS KDS Controller");
+                    foreach (string srvs in Config2.Settings["ServicesToStart"].Split('|')) TryStartService(srvs);
                     Service.Start();
                     Logger.Good("CAL Started.");
                     StopStartCAL.Invoke(new Action(() => {
@@ -67,7 +76,18 @@ namespace SuperCAL
                 {
                     Logger.Warning("Failed to start Micros CAL: " + e.Message);
                     await Task.Delay(1000);
-                    await Start();
+                    if (--StartTries == 0)
+                    {
+                        StartTries = 3;
+                        Logger.Error("Failed to start Micros CAL! Tried 3 times.");
+                        StopStartCAL.Invoke(new Action(() => {
+                            StopStartCAL.Text = "Start CAL";
+                        }));
+                    }
+                    else
+                    {
+                        await Start();
+                    }
                 }
             });
         }

@@ -60,7 +60,16 @@ namespace SuperCAL
             {"FoldersToDelete", @"C:\Micros\Simphony"},
 
             {"XComment11", @"Pipe delimited list of files to delete on re-cal / re-download. (Example: C:\File1.txt|C:\File2.txt )"},
-            {"FilesToDelete", @""}
+            {"FilesToDelete", @""},
+
+            {"XComment13", @"Pipe delimited list of processes to stop on re-cal / re-download. (Example: Process1|Process2 )"},
+            {"ProcessesToStop", @"WIN7CALStart|SarOpsWin32|KDSDisplay"},
+
+            {"XComment14", @"Pipe delimited list of services to stop on re-cal / re-download excluding 'Micros Cal Client'. (Example: Service1|Service2 )"},
+            {"ServicesToStop", @"World Wide Web Publishing Service|MICROS KDS Controller"},
+
+            {"XComment15", @"Pipe delimited list of services to start after re-cal / re-download excluding 'Micros Cal Client'. (Example: Service1|Service2 )"},
+            {"ServicesToStart", @"World Wide Web Publishing Service|MICROS KDS Controller"}
         };
         public static Dictionary<string, string> DefaultSettings = Settings;
         public static void SaveConfig()
