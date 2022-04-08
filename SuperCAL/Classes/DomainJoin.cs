@@ -12,6 +12,7 @@ namespace SuperCAL
         public static string OU = "";
         public static async Task<bool> Join()
         {
+            /*
             Ping ping = new Ping();
             Logger.Log("Pinging " + DomainName + "...");
             PingReply reply = null;
@@ -33,6 +34,7 @@ namespace SuperCAL
                 return false;
             }
             Logger.Good("Ping: Success.");
+            */
             Logger.Log("Adding computer to domain (" + DomainName + ") in container (" + OU + ")  as (" + Environment.MachineName + "): Please wait...");
             int tries = 4;
             bool popKeyboard = false;
