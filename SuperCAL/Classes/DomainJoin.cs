@@ -2,7 +2,7 @@
 using System.DirectoryServices.ActiveDirectory;
 using System.DirectoryServices;
 using System;
-using System.Net.NetworkInformation;
+//using System.Net.NetworkInformation;
 
 namespace SuperCAL
 {

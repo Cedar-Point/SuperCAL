@@ -65,6 +65,7 @@
             this.NetDomButton = new System.Windows.Forms.MenuItem();
             this.RebootWindows = new System.Windows.Forms.MenuItem();
             this.AboutButton = new System.Windows.Forms.MenuItem();
+            this.CleanupButton = new System.Windows.Forms.MenuItem();
             this.Table.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,7 +77,7 @@
             this.ReCAL.Location = new System.Drawing.Point(6, 5);
             this.ReCAL.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.ReCAL.Name = "ReCAL";
-            this.ReCAL.Size = new System.Drawing.Size(113, 69);
+            this.ReCAL.Size = new System.Drawing.Size(112, 69);
             this.ReCAL.TabIndex = 1;
             this.ReCAL.TabStop = false;
             this.ReCAL.Text = "Re CAL";
@@ -88,10 +89,10 @@
             this.ReDownloadCAL.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ReDownloadCAL.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.ReDownloadCAL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ReDownloadCAL.Location = new System.Drawing.Point(125, 5);
+            this.ReDownloadCAL.Location = new System.Drawing.Point(124, 5);
             this.ReDownloadCAL.Margin = new System.Windows.Forms.Padding(0, 5, 0, 5);
             this.ReDownloadCAL.Name = "ReDownloadCAL";
-            this.ReDownloadCAL.Size = new System.Drawing.Size(125, 69);
+            this.ReDownloadCAL.Size = new System.Drawing.Size(124, 69);
             this.ReDownloadCAL.TabIndex = 2;
             this.ReDownloadCAL.TabStop = false;
             this.ReDownloadCAL.Text = "Re Download";
@@ -104,10 +105,10 @@
             this.StopStartCAL.FlatAppearance.MouseOverBackColor = System.Drawing.SystemColors.ControlLight;
             this.StopStartCAL.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.StopStartCAL.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.StopStartCAL.Location = new System.Drawing.Point(256, 5);
+            this.StopStartCAL.Location = new System.Drawing.Point(254, 5);
             this.StopStartCAL.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.StopStartCAL.Name = "StopStartCAL";
-            this.StopStartCAL.Size = new System.Drawing.Size(114, 69);
+            this.StopStartCAL.Size = new System.Drawing.Size(113, 69);
             this.StopStartCAL.TabIndex = 3;
             this.StopStartCAL.TabStop = false;
             this.StopStartCAL.Text = "CAL Srvc Toggle";
@@ -129,7 +130,7 @@
             this.Table.Name = "Table";
             this.Table.RowCount = 1;
             this.Table.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.Table.Size = new System.Drawing.Size(376, 79);
+            this.Table.Size = new System.Drawing.Size(373, 79);
             this.Table.TabIndex = 4;
             // 
             // LogRTB
@@ -203,6 +204,7 @@
             this.PhaseThreeMenu,
             this.DomainMenu,
             this.AutoLogon,
+            this.CleanupButton,
             this.NetDomButton,
             this.RebootWindows});
             this.ActionsButton.Text = "Actions";
@@ -335,13 +337,13 @@
             // 
             // NetDomButton
             // 
-            this.NetDomButton.Index = 5;
+            this.NetDomButton.Index = 6;
             this.NetDomButton.Text = "Install NETDOM...";
             this.NetDomButton.Click += new System.EventHandler(this.NetDomButton_Click);
             // 
             // RebootWindows
             // 
-            this.RebootWindows.Index = 6;
+            this.RebootWindows.Index = 7;
             this.RebootWindows.Text = "Restart Windows...";
             this.RebootWindows.Click += new System.EventHandler(this.RebootWindows_Click);
             // 
@@ -350,6 +352,12 @@
             this.AboutButton.Index = 2;
             this.AboutButton.Text = "About";
             this.AboutButton.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // CleanupButton
+            // 
+            this.CleanupButton.Index = 5;
+            this.CleanupButton.Text = "Cleanup...";
+            this.CleanupButton.Click += new System.EventHandler(this.CleanupButton_Click);
             // 
             // Main
             // 
@@ -407,6 +415,7 @@
         private System.Windows.Forms.MenuItem PhaseThreeSeperator;
         private System.Windows.Forms.MenuItem ToolsSeperator;
         private System.Windows.Forms.MenuItem PhaseTwoSeperator;
+        private System.Windows.Forms.MenuItem CleanupButton;
     }
 }
 

@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace SuperCAL
@@ -11,6 +12,12 @@ namespace SuperCAL
         public static string AutoLogonUserName = "";
         public static string AutoLogonPassword = "";
         public static string AutoLogonADDomain = "";
+        [DllImport("kernel32.dll")]
+        public static extern bool MoveFileExA(string ExistingFile, string NewFile, MoveFileExAFlags Flags);
+        public enum MoveFileExAFlags
+        {
+            MOVEFILE_DELAY_UNTIL_REBOOT = 0x4
+        }
         public static void RestartWindows()
         {
             Logger.Log("Restarting windows...");
@@ -82,6 +89,18 @@ namespace SuperCAL
                     Logger.Good("Done.");
                 }
             });
+        }
+        public static Task<bool> RemoveFileOnReboot(string FilePath)
+        {
+            Task<bool> result = Task.Run(() => MoveFileExA(FilePath, null, MoveFileExAFlags.MOVEFILE_DELAY_UNTIL_REBOOT));
+            Logger.Good(FilePath + @": Registered remove on reboot.");
+            return result;
+        }
+        public static async Task RemoveSuperCALOnReboot()
+        {
+            await RemoveFileOnReboot(@"C:\MICROS\SuperCAL\SuperCAL.exe");
+            await RemoveFileOnReboot(@"C:\MICROS\SuperCAL\SuperCAL.xml");
+            await RemoveFileOnReboot(@"C:\MICROS\SuperCAL\");
         }
         public static Task InstallNetdom()
         {

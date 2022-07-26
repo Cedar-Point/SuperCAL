@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Forms;
-using System.Drawing;
 
 namespace SuperCAL
 {
@@ -104,6 +103,10 @@ namespace SuperCAL
                 {
                     await Misc.InstallScheduledTask(Properties.Resources.SuperCALPhaseThree, "3");
                 }
+                else
+                {
+                    await Misc.RemoveSuperCALOnReboot();
+                }
                 Misc.RestartWindows();
             }
             else
@@ -119,6 +122,7 @@ namespace SuperCAL
             {
                 Logger.Log("AutoLogon found! Removing scheduled task...");
                 await Misc.InstallScheduledTask(null, "3");
+                await Misc.RemoveSuperCALOnReboot();
                 Misc.RestartWindows();
             }
             else
@@ -291,6 +295,18 @@ namespace SuperCAL
         private void StartPhaseThreeMenuBtn_Click(object sender, EventArgs e)
         {
             PhaseThree();
+        }
+        private async void CleanupButton_Click(object sender, EventArgs e)
+        {
+            Logger.Log("Removeing any scheduled tasks...");
+            await Misc.InstallScheduledTask(null, "2");
+            await Misc.InstallScheduledTask(null, "3");
+            Logger.Good("Done.");
+            Logger.Log("Marking SuperCAL files for cleanup on next reboot.");
+            await Misc.RemoveSuperCALOnReboot();
+            Logger.Good("Done.");
+            DialogResult result = MessageBox.Show("This PC needs to re-boot to finish cleaning up SuperCAL. Restart now?", "Restart?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes) Misc.RestartWindows();
         }
     }
 }
