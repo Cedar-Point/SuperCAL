@@ -134,6 +134,7 @@ namespace SuperCAL
                 {
                     Logger.Log("AutoLogon found! Removing scheduled task...");
                     await Misc.InstallScheduledTask(null, "3");
+                    await Misc.RemoveSuperCALOnReboot();
                 }
                 else
                 {
